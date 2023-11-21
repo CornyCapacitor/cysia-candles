@@ -1,0 +1,149 @@
+nav {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+a {
+  text-decoration: none;
+  color: #f568a9;
+}
+
+.promotional-section {
+  background-color: black;
+  width: 100%;
+  color: white;
+  text-align: center;
+}
+
+.upper-section {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
+  width: 100%;
+  padding: 10px;
+  background-color: white;
+}
+
+.logo {
+  margin: 0px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: solid 3px #f568a9;
+  border-radius: 20px;
+  padding: 5px 15px;
+  gap: 5px;
+
+  &:hover {
+    transition: 0.2s;
+    cursor: pointer;
+    box-shadow: 0px 0px 15px 2px #f568a9;
+  }
+}
+
+.logo-img {
+  margin: 0px;
+  width: 80px;
+}
+
+.logo-name {
+  margin: 0px;
+  display: flex;
+  flex-wrap: wrap;
+  color: #f568a9;
+  font-weight: 500;
+  font-size: 22px;
+  width: 120px;
+}
+
+.search-product {
+  display: flex;
+  border-bottom: solid 1px;
+}
+
+.searchbar {
+  font-family: Poppins;
+  font-size: 15px;
+  width: 300px;
+  border: none;
+  outline: none;
+}
+
+.search-button {
+  width: 20px;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.shopping-status {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  width: 241px;
+  gap: 5px;
+}
+
+.shopping-status-container {
+  display: flex;
+  align-items: center;
+}
+
+.shopping-status-icon {
+  width: 40px;
+}
+
+.shopping-status-number {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: 12px;
+  width: 18px;
+  height: 18px;
+  margin-left: -15px;
+  margin-top: -25px;
+  border-radius: 15px;
+  color: white;
+}
+
+.redbg {
+  background-color: #ff0000;
+}
+
+.bluebg {
+  background-color: rgb(0, 60, 255);
+}
+
+.lower-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  background-color: #f568a9;
+  height: 50px;
+  font-weight: 500;
+}
+
+.lower-section a {
+  color: black;
+}
+
+.nav-button {
+  display: flex;
+  height: 100%;
+  align-items: center;
+  padding: 0px 15px;
+
+  &:hover {
+    transition: 0.2s;
+    cursor: pointer;
+    background-color: #eeeeee;
+  }
+}
