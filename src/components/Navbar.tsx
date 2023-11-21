@@ -23,10 +23,6 @@ export const Navbar = () => {
             <p className="logo-name">Cysia Candles</p>
           </div>
         </Link>
-        <div className="search-product">
-          <input className="searchbar" type="textbox" placeholder="Search products..." />
-          <img className="search-button" src="/public/magnifier.svg" />
-        </div>
         <div className="shopping-status">
           <Link to="/favourites">
             <div className="shopping-status-container">
