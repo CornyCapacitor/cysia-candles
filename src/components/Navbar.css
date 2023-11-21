@@ -61,33 +61,12 @@ a {
   width: 120px;
 }
 
-.search-product {
-  display: flex;
-  border-bottom: solid 1px;
-}
-
-.searchbar {
-  font-family: Poppins;
-  font-size: 15px;
-  width: 300px;
-  border: none;
-  outline: none;
-}
-
-.search-button {
-  width: 20px;
-
-  &:hover {
-    cursor: pointer;
-  }
-}
-
 .shopping-status {
+  position: fixed;
+  right: 5%;
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  width: 241px;
-  gap: 5px;
 }
 
 .shopping-status-container {
