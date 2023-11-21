@@ -1,44 +1,40 @@
+import { useState } from 'react';
 import './Candle.css';
 
-export const Candle = () => {
-  const object = {
-    image_url: "/public/candle-placeholder.svg",
-    name: "Vanilla mist",
-    color: "Beige",
-    smell: "Vanilla",
-    volume: "130ml",
-    price: "20,00zł",
-    popularity: 5,
-    description: "Feel the softness of vanilla",
-    discounted: true,
-    discounted_value: "-20%",
-    discounted_price: "16,00zł",
-  }
+type CandleProps = {
+  image: string,
+  name: string,
+  popularity: number,
+}
 
-  const stars = Array.from({ length: object.popularity }, (_, index) => (
+export const Candle = ({ image, name, popularity }: CandleProps) => {
+  const [selectedVolume, setSelectedVolume] = useState<string>("130ml");
+  const [selectedColor, setSelectedColor] = useState<string>("#ffffff");
+  const stars = Array.from({ length: popularity }, (_, index) => (
     <span key={index} className="star-icon">★</span>
   ));
 
   return (
     <div className="candle">
-      <img className="candle-image" src={object.image_url} />
-      <span className="candle-name">{object.name}</span>
+      <img className="candle-image" src={image} alt={`Image of a ${name}`} />
+      <span className="candle-name">{name}</span>
       <div className="candle-popularity">
         {stars}
       </div>
-      <span className="candle-price">{object.discounted ?
-        <div className="candle-discount-container">
-          <span className="discounted-price">{object.discounted_price}</span>
-          <span className="original-price">{object.price}</span>
-        </div>
-        :
-        <>{object.price}</>}</span>
+      <div className="candle-selections">
+        <select className="candle-volume" value={selectedVolume} onChange={(e) => setSelectedVolume(e.target.value)}>
+          <option value="130ml">130ml</option>
+          <option value="250ml">250ml</option>
+        </select>
+        <input className="candle-color" type="color" value={selectedColor} onChange={(e) => setSelectedColor(e.target.value)} />
+      </div>
+      <span className="candle-price">{selectedVolume === "250ml" ? <>25.00zł</> : <>15.00zł</>}</span>
       <button className="candle-button">Add to cart</button>
-      {object.discounted ?
+      {/* {object.discounted ?
         <div className="candle-discount">{object.discounted_value}</div>
         :
         <></>
-      }
+      } */}
     </div>
   )
 }
