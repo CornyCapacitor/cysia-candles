@@ -1,0 +1,102 @@
+.candle {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 300px;
+  padding: 10px;
+  gap: 5px;
+  background-color: #ffffff;
+  transition: 0.2s;
+
+  &:hover {
+    box-shadow: 0px 0px 10px 1px gray;
+  }
+}
+
+.candle-image {
+  cursor: pointer;
+  width: 280px;
+  margin-bottom: 10px;
+}
+
+.candle-name {
+  font-size: 20px;
+  font-weight: 500;
+  color: var(--primary);
+  transition: 0.2s;
+
+  &:hover {
+    cursor: pointer;
+    filter: brightness(85%);
+  }
+}
+
+.candle-selections {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+}
+
+.candle-volume {
+  height: 30px;
+  width: 70%;
+}
+
+.candle-color {
+  height: 30px;
+  width: 70%;
+}
+
+.star-icon {
+  font-size: 28px;
+}
+
+.candle-price {
+  font-size: 20px;
+  font-weight: 500;
+  color: var(--primary);
+}
+
+.candle-button {
+  width: 90%;
+  font-size: 18px;
+  font-family: Poppins;
+  font-weight: 500;
+  background-color: var(--primary);
+  border: none;
+  height: 50px;
+  color: #ffffff;
+  transition: 0.2s;
+
+  &:hover {
+    cursor: pointer;
+    filter: brightness(85%);
+  }
+}
+
+.candle-discount-container {
+  display: flex;
+  gap: 10px;
+}
+
+.original-price {
+  text-decoration-line: line-through;
+  color: #808080;
+}
+
+.candle-discount {
+  position: absolute;
+  height: 30px;
+  width: 50px;
+  background-color: var(--secondary);
+  color: #ffffff;
+  margin-top: -500px;
+  margin-left: -235px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
