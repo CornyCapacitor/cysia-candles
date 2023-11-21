@@ -38,9 +38,10 @@ a {
   border-radius: 20px;
   padding: 5px 15px;
   gap: 5px;
+  transition: 0.2s;
+  box-shadow: none;
 
   &:hover {
-    transition: 0.2s;
     cursor: pointer;
     box-shadow: 0px 0px 15px 2px var(--primary);
   }
@@ -116,10 +117,14 @@ a {
   height: 100%;
   align-items: center;
   padding: 0px 15px;
+  transition: 0.2s;
 
   &:hover {
-    transition: 0.2s;
     cursor: pointer;
     background-color: #eeeeee;
   }
+}
+
+.button-icon {
+  width: 20px;
 }
