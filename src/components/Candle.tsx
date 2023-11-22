@@ -4,23 +4,16 @@ import './Candle.css';
 type CandleProps = {
   image: string,
   name: string,
-  popularity: number,
 }
 
-export const Candle = ({ image, name, popularity }: CandleProps) => {
+export const Candle = ({ image, name }: CandleProps) => {
   const [selectedVolume, setSelectedVolume] = useState<string>("130ml");
   const [selectedColor, setSelectedColor] = useState<string>("#ffffff");
-  const stars = Array.from({ length: popularity }, (_, index) => (
-    <span key={index} className="star-icon">★</span>
-  ));
 
   return (
     <div className="candle">
       <img className="candle-image" src={image} alt={`Image of a ${name}`} />
       <span className="candle-name">{name}</span>
-      <div className="candle-popularity">
-        {stars}
-      </div>
       <div className="candle-selections">
         <select className="candle-volume" value={selectedVolume} onChange={(e) => setSelectedVolume(e.target.value)}>
           <option value="130ml">130ml</option>
