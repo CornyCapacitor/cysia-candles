@@ -4,6 +4,7 @@ import { Candle } from "./Candle";
 import './Candles.css';
 
 type CandleProps = {
+  id: number,
   image: string,
   name: string,
 }
@@ -32,8 +33,8 @@ export const Candles = () => {
 
   return (
     <div className="candles">
-      {isFetched ? candles.map((candle, index) => (
-        <Candle key={index} image={candle.image} name={candle.name} />
+      {isFetched ? candles.map((candle) => (
+        <Candle key={candle.id} image={candle.image} name={candle.name} />
       )) : <>Loading products...</>}
     </div>
   )
