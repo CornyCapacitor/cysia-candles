@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import supabase from "../config/supabaseClient";
 import { Candle } from "./Candle";
 import './Candles.css';
 
@@ -8,22 +9,32 @@ type CandleProps = {
 }
 
 export const Candles = () => {
-  const [candles] = useState<CandleProps[]>([
-    {
-      image: "/public/cherry.svg",
-      name: "Cherry"
-    },
-    {
-      image: "/public/cedar-tree.svg",
-      name: "Cedar tree",
-    }
-  ]);
+  const [candles, setCandles] = useState<CandleProps[]>([]);
+  const [isFetched, setIsFetched] = useState<boolean>();
+
+  useEffect(() => {
+    const fetchBoards = async () => {
+      const { data, error } = await supabase.from('candles').select();
+
+      if (error) {
+        console.error(error);
+      }
+
+      if (data) {
+        setCandles(data);
+        setIsFetched(true);
+      }
+    };
+
+    console.log(candles)
+    fetchBoards();
+  }, []);
 
   return (
     <div className="candles">
-      {candles.map((candle, index) => (
+      {isFetched ? candles.map((candle, index) => (
         <Candle key={index} image={candle.image} name={candle.name} />
-      ))}
+      )) : <>Loading products...</>}
     </div>
   )
 }
