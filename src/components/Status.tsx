@@ -1,6 +1,7 @@
 import { useAtom } from "jotai"
 import { Link } from "react-router-dom"
 import { cartCountAtom, favouritesCountAtom } from "../atoms"
+import './Status.css'
 
 export const Status = () => {
 
