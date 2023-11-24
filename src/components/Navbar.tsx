@@ -10,7 +10,7 @@ export const Navbar = () => {
   const [favouriteCount] = useAtom(favouritesCountAtom)
   const [cartCount] = useAtom(cartCountAtom)
 
-  const [, setCart] = useAtom(cartAtom)
+  const [cart, setCart] = useAtom(cartAtom)
   const [, setFavourites] = useAtom(favouritesAtom)
 
   const resetCart = () => {
@@ -75,6 +75,7 @@ export const Navbar = () => {
         <div className="nav-button" onClick={resetCart}>Reset cart</div>
         <div className="nav-button" onClick={resetFavourites}>Clear favs</div>
         <div className="nav-button" onClick={resetAtoms}>Reset atoms</div>
+        <div className="nav-button" onClick={() => console.log(cart)}>Console log cart</div>
       </div>
     </nav>
   )

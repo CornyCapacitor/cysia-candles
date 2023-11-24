@@ -1,7 +1,7 @@
 import { useAtom } from 'jotai';
 import { useState } from 'react';
 import Swal from 'sweetalert2';
-import { cartAtom, favouritesAtom } from '../App';
+import { cartAtom } from '../App';
 import './Candle.css';
 
 type CandleProps = {
@@ -14,7 +14,6 @@ export const Candle = ({ image, name }: CandleProps) => {
   const [selectedColor, setSelectedColor] = useState<string>("#ffffff");
   const [selectedQuantity, setSelectedQuantity] = useState<string | number>(1);
   const [, setCart] = useAtom(cartAtom)
-  const [, setFavourites] = useAtom(favouritesAtom)
 
   const addToCart = () => {
     const newItem = { name: name, image: image, volume: selectedVolume, color: selectedColor };
@@ -37,11 +36,6 @@ export const Candle = ({ image, name }: CandleProps) => {
     resetItem();
   };
 
-  const setFavourite = () => {
-    const newFavourite = { name: name, image: image }
-    setFavourites((prevFavourites) => [...prevFavourites, newFavourite])
-  }
-
   const options = Array.from({ length: 20 }, (_, index) => index + 1)
 
   return (
@@ -62,7 +56,7 @@ export const Candle = ({ image, name }: CandleProps) => {
         </div>
         <div className="candle-selection">
           <span className="candle-header">Quantity:</span>
-          <select className="candle-select" onChange={(e) => setSelectedQuantity(e.target.value)}>
+          <select className="candle-select" value={selectedQuantity} onChange={(e) => setSelectedQuantity(e.target.value)}>
             {options.map((value) => (
               <option key={value} value={value}>{value}</option>
             ))}
@@ -71,7 +65,6 @@ export const Candle = ({ image, name }: CandleProps) => {
       </div>
       <span className="candle-price">{selectedVolume === "250ml" ? <>25.00zł</> : <>15.00zł</>}</span>
       <button className="candle-button" onClick={addToCart}>Add to cart</button>
-      <img onClick={setFavourite} className="favourite-icon" src="/public/heart.svg" />
     </div>
   )
 }

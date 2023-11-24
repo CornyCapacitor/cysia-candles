@@ -8,6 +8,7 @@
   gap: 5px;
   background-color: #ffffff;
   transition: 0.2s;
+  border-radius: 5px;
 
   &:hover {
     box-shadow: 0px 0px 10px 1px gray;
