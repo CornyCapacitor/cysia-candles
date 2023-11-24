@@ -1,7 +1,7 @@
 import { useAtom } from 'jotai';
 import { useState } from 'react';
 import Swal from 'sweetalert2';
-import { cartAtom } from '../App';
+import { cartAtom } from '../atoms';
 import './Candle.css';
 
 type CandleProps = {

@@ -1,0 +1,17 @@
+.cart-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.cart-display {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 95%;
+  margin: 20px;
+  min-height: 300px;
+  border-radius: 10px;
+  background-color: white;
+}
