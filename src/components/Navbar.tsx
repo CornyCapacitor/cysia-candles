@@ -2,13 +2,11 @@
 import { useAtom } from 'jotai';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { cartAtom, cartCountAtom, favouritesAtom, favouritesCountAtom } from '../atoms';
+import { cartAtom, favouritesAtom } from '../atoms';
 import './Navbar.css';
 
 export const Navbar = () => {
   const [saleTime] = useState<boolean>(false);
-  const [favouriteCount] = useAtom(favouritesCountAtom)
-  const [cartCount] = useAtom(cartCountAtom)
 
   const [cart, setCart] = useAtom(cartAtom)
   const [, setFavourites] = useAtom(favouritesAtom)
@@ -42,20 +40,6 @@ export const Navbar = () => {
             <p className="logo-name">Cysia Candles</p>
           </div>
         </Link>
-        <div className="shopping-status">
-          <Link to="/favourites">
-            <div className="shopping-status-container">
-              <img className="shopping-status-icon" src="/heart.svg" />
-              <span className="shopping-status-number redbg">{favouriteCount}</span>
-            </div>
-          </Link>
-          <Link to="/cart">
-            <div className="shopping-status-container">
-              <img className="shopping-status-icon" src="/shopping-cart.svg" />
-              <span className="shopping-status-number bluebg">{cartCount}</span>
-            </div>
-          </Link>
-        </div>
       </div>
       <div className="lower-section">
         <Link className="nav-button" to="/">
