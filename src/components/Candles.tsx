@@ -27,12 +27,14 @@ export const Candles = () => {
       }
     };
 
-    console.log(candles)
     fetchBoards();
   }, []);
 
   return (
     <div className="candles">
+      <div className="candles-info">
+        <span>Make sure to select correct volume, color and quantity for your candle. If not changed, candle will remain white.</span>
+      </div>
       {isFetched ? candles.map((candle) => (
         <Candle key={candle.id} image={candle.image} name={candle.name} />
       )) : <>Loading products...</>}

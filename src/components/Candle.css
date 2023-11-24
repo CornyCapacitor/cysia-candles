@@ -8,6 +8,7 @@
   gap: 5px;
   background-color: #ffffff;
   transition: 0.2s;
+  border-radius: 5px;
 
   &:hover {
     box-shadow: 0px 0px 10px 1px gray;
@@ -15,7 +16,6 @@
 }
 
 .candle-image {
-  cursor: pointer;
   width: 280px;
   margin-bottom: 10px;
 }
@@ -37,18 +37,34 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 10px;
   width: 100%;
+  gap: 10px;
 }
 
-.candle-volume {
+.candle-selection {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  flex-direction: column;
+}
+
+.candle-select {
   height: 30px;
   width: 70%;
+  border: solid 1px var(--primary);
+  border-radius: 5px;
+  font-family: Poppins;
+  text-align: center;
+  outline-color: var(--primary);
 }
 
 .candle-color {
   height: 30px;
   width: 70%;
+  border: solid 1px var(--primary);
+  border-radius: 5px;
+  outline-color: var(--primary);
 }
 
 .candle-price {
@@ -95,4 +111,20 @@
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.candle-header {
+  color: var(--primary);
+  font-weight: 500;
+}
+
+.favourite-icon {
+  width: 30px;
+  position: absolute;
+  margin-top: -500px;
+  margin-right: -250px;
+
+  &:hover {
+    cursor: pointer;
+  }
 }

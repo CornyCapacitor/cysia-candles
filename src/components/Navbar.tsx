@@ -1,11 +1,30 @@
+/* eslint-disable react-hooks/rules-of-hooks */
+import { useAtom } from 'jotai';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { cartAtom, cartCountAtom, favouritesAtom, favouritesCountAtom } from '../App';
 import './Navbar.css';
 
 export const Navbar = () => {
   const [saleTime] = useState<boolean>(false);
-  const [favouriteCount] = useState<number>(0);
-  const [cartCount] = useState<number>(0);
+  const [favouriteCount] = useAtom(favouritesCountAtom)
+  const [cartCount] = useAtom(cartCountAtom)
+
+  const [cart, setCart] = useAtom(cartAtom)
+  const [, setFavourites] = useAtom(favouritesAtom)
+
+  const resetCart = () => {
+    setCart([]);
+  }
+
+  const resetFavourites = () => {
+    setFavourites([]);
+  }
+
+  const resetAtoms = () => {
+    resetCart()
+    resetFavourites()
+  }
 
   return (
     <nav>
@@ -42,8 +61,8 @@ export const Navbar = () => {
         <Link className="nav-button" to="/">
           Candles
         </Link>
-        <Link className="nav-button" to="/candlecreator">
-          Create your own candle
+        <Link className="nav-button" to="/ask">
+          Ask us a question
         </Link>
         <Link className="nav-button" to="/favourites">
           <img className="button-icon" src="/public/heart.svg" />
@@ -53,6 +72,10 @@ export const Navbar = () => {
           <img className="button-icon" src="/public/shopping-cart.svg" />
           <span>Cart</span>
         </Link>
+        <div className="nav-button" onClick={resetCart}>Reset cart</div>
+        <div className="nav-button" onClick={resetFavourites}>Clear favs</div>
+        <div className="nav-button" onClick={resetAtoms}>Reset atoms</div>
+        <div className="nav-button" onClick={() => console.log(cart)}>Console log cart</div>
       </div>
     </nav>
   )
