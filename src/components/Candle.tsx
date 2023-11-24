@@ -14,14 +14,7 @@ export const Candle = ({ image, name }: CandleProps) => {
   const [cart, setCart] = useAtom(cartAtom)
 
   const addToCart = () => {
-    console.log("Adding to cart")
-
-    if (!Array.isArray(cart)) {
-      console.error("Cart is not an array");
-    }
-
     const newItem = { name: name, image: image, volume: selectedVolume, color: selectedColor }
-
     setCart((prevCart) => [...prevCart, newItem])
   }
 
@@ -44,8 +37,6 @@ export const Candle = ({ image, name }: CandleProps) => {
       </div>
       <span className="candle-price">{selectedVolume === "250ml" ? <>25.00zł</> : <>15.00zł</>}</span>
       <button className="candle-button" onClick={addToCart}>Add to cart</button>
-      <button onClick={() => setCart([])}>Reset cart</button>
-      <button onClick={() => console.log(cart)}>Clog</button>
     </div>
   )
 }
