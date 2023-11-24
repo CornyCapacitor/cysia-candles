@@ -15,7 +15,6 @@
 }
 
 .candle-image {
-  cursor: pointer;
   width: 280px;
   margin-bottom: 10px;
 }
@@ -49,7 +48,7 @@
   flex-direction: column;
 }
 
-.candle-volume {
+.candle-select {
   height: 30px;
   width: 70%;
 }
@@ -108,4 +107,15 @@
 .candle-header {
   color: var(--primary);
   font-weight: 500;
+}
+
+.favourite-icon {
+  width: 30px;
+  position: absolute;
+  margin-top: -500px;
+  margin-right: -250px;
+
+  &:hover {
+    cursor: pointer;
+  }
 }
