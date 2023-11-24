@@ -6,6 +6,7 @@ type Item = {
   image: string,
   volume?: string,
   color?: string,
+  quantity?: number,
 }
 
 export const cartAtom = atomWithStorage<Item[]>('cart', [])
