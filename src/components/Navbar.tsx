@@ -2,7 +2,7 @@
 import { useAtom } from 'jotai';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { cartAtom, cartCountAtom, favouritesAtom, favouritesCountAtom } from '../App';
+import { cartAtom, cartCountAtom, favouritesAtom, favouritesCountAtom } from '../atoms';
 import './Navbar.css';
 
 export const Navbar = () => {
