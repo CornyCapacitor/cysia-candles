@@ -5,7 +5,6 @@ export const Cart = () => {
     <div className="cart-page">
       <div className="cart-display">
         Cart
-
       </div>
     </div>
   )
