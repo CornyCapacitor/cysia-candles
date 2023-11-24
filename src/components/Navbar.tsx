@@ -1,11 +1,13 @@
+import { useAtom } from 'jotai';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { cartCountAtom } from '../App';
 import './Navbar.css';
 
 export const Navbar = () => {
   const [saleTime] = useState<boolean>(false);
   const [favouriteCount] = useState<number>(0);
-  const [cartCount] = useState<number>(0);
+  const [cartCount] = useAtom(cartCountAtom)
 
   return (
     <nav>

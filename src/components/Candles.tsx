@@ -27,7 +27,6 @@ export const Candles = () => {
       }
     };
 
-    console.log(candles)
     fetchBoards();
   }, []);
 
