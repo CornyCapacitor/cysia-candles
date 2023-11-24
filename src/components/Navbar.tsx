@@ -61,8 +61,8 @@ export const Navbar = () => {
         <Link className="nav-button" to="/">
           Candles
         </Link>
-        <Link className="nav-button" to="/candlecreator">
-          Create your own candle
+        <Link className="nav-button" to="/ask">
+          Ask us a question
         </Link>
         <Link className="nav-button" to="/favourites">
           <img className="button-icon" src="/public/heart.svg" />
