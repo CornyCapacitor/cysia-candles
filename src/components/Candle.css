@@ -52,11 +52,19 @@
 .candle-select {
   height: 30px;
   width: 70%;
+  border: solid 1px var(--primary);
+  border-radius: 5px;
+  font-family: Poppins;
+  text-align: center;
+  outline-color: var(--primary);
 }
 
 .candle-color {
   height: 30px;
   width: 70%;
+  border: solid 1px var(--primary);
+  border-radius: 5px;
+  outline-color: var(--primary);
 }
 
 .candle-price {

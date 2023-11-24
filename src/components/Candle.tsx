@@ -15,6 +15,8 @@ export const Candle = ({ image, name }: CandleProps) => {
   const [selectedQuantity, setSelectedQuantity] = useState<string | number>(1);
   const [, setCart] = useAtom(cartAtom)
 
+  const candlePrice = Number(selectedQuantity) * (selectedVolume === "130ml" ? 15.00 : 25.00)
+
   const addToCart = () => {
     const newItem = { name: name, image: image, volume: selectedVolume, color: selectedColor };
     const itemsToAdd = Array.from({ length: Number(selectedQuantity) }, () => newItem).flat();
@@ -63,7 +65,7 @@ export const Candle = ({ image, name }: CandleProps) => {
           </select>
         </div>
       </div>
-      <span className="candle-price">{selectedVolume === "250ml" ? <>25.00zł</> : <>15.00zł</>}</span>
+      <span className="candle-price">{candlePrice.toFixed(2)}</span>
       <button className="candle-button" onClick={addToCart}>Add to cart</button>
     </div>
   )
