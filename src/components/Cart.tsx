@@ -9,20 +9,23 @@ export const Cart = () => {
     <div className="cart-page">
       <div className="cart-display">
         <div className="cart-header">
-          <span>Image:</span>
-          <span>Name:</span>
-          <span>Quantity:</span>
-          <span>Total price:</span>
+          <span className="width-100px">Select:</span>
+          <span className="width-100px">Image:</span>
+          <span className="width-150px">Name:</span>
+          <span className="width-100px">Quantity:</span>
+          <span className="width-100px">Volume:</span>
+          <span className="width-100px">Color:</span>
+          <span className="width-100px">Price:</span>
         </div>
         {cart.map((candle) => (
           <div className="cart-item">
-            <input type="checkbox" />
-            <img className="cart-image" src={candle.image} />
-            <div className="cart-name">Name: {candle.name}</div>
-            <div>Quantity: {candle.quantity}</div>
-            <div>Volume: {candle.volume}</div>
-            <span>Color:</span>
-            <div style={{ color: `${candle.color}` }}>{candle.color}</div>
+            <input className="width-100px" type="checkbox" />
+            <img className="cart-image width-100px" src={candle.image} />
+            <div className="cart-name width-150px">{candle.name}</div>
+            <div className="width-100px">{candle.quantity}</div>
+            <div className="width-100px">{candle.volume}</div>
+            <div className="cart-color width-100px"><span className="color" style={{ backgroundColor: `${candle.color}`, color: `${candle.color}` }}>{candle.color}</span></div>
+            <div className="width-100px">{(candle.quantity * (candle.volume === '130ml' ? 15.00 : 25.00)).toFixed(2)}</div>
           </div>
         ))}
       </div>
