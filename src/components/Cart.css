@@ -30,6 +30,10 @@
   background-color: var(--primary);
   color: white;
   text-align: center;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
 }
 
 .cart-item {
@@ -42,6 +46,10 @@
   border-radius: 5px;
   min-height: 100px;
   text-align: center;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
 }
 
 .cart-color {
@@ -78,7 +86,12 @@
   align-items: center;
   justify-content: flex-end;
   width: 100%;
-  gap: 20px;
+  gap: 10px;
   position: relative;
   right: 5%;
+
+  @media (max-width: 768px) {
+    justify-content: center;
+    position: static;
+  }
 }
