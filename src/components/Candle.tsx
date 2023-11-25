@@ -21,7 +21,7 @@ export const Candle = ({ image, name }: CandleProps) => {
     const selQuant = Number(selectedQuantity)
     const newItem = { name: name, image: image, volume: selectedVolume, color: selectedColor, quantity: selQuant };
 
-    const existingItemIndex = cart.findIndex(item => item.name === name && item.color === selectedColor)
+    const existingItemIndex = cart.findIndex(item => item.name === name && item.color === selectedColor && item.volume === selectedVolume)
 
     if (existingItemIndex !== -1) {
       const updatedCart = [...cart];
