@@ -5,6 +5,11 @@ import './Cart.css'
 export const Cart = () => {
   const [cart] = useAtom(cartAtom)
 
+  const totalPrice = cart.reduce((sum, candle) => {
+    const quantity = candle.quantity || 0;
+    return sum + quantity * (candle.volume === "130ml" ? 15.00 : 25.00);
+  }, 0).toFixed(2);
+
   return (
     <div className="cart-page">
       <div className="cart-display">
@@ -25,9 +30,15 @@ export const Cart = () => {
             <div className="width-100px">{candle.quantity}</div>
             <div className="width-100px">{candle.volume}</div>
             <div className="cart-color width-100px"><span className="color" style={{ backgroundColor: `${candle.color}`, color: `${candle.color}` }}>{candle.color}</span></div>
-            <div className="width-100px">{(candle.quantity * (candle.volume === '130ml' ? 15.00 : 25.00)).toFixed(2)}</div>
+            <div className="width-100px">
+              {((candle.quantity ? candle.quantity : 0) * (candle.volume === '130ml' ? 15.00 : 25.00)).toFixed(2) as unknown as number}
+            </div>
           </div>
         ))}
+        <div className="total-price">
+          <span>Total price:</span>
+          <span>{totalPrice}</span>
+        </div>
       </div>
     </div>
   )
