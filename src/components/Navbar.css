@@ -21,11 +21,10 @@ a {
 
 .upper-section {
   display: flex;
-  flex-direction: row;
+  justify-content: center;
   align-items: center;
-  justify-content: space-evenly;
   width: 100%;
-  padding: 10px;
+  padding: 20px 0px;
   background-color: #ffffff;
 }
 
