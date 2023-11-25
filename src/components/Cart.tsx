@@ -18,7 +18,11 @@ export const Cart = () => {
           <div className="cart-item">
             <input type="checkbox" />
             <img className="cart-image" src={candle.image} />
-            <div className="cart-name">{candle.name}</div>
+            <div className="cart-name">Name: {candle.name}</div>
+            <div>Quantity: {candle.quantity}</div>
+            <div>Volume: {candle.volume}</div>
+            <span>Color:</span>
+            <div style={{ color: `${candle.color}` }}>{candle.color}</div>
           </div>
         ))}
       </div>

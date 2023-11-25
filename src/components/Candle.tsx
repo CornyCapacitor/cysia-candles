@@ -13,14 +13,28 @@ export const Candle = ({ image, name }: CandleProps) => {
   const [selectedVolume, setSelectedVolume] = useState<string>("130ml");
   const [selectedColor, setSelectedColor] = useState<string>("#ffffff");
   const [selectedQuantity, setSelectedQuantity] = useState<string | number>(1);
-  const [, setCart] = useAtom(cartAtom)
+  const [cart, setCart] = useAtom(cartAtom)
 
   const candlePrice = Number(selectedQuantity) * (selectedVolume === "130ml" ? 15.00 : 25.00)
 
   const addToCart = () => {
-    const newItem = { name: name, image: image, volume: selectedVolume, color: selectedColor };
-    const itemsToAdd = Array.from({ length: Number(selectedQuantity) }, () => newItem).flat();
-    setCart((prevCart) => [...prevCart, ...itemsToAdd]);
+    const selQuant = Number(selectedQuantity)
+    const newItem = { name: name, image: image, volume: selectedVolume, color: selectedColor, quantity: selQuant };
+
+    const existingItemIndex = cart.findIndex(item => item.name === name && item.color === selectedColor && item.volume === selectedVolume)
+
+    if (existingItemIndex !== -1) {
+      const updatedCart = [...cart];
+      const existingItem = updatedCart[existingItemIndex];
+
+      if (existingItem && existingItem.quantity !== undefined) {
+        existingItem.quantity += selQuant
+        setCart(updatedCart);
+      }
+    } else {
+      const itemToAdd = { ...newItem, quantity: selQuant };
+      setCart((prevCart) => [...prevCart, itemToAdd]);
+    }
 
     Swal.fire({
       icon: 'success',
