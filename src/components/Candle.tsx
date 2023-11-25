@@ -56,7 +56,7 @@ export const Candle = ({ image, name }: CandleProps) => {
 
   return (
     <div className="candle">
-      <img className="candle-image" src={`/public/${image}`} alt={`Image of a ${name}`} />
+      <img className="candle-image" src={`${image}`} alt={`Image of a ${name}`} />
       <span className="candle-name">{name}</span>
       <div className="candle-selections">
         <div className="candle-selection">

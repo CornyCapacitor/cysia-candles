@@ -36,7 +36,7 @@ export const Navbar = () => {
       <div className="upper-section">
         <Link to="/">
           <div className="logo">
-            <img src="src/assets/candle.svg" className="logo-img" />
+            <img src="candle.svg" className="logo-img" />
             <p className="logo-name">Cysia Candles</p>
           </div>
         </Link>
