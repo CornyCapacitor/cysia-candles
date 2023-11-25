@@ -49,11 +49,11 @@ export const Navbar = () => {
           Ask us a question
         </Link>
         <Link className="nav-button" to="/favourites">
-          <img className="button-icon" src="/public/heart.svg" />
+          <img className="button-icon" src="heart.svg" />
           <span>Favourites</span>
         </Link>
         <Link className="nav-button" to="/cart">
-          <img className="button-icon" src="/public/shopping-cart.svg" />
+          <img className="button-icon" src="shopping-cart.svg" />
           <span>Cart</span>
         </Link>
         <div className="nav-button" onClick={resetCart}>Reset cart</div>
