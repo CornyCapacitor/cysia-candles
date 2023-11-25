@@ -72,3 +72,13 @@
 .width-150px {
   width: 150px;
 }
+
+.total-price {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  width: 100%;
+  gap: 20px;
+  position: relative;
+  right: 5%;
+}
