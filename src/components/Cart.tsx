@@ -26,7 +26,9 @@ export const Cart = () => {
             </div>
             {cart.map((candle) => (
               <div className="cart-item">
-                <input className="cart-width-medium" type="checkbox" />
+                <div className="cart-width-medium">
+                  <input className="cart-select" type="checkbox" />
+                </div>
                 <img className="cart-image cart-width-medium" src={candle.image} />
                 <div className="cart-name cart-width-large">{candle.name}</div>
                 <div className="cart-width-medium">{candle.quantity}</div>
