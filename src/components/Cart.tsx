@@ -13,32 +13,39 @@ export const Cart = () => {
   return (
     <div className="cart-page">
       <div className="cart-display">
-        <div className="cart-header">
-          <span className="width-100px">Select:</span>
-          <span className="width-100px">Image:</span>
-          <span className="width-150px">Name:</span>
-          <span className="width-100px">Quantity:</span>
-          <span className="width-100px">Volume:</span>
-          <span className="width-100px">Color:</span>
-          <span className="width-100px">Price:</span>
-        </div>
-        {cart.map((candle) => (
-          <div className="cart-item">
-            <input className="width-100px" type="checkbox" />
-            <img className="cart-image width-100px" src={candle.image} />
-            <div className="cart-name width-150px">{candle.name}</div>
-            <div className="width-100px">{candle.quantity}</div>
-            <div className="width-100px">{candle.volume}</div>
-            <div className="cart-color width-100px"><span className="color" style={{ backgroundColor: `${candle.color}`, color: `${candle.color}` }}>{candle.color}</span></div>
-            <div className="width-100px">
-              {((candle.quantity ? candle.quantity : 0) * (candle.volume === '130ml' ? 15.00 : 25.00)).toFixed(2) as unknown as number}
+        {cart.length > 0 ?
+          <>
+            <div className="cart-header">
+              <span className="cart-width-medium">Select:</span>
+              <span className="cart-width-medium">Image:</span>
+              <span className="cart-width-large">Name:</span>
+              <span className="cart-width-medium">Quantity:</span>
+              <span className="cart-width-medium">Volume:</span>
+              <span className="cart-width-medium">Color:</span>
+              <span className="cart-width-medium">Price:</span>
             </div>
-          </div>
-        ))}
-        <div className="total-price">
-          <span>Total price:</span>
-          <span>{totalPrice}</span>
-        </div>
+            {cart.map((candle) => (
+              <div className="cart-item">
+                <input className="cart-width-medium" type="checkbox" />
+                <img className="cart-image cart-width-medium" src={candle.image} />
+                <div className="cart-name cart-width-large">{candle.name}</div>
+                <div className="cart-width-medium">{candle.quantity}</div>
+                <div className="cart-width-medium">{candle.volume}</div>
+                <div className="cart-candle-container">
+                  <img className="cart-candle-image" src="cart-candle.svg" />
+                  <div className="cart-candle-color" style={{ backgroundColor: `${candle.color}`, color: `${candle.color}` }}>{candle.color}</div>
+                </div>
+                <div className="cart-width-medium">
+                  {((candle.quantity ? candle.quantity : 0) * (candle.volume === '130ml' ? 15.00 : 25.00)).toFixed(2) as unknown as number}
+                </div>
+              </div>
+            ))}
+            <div className="total-price">
+              <span>Total price:</span>
+              <span>{totalPrice}</span>
+            </div>
+
+          </> : <>Cart is empty</>}
       </div>
     </div>
   )
