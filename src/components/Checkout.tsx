@@ -186,7 +186,7 @@ export const Checkout = () => {
       <div className="checkout-display">
         <div style={{ display: `flex`, flexDirection: `column`, gap: `20px` }}>
           <div className="delivery-details">
-            <header className="section-header" style={{ width: `450px` }}>Delivery</header>
+            <header className="delivery-header">Delivery</header>
             <div className="delivery">
               <fieldset className="fieldset">
                 {deliveryOptions.map((option) => (
@@ -202,7 +202,7 @@ export const Checkout = () => {
             </div>
           </div>
           <div className="payment-details">
-            <header className="section-header" style={{ width: `450px` }}>Payment method</header>
+            <header className="payment-header">Payment method</header>
             <div className="payment">
               <fieldset className="fieldset">
                 {paymentOptions.map((option) => (
@@ -219,7 +219,7 @@ export const Checkout = () => {
           </div>
         </div>
         <div className="checkout-details">
-          <header className="section-header">Customer information</header>
+          <header className="checkout-header">Customer information</header>
           <form className="form">
             <fieldset className="fieldset">
               <div className="fieldset-section">
@@ -256,12 +256,12 @@ export const Checkout = () => {
             <input type="textbox" placeholder="Phone number*" className="checkout-input" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} />
             <input type="textbox" placeholder="E-mail*" className="checkout-input" value={email} onChange={(e) => setEmail(e.target.value)} />
             <textarea placeholder="Comment" className="comments" value={comments} onChange={(e) => setComments(e.target.value)} />
-            <span style={{ fontSize: "12px" }}>* fields marked with a star are necessary</span>
+            <span style={{ fontSize: "12px" }}>* fields marked with a star are optional</span>
             <button className="checkout-button" onClick={(e) => handleBuy(e)}>Buy</button>
           </form>
         </div>
         <div className="summary-details">
-          <header className="section-header" style={{ width: `350px` }}>Summary</header>
+          <header className="summary-header">Summary</header>
           <div className="summary">
             <div className="summary-section">
               <span>Value of products:</span>
