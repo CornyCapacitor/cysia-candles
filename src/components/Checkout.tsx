@@ -1,5 +1,6 @@
 import { useAtom } from 'jotai';
 import { useEffect, useState } from 'react';
+import Swal from 'sweetalert2';
 import { cartAtom } from '../atoms';
 import supabase from '../config/supabaseClient';
 import './Checkout.css';
@@ -145,6 +146,12 @@ export const Checkout = () => {
     }
 
     console.log(form)
+
+    Swal.fire({
+      icon: 'info',
+      iconColor: '#f568a9',
+      title: `Normaly you'd be sent to payment window right now, but instead, we've noticed your order and we'll message you when the order is ready :)`,
+    })
   }
 
   return (
