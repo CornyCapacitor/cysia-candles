@@ -1,14 +1,29 @@
 import { useAtom } from 'jotai'
+import { useState } from 'react'
 import { cartAtom } from '../atoms'
 import './Cart.css'
 
 export const Cart = () => {
-  const [cart] = useAtom(cartAtom)
+  const [cart, setCart] = useAtom(cartAtom)
+  const [selected, setSelected] = useState<number[]>([]);
 
   const totalPrice = cart.reduce((sum, candle) => {
     const quantity = candle.quantity || 0;
     return sum + quantity * (candle.volume === "130ml" ? 15.00 : 25.00);
   }, 0).toFixed(2);
+
+  const selectItem = (index: number) => {
+    if (!selected.includes(index)) {
+      setSelected((p) => [...p, index])
+    } else if (selected.includes(index)) {
+      setSelected((p) => p.filter(item => item !== index))
+    }
+  }
+
+  const removeItems = () => {
+    setCart((p) => p.filter((candle) => !selected.includes(candle.id)))
+    setSelected([]);
+  };
 
   return (
     <div className="cart-page">
@@ -25,9 +40,9 @@ export const Cart = () => {
               <span className="cart-width-medium">Price:</span>
             </div>
             {cart.map((candle) => (
-              <div className="cart-item">
+              <div className="cart-item" key={candle.id}>
                 <div className="cart-width-medium">
-                  <input className="cart-select" type="checkbox" />
+                  <input className="cart-select" type="checkbox" onChange={() => selectItem(candle.id)} />
                 </div>
                 <img className="cart-image cart-width-medium" src={candle.image} />
                 <div className="cart-name cart-width-large">{candle.name}</div>
@@ -46,7 +61,11 @@ export const Cart = () => {
               <span>Total price:</span>
               <span>{totalPrice}</span>
             </div>
-
+            <div className="cart-buttons">
+              {selected.length > 0 ?
+                <button onClick={() => removeItems()}>Delete</button>
+                : <></>}
+            </div>
           </> : <>Cart is empty</>}
       </div>
     </div>

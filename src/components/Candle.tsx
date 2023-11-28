@@ -19,7 +19,7 @@ export const Candle = ({ image, name }: CandleProps) => {
 
   const addToCart = () => {
     const selQuant = Number(selectedQuantity)
-    const newItem = { name: name, image: image, volume: selectedVolume, color: selectedColor, quantity: selQuant };
+    const newItem = { id: Math.random(), name: name, image: image, volume: selectedVolume, color: selectedColor, quantity: selQuant };
 
     const existingItemIndex = cart.findIndex(item => item.name === name && item.color === selectedColor && item.volume === selectedVolume)
 

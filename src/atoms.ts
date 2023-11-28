@@ -2,6 +2,7 @@ import { atom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
 
 type Item = {
+  id: number,
   name: string,
   image: string,
   volume?: string,
