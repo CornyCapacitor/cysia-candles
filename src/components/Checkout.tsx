@@ -36,6 +36,7 @@ export const Checkout = () => {
   // Summary states
   const [cart] = useAtom(cartAtom)
   const [deliveryCost, setDeliveryCost] = useState<number>(0);
+  const [paymentCost, setPaymentCost] = useState<number>(0);
 
   // Delivery states
   const [selectedDelivery, setSelectedDelivery] = useState<string>("");
@@ -118,7 +119,7 @@ export const Checkout = () => {
     },
   ]);
 
-  const totalPrice = cart.reduce((sum, candle) => {
+  const candlesPrice = cart.reduce((sum, candle) => {
     const quantity = candle.quantity || 0;
     return sum + quantity * (candle.volume === "130ml" ? 15.00 : 25.00);
   }, 0).toFixed(2);
@@ -144,6 +145,16 @@ export const Checkout = () => {
     }
   }, [selectedDelivery, deliveryOptions])
 
+  useEffect(() => {
+    const selectedOption = paymentOptions.find(option => option.name === selectedPayment)
+
+    if (selectedOption) {
+      setPaymentCost(selectedOption.price)
+    } else {
+      setPaymentCost(0)
+    }
+  }, [selectedPayment, paymentOptions])
+
   const handleBuy = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
 
@@ -161,7 +172,10 @@ export const Checkout = () => {
       zipCode: zipCode,
       phoneNumber: phoneNumber,
       email: email,
-      comments: comments
+      comments: comments,
+      delivery: selectedDelivery,
+      payment: selectedPayment,
+      totalPrice: (Number(candlesPrice) + deliveryCost + paymentCost).toFixed(2)
     }
 
     console.log(form)
@@ -170,36 +184,38 @@ export const Checkout = () => {
   return (
     <div className="checkout-page">
       <div className="checkout-display">
-        <div className="delivery-details">
-          <header className="section-header" style={{ width: `450px` }}>Delivery</header>
-          <div className="delivery">
-            <fieldset className="fieldset">
-              {deliveryOptions.map((option) => (
-                <div className="delivery-option">
-                  <div className="delivery-option-info">
-                    <input className="radio" type="radio" id={option.name} name={option.name} value={option.name} onChange={() => setSelectedDelivery(option.name)} checked={selectedDelivery === option.name} disabled={!option.available} />
-                    <label style={{ color: option.available ? `#000000` : `#aaaaaa` }}>{option.name}</label>
+        <div style={{ display: `flex`, flexDirection: `column`, gap: `20px` }}>
+          <div className="delivery-details">
+            <header className="section-header" style={{ width: `450px` }}>Delivery</header>
+            <div className="delivery">
+              <fieldset className="fieldset">
+                {deliveryOptions.map((option) => (
+                  <div className="delivery-option">
+                    <div className="delivery-option-info">
+                      <input className="radio" type="radio" id={option.name} name={option.name} value={option.name} onChange={() => setSelectedDelivery(option.name)} checked={selectedDelivery === option.name} disabled={!option.available} />
+                      <label style={{ color: option.available ? `#000000` : `#aaaaaa` }}>{option.name}</label>
+                    </div>
+                    <span className="delivery-option-price" style={{ color: option.available ? `#000000` : `#aaaaaa` }}>{option.price.toFixed(2)} PLN</span>
                   </div>
-                  <span className="delivery-option-price" style={{ color: option.available ? `#000000` : `#aaaaaa` }}>{option.price.toFixed(2)} PLN</span>
-                </div>
-              ))}
-            </fieldset>
+                ))}
+              </fieldset>
+            </div>
           </div>
-        </div>
-        <div className="payment-details">
-          <header className="section-header" style={{ width: `450px` }}>Payment</header>
-          <div className="payment">
-            <fieldset className="fieldset">
-              {paymentOptions.map((option) => (
-                <div className="delivery-option">
-                  <div className="delivery-option-info">
-                    <input className="radio" type="radio" id={option.name} name={option.name} value={option.name} onChange={() => setSelectedPayment(option.name)} checked={selectedPayment === option.name} disabled={!option.available} />
-                    <label style={{ color: option.available ? `#000000` : `#aaaaaa` }}>{option.name}</label>
+          <div className="payment-details">
+            <header className="section-header" style={{ width: `450px` }}>Payment method</header>
+            <div className="payment">
+              <fieldset className="fieldset">
+                {paymentOptions.map((option) => (
+                  <div className="delivery-option">
+                    <div className="delivery-option-info">
+                      <input className="radio" type="radio" id={option.name} name={option.name} value={option.name} onChange={() => setSelectedPayment(option.name)} checked={selectedPayment === option.name} disabled={!option.available} />
+                      <label style={{ color: option.available ? `#000000` : `#aaaaaa` }}>{option.name}</label>
+                    </div>
+                    <span className="delivery-option-price" style={{ color: option.available ? `#000000` : `#aaaaaa` }}>{option.price.toFixed(2)} PLN</span>
                   </div>
-                  <span className="delivery-option-price" style={{ color: option.available ? `#000000` : `#aaaaaa` }}>{option.price.toFixed(2)} PLN</span>
-                </div>
-              ))}
-            </fieldset>
+                ))}
+              </fieldset>
+            </div>
           </div>
         </div>
         <div className="checkout-details">
@@ -249,15 +265,19 @@ export const Checkout = () => {
           <div className="summary">
             <div className="summary-section">
               <span>Value of products:</span>
-              <span>{totalPrice} PLN</span>
+              <span>{candlesPrice} PLN</span>
             </div>
             <div className="summary-section">
               <span>Shipment cost:</span>
               <span>{deliveryCost.toFixed(2)} PLN</span>
             </div>
             <div className="summary-section">
+              <span>Payment cost:</span>
+              <span>{paymentCost.toFixed(2)} PLN</span>
+            </div>
+            <div className="summary-section">
               <span>Final price:</span>
-              <span>{(Number(totalPrice) + deliveryCost).toFixed(2)} PLN</span>
+              <span>{(Number(candlesPrice) + deliveryCost + paymentCost).toFixed(2)} PLN</span>
             </div>
           </div>
         </div>
