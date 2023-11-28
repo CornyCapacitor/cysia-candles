@@ -21,7 +21,7 @@
   }
 }
 
-.checkout-details {
+.customer-details {
   display: flex;
   width: 400px;
   flex-direction: column;
@@ -232,7 +232,7 @@
   }
 }
 
-.checkout-input {
+.customer-input {
   width: 360px;
   height: 30px;
   border: none;
@@ -247,7 +247,7 @@
   }
 }
 
-.checkout-header {
+.customer-header {
   align-self: center;
   display: flex;
   align-items: center;
@@ -315,7 +315,7 @@
   outline-color: var(--primary);
 }
 
-.smaller-checkout-input {
+.smaller-customer-input {
   width: 140px;
   height: 30px;
   border: none;
@@ -355,7 +355,7 @@
   }
 }
 
-.checkout-button {
+.customer-button {
   align-self: center;
   width: 50%;
   font-size: 18px;
