@@ -1,26 +1,17 @@
+import { useAtom } from 'jotai';
 import { useEffect, useState } from 'react';
+import { cartAtom } from '../atoms';
 import './Checkout.css';
 
-// type Form = {
-//   customerType: string,
-//   customerName: string,
-//   customerSecondName: string,
-//   customerNumber: "";
-//   street: string,
-//   houseNumber: number,
-//   apartmentNumber: number,
-//   city: string,
-//   zipCode: string,
-//   country: string,
-//   phoneNumber: string | "",
-//   email: string | "",
-//   comments: string,
-//   newsletter: boolean,
-//   promotionAlerts: boolean,
-//   rules: boolean
-// }
+type DeliveryOption = {
+  name: string,
+  estimatedTime: string,
+  price: number,
+  available: boolean
+}
 
 export const Checkout = () => {
+  // Form states
   const [customerType, setCustomerType] = useState<string>("private-person");
   const [customerName, setCustomerName] = useState<string>("");
   const [customerSecondName, setCustomerSecondName] = useState<string>("");
@@ -36,6 +27,56 @@ export const Checkout = () => {
   const [email, setEmail] = useState<string>("");
   const [comments, setComments] = useState<string>("");
 
+  // Summary states
+  const [cart] = useAtom(cartAtom)
+  const [deliveryCost, setDeliveryCost] = useState<number>(0);
+
+  // Delivery states
+  const [selectedDelivery, setSelectedDelivery] = useState<string>("");
+  const [deliveryOptions] = useState<DeliveryOption[]>([
+    {
+      name: "DPD PickUp",
+      estimatedTime: "1 day(s)",
+      price: 10.90,
+      available: false,
+    },
+    {
+      name: "POCZTEX",
+      estimatedTime: "2 day(s)",
+      price: 9.90,
+      available: false,
+    },
+    {
+      name: "Inpost Paczkomaty 24/7",
+      estimatedTime: "1 day(s)",
+      price: 7.90,
+      available: false,
+    },
+    {
+      name: "Kurier Inpost",
+      estimatedTime: "1 day(s)",
+      price: 12.90,
+      available: false,
+    },
+    {
+      name: "Kurier DPD",
+      estimatedTime: "1 day(s)",
+      price: 12.90,
+      available: false,
+    },
+    {
+      name: "Personal pickup",
+      estimatedTime: "2 day(s)",
+      price: 0.00,
+      available: true,
+    },
+  ])
+
+  const totalPrice = cart.reduce((sum, candle) => {
+    const quantity = candle.quantity || 0;
+    return sum + quantity * (candle.volume === "130ml" ? 15.00 : 25.00);
+  }, 0).toFixed(2);
+
   useEffect(() => {
     if (customerType === "private-person") {
       setCompanyName("");
@@ -46,6 +87,16 @@ export const Checkout = () => {
       setInvoice(false);
     }
   }, [customerType])
+
+  useEffect(() => {
+    const selectedOption = deliveryOptions.find(option => option.name === selectedDelivery)
+
+    if (selectedOption) {
+      setDeliveryCost(selectedOption.price)
+    } else {
+      setDeliveryCost(0)
+    }
+  }, [selectedDelivery, deliveryOptions])
 
   const handleBuy = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
@@ -73,8 +124,24 @@ export const Checkout = () => {
   return (
     <div className="checkout-page">
       <div className="checkout-display">
+        <div className="delivery-details">
+          <header className="section-header" style={{ width: `450px` }}>Delivery</header>
+          <div className="delivery">
+            <fieldset className="fieldset">
+              {deliveryOptions.map((option) => (
+                <div className="delivery-option">
+                  <div className="delivery-option-info">
+                    <input className="radio" type="radio" id={option.name} name={option.name} value={option.name} onChange={() => setSelectedDelivery(option.name)} checked={selectedDelivery === option.name} disabled={!option.available} />
+                    <label style={{ color: option.available ? `#000000` : `#aaaaaa` }}>{option.name}</label>
+                  </div>
+                  <span className="delivery-option-price" style={{ color: option.available ? `#000000` : `#aaaaaa` }}>{option.price.toFixed(2)} PLN</span>
+                </div>
+              ))}
+            </fieldset>
+          </div>
+        </div>
         <div className="checkout-details">
-          <header className="form-header">Fill the form in order to proceed your order</header>
+          <header className="section-header">Customer information</header>
           <form className="form">
             <fieldset className="fieldset">
               <div className="fieldset-section">
@@ -114,6 +181,23 @@ export const Checkout = () => {
             <span style={{ fontSize: "12px" }}>* fields marked with a star are optional</span>
             <button className="checkout-button" onClick={(e) => handleBuy(e)}>Buy</button>
           </form>
+        </div>
+        <div className="summary-details">
+          <header className="section-header" style={{ width: `350px` }}>Summary</header>
+          <div className="summary">
+            <div className="summary-section">
+              <span>Value of products:</span>
+              <span>{totalPrice} PLN</span>
+            </div>
+            <div className="summary-section">
+              <span>Shipment cost:</span>
+              <span>{deliveryCost.toFixed(2)} PLN</span>
+            </div>
+            <div className="summary-section">
+              <span>Final price:</span>
+              <span>{(Number(totalPrice) + deliveryCost).toFixed(2)} PLN</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
