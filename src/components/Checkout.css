@@ -68,6 +68,16 @@
   padding-bottom: 30px;
 }
 
+.payment-details {
+  display: flex;
+  width: 350px;
+  flex-direction: column;
+  justify-content: center;
+  box-shadow: 0px 0px 5px 1px #808080;
+  padding: 0px 50px;
+  padding-bottom: 30px;
+}
+
 .delivery-section {
   width: 100%;
   display: flex;
@@ -142,6 +152,10 @@
   width: 20px;
   height: 20px;
   outline-color: var(--primary);
+
+  &:hover {
+    cursor: pointer;
+  }
 }
 
 .checkout-input {

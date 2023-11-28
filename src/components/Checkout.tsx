@@ -10,6 +10,12 @@ type DeliveryOption = {
   available: boolean
 }
 
+type PaymentOption = {
+  name: string,
+  price: number,
+  available: boolean
+}
+
 export const Checkout = () => {
   // Form states
   const [customerType, setCustomerType] = useState<string>("private-person");
@@ -72,6 +78,46 @@ export const Checkout = () => {
     },
   ])
 
+  // Payment states
+  const [selectedPayment, setSelectedPayment] = useState<string>("");
+  const [paymentOptions] = useState<PaymentOption[]>([
+    {
+      name: "Google Pay",
+      price: 0.00,
+      available: false,
+    },
+    {
+      name: "PayU",
+      price: 0.00,
+      available: false,
+    },
+    {
+      name: "Skrill",
+      price: 0.00,
+      available: false,
+    },
+    {
+      name: "PayPal",
+      price: 0.00,
+      available: false,
+    },
+    {
+      name: "Bank transfer",
+      price: 0.00,
+      available: false,
+    },
+    {
+      name: "Cryptocurrencies",
+      price: 0.00,
+      available: false,
+    },
+    {
+      name: "Cash or credit card",
+      price: 0.00,
+      available: true,
+    },
+  ]);
+
   const totalPrice = cart.reduce((sum, candle) => {
     const quantity = candle.quantity || 0;
     return sum + quantity * (candle.volume === "130ml" ? 15.00 : 25.00);
@@ -132,6 +178,22 @@ export const Checkout = () => {
                 <div className="delivery-option">
                   <div className="delivery-option-info">
                     <input className="radio" type="radio" id={option.name} name={option.name} value={option.name} onChange={() => setSelectedDelivery(option.name)} checked={selectedDelivery === option.name} disabled={!option.available} />
+                    <label style={{ color: option.available ? `#000000` : `#aaaaaa` }}>{option.name}</label>
+                  </div>
+                  <span className="delivery-option-price" style={{ color: option.available ? `#000000` : `#aaaaaa` }}>{option.price.toFixed(2)} PLN</span>
+                </div>
+              ))}
+            </fieldset>
+          </div>
+        </div>
+        <div className="payment-details">
+          <header className="section-header" style={{ width: `450px` }}>Payment</header>
+          <div className="payment">
+            <fieldset className="fieldset">
+              {paymentOptions.map((option) => (
+                <div className="delivery-option">
+                  <div className="delivery-option-info">
+                    <input className="radio" type="radio" id={option.name} name={option.name} value={option.name} onChange={() => setSelectedPayment(option.name)} checked={selectedPayment === option.name} disabled={!option.available} />
                     <label style={{ color: option.available ? `#000000` : `#aaaaaa` }}>{option.name}</label>
                   </div>
                   <span className="delivery-option-price" style={{ color: option.available ? `#000000` : `#aaaaaa` }}>{option.price.toFixed(2)} PLN</span>
