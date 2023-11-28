@@ -70,10 +70,10 @@
 }
 
 .cart-image {
-  height: 100px;
+  height: 90px;
 
   @media (max-width: 768px) {
-    height: 50px;
+    height: 45px;
   }
 }
 
@@ -93,23 +93,7 @@
   }
 }
 
-.total-price {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  width: 100%;
-  gap: 10px;
-  position: relative;
-  right: 5%;
-
-  @media (max-width: 768px) {
-    justify-content: center;
-    position: static;
-  }
-}
-
 .cart-candle-container {
-  width: 100px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -137,5 +121,92 @@
     width: 15px;
     height: 15px;
     font-size: 3px;
+  }
+}
+
+.cart-select {
+  width: 25px;
+  height: 25px;
+  box-shadow: 0px 0px 10px 3px var(--primary);
+  background-color: var(--primary);
+  border-radius: 20px;
+
+  @media (max-width: 768px) {
+    width: 15px;
+    height: 15px;
+    box-shadow: 0px 0px 5px 1px var(--primary);
+  }
+}
+
+.bottom-section {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 5px;
+}
+
+.bottom-upper-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    gap: 5px;
+  }
+}
+
+.bottom-lower-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bottom-lower-section a {
+  color: white;
+}
+
+.cart-button {
+  width: 250px;
+  font-size: 18px;
+  font-family: Poppins;
+  font-weight: 500;
+  background-color: var(--primary);
+  border: none;
+  height: 50px;
+  color: #ffffff;
+  transition: 0.2s;
+  margin-left: 5%;
+  order: 0;
+
+  &:hover {
+    cursor: pointer;
+    filter: brightness(85%);
+  }
+
+  @media (max-width: 768px) {
+    width: 170px;
+    height: 30px;
+    font-size: 12px;
+    margin: 0;
+    order: 1;
+  }
+}
+
+
+.total-price {
+  height: 50px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  gap: 10px;
+  margin-right: 5%;
+  order: 1;
+
+  @media (max-width: 768px) {
+    height: 30px;
+    font-size: 12px;
+    margin: 0;
+    order: 0;
   }
 }

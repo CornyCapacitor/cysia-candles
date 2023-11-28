@@ -14,7 +14,7 @@ export const Candles = () => {
   const [isFetched, setIsFetched] = useState<boolean>();
 
   useEffect(() => {
-    const fetchBoards = async () => {
+    const fetchCandles = async () => {
       const { data, error } = await supabase.from('candles').select();
 
       if (error) {
@@ -27,7 +27,7 @@ export const Candles = () => {
       }
     };
 
-    fetchBoards();
+    fetchCandles();
   }, []);
 
   return (

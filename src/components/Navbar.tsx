@@ -8,20 +8,11 @@ import './Navbar.css';
 export const Navbar = () => {
   const [saleTime] = useState<boolean>(false);
 
-  const [cart, setCart] = useAtom(cartAtom)
+  const [cart] = useAtom(cartAtom)
   const [, setFavourites] = useAtom(favouritesAtom)
-
-  const resetCart = () => {
-    setCart([]);
-  }
 
   const resetFavourites = () => {
     setFavourites([]);
-  }
-
-  const resetAtoms = () => {
-    resetCart()
-    resetFavourites()
   }
 
   return (
@@ -56,9 +47,7 @@ export const Navbar = () => {
           <img className="button-icon" src="shopping-cart.svg" />
           <span>Cart</span>
         </Link>
-        <div className="nav-button" onClick={resetCart}>Reset cart</div>
         <div className="nav-button" onClick={resetFavourites}>Clear favs</div>
-        <div className="nav-button" onClick={resetAtoms}>Reset atoms</div>
         <div className="nav-button" onClick={() => console.log(cart)}>Console log cart</div>
       </div>
     </nav>
