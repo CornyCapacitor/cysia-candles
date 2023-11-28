@@ -1,5 +1,6 @@
 import { useAtom } from 'jotai'
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import { cartAtom } from '../atoms'
 import './Cart.css'
 
@@ -68,7 +69,9 @@ export const Cart = () => {
                 </div>
               </div>
               <div className="bottom-lower-section">
-                <span>Lower section</span>
+                <Link to="/checkout">
+                  <button className="cart-button">Checkout</button>
+                </Link>
               </div>
             </div>
           </> : <>Cart is empty</>}
