@@ -158,7 +158,7 @@ export const Checkout = () => {
                 <div className="delivery">
                   <fieldset className="fieldset">
                     {deliveryOptions.map((option) => (
-                      <div className="delivery-option">
+                      <div className="delivery-option" key={option.name}>
                         <div className="delivery-option-info">
                           <input className="radio" type="radio" id={option.name} name={option.name} value={option.name} onChange={() => setSelectedDelivery(option.name)} checked={selectedDelivery === option.name} disabled={!option.available} />
                           <label style={{ color: option.available ? `#000000` : `#aaaaaa` }}>{option.name}</label>
@@ -174,7 +174,7 @@ export const Checkout = () => {
                 <div className="payment">
                   <fieldset className="fieldset">
                     {paymentOptions.map((option) => (
-                      <div className="delivery-option">
+                      <div className="delivery-option" key={option.name}>
                         <div className="delivery-option-info">
                           <input className="radio" type="radio" id={option.name} name={option.name} value={option.name} onChange={() => setSelectedPayment(option.name)} checked={selectedPayment === option.name} disabled={!option.available} />
                           <label style={{ color: option.available ? `#000000` : `#aaaaaa` }}>{option.name}</label>
