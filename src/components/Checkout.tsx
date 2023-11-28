@@ -173,8 +173,8 @@ export const Checkout = () => {
       phoneNumber: phoneNumber,
       email: email,
       comments: comments,
-      delivery: selectedDelivery,
-      payment: selectedPayment,
+      deliveryType: selectedDelivery,
+      paymentMethod: selectedPayment,
       totalPrice: (Number(candlesPrice) + deliveryCost + paymentCost).toFixed(2)
     }
 
@@ -256,7 +256,7 @@ export const Checkout = () => {
             <input type="textbox" placeholder="Phone number*" className="checkout-input" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} />
             <input type="textbox" placeholder="E-mail*" className="checkout-input" value={email} onChange={(e) => setEmail(e.target.value)} />
             <textarea placeholder="Comment" className="comments" value={comments} onChange={(e) => setComments(e.target.value)} />
-            <span style={{ fontSize: "12px" }}>* fields marked with a star are optional</span>
+            <span style={{ fontSize: "12px" }}>* fields marked with a star are necessary</span>
             <button className="checkout-button" onClick={(e) => handleBuy(e)}>Buy</button>
           </form>
         </div>
