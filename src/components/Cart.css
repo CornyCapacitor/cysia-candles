@@ -139,15 +139,31 @@
 }
 
 .bottom-section {
+  display: flex;
+  flex-direction: column;
   width: 100%;
+  gap: 5px;
+}
+
+.bottom-upper-section {
   display: flex;
   align-items: center;
   justify-content: space-between;
 
   @media (max-width: 768px) {
     flex-direction: column;
-    gap: 10px;
+    gap: 5px;
   }
+}
+
+.bottom-lower-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bottom-lower-section a {
+  color: white;
 }
 
 .cart-button {
@@ -177,14 +193,18 @@
   }
 }
 
+
 .total-price {
+  height: 50px;
   display: flex;
+  align-items: center;
   text-align: center;
   gap: 10px;
   margin-right: 5%;
   order: 1;
 
   @media (max-width: 768px) {
+    height: 30px;
     font-size: 12px;
     margin: 0;
     order: 0;

@@ -58,12 +58,17 @@ export const Cart = () => {
               </div>
             ))}
             <div className="bottom-section">
-              {selected.length > 0 ?
-                <button className="cart-button" onClick={() => removeItems()}>Delete selected items</button>
-                : <span></span>}
-              <div className="total-price">
-                <span>Total price:</span>
-                <span>{totalPrice}</span>
+              <div className="bottom-upper-section">
+                {selected.length > 0 ?
+                  <button className="cart-button" onClick={() => removeItems()}>Delete selected items</button>
+                  : <span></span>}
+                <div className="total-price">
+                  <span>Total price:</span>
+                  <span>{totalPrice}</span>
+                </div>
+              </div>
+              <div className="bottom-lower-section">
+                <span>Lower section</span>
               </div>
             </div>
           </> : <>Cart is empty</>}
