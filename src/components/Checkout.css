@@ -1,0 +1,20 @@
+.checkout-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.checkout-display {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+  width: 85%;
+  margin: 20px;
+  min-height: 100px;
+  border-radius: 10px;
+  background-color: white;
+  padding: 20px;
+}
