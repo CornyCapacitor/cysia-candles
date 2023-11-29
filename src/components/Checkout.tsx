@@ -95,46 +95,46 @@ export const Checkout = () => {
       const isValidCustomerName = onlyLettersRegex.test(customerName);
       firstInput = isValidCustomerName
       if (!isValidCustomerName) {
-        addError("Wrong customer name")
+        addError("Please enter proper name e.g. Michał")
       }
 
       const isValidCustomerSecondName = onlyLettersRegex.test(customerSecondName)
       secondInput = isValidCustomerSecondName
       if (!isValidCustomerSecondName) {
-        addError("Wrong customer second name")
+        addError("Please enter proper second name e.g. Owczarzak")
       }
     } else if (customerType === "company") {
       const isValidCompanyName = onlyLettersRegex.test(companyName);
       firstInput = isValidCompanyName
       if (!isValidCompanyName) {
-        addError("Wrong company name")
+        addError("Please enter proper company name e.g. WK sp. z o.o.")
       }
 
       const isValidCompanyNumber = onlyNumbersRegex.test(companyNumber)
       secondInput = isValidCompanyNumber
       if (!isValidCompanyNumber) {
-        addError("Wrong company identification number")
+        addError("Please enter proper company identification number e.g. 7010633012")
       }
     }
 
     const isValidStreet = onlyLettersRegex.test(streetName)
     if (!isValidStreet) {
-      addError("Wrong street")
+      addError("Please enter proper street name e.g. Bydgoska")
     }
 
     const isValidCity = onlyLettersRegex.test(city)
     if (!isValidCity) {
-      addError("Wrong city")
+      addError("Please enter proper city name e.g. Warszawa")
     }
 
     const isValidPhoneNumber = phoneNumberRegex.test(phoneNumber)
     if (!isValidPhoneNumber) {
-      addError("Wrong phone number")
+      addError("Please enter proper phone number e.g. +48123456789 or 123456789")
     }
 
     const isValidEmail = emailRegex.test(email);
     if (!isValidEmail) {
-      addError("Wrong email")
+      addError("Please enter proper e-mail adress e.g. michalowczarzak@gmail.com")
     }
 
     const proceed = () => {
@@ -151,19 +151,19 @@ export const Checkout = () => {
       proceed();
     } else {
       if (!houseNumber) {
-        addError("Wrong house number")
+        addError("Please enter proper house number e.g. 47")
       }
       if (!apartmentValue) {
-        addError("Wrong apartment number")
+        addError("Please enter proper apartment/flat number e.g. 1. In case there's no such a numeration for your adress, type 0")
       }
       if (!zipCode) {
-        addError("Wrong zip code")
+        addError("Please enter proper zip code e.g. 85-047 or 12345-12345")
       }
       if (!selectedDelivery) {
-        addError("You must select delivery type")
+        addError("Please select one of delivery options")
       }
       if (!selectedPayment) {
-        addError("You must select payment method")
+        addError("YPlease select one payment method")
       }
     }
   }
