@@ -183,8 +183,9 @@ export const Checkout = () => {
       setCart([]);
     }
 
-    if (firstInput && secondInput && isValidStreet && houseNumber && apartmentValue && isValidCity && zipCode && isValidPhoneNumber && isValidEmail) {
+    if (candlesPrice !== "0.00" && firstInput && secondInput && isValidStreet && houseNumber && apartmentValue && isValidCity && zipCode && isValidPhoneNumber && isValidEmail && country) {
       proceed();
+      console.log(candlesPrice)
     } else {
       if (!houseNumber) {
         addError("Please enter proper house number e.g. 47")
@@ -203,6 +204,18 @@ export const Checkout = () => {
       }
       if (!selectedPayment) {
         addError("Please select one payment method")
+      }
+      if (candlesPrice === "0.00") {
+        Swal.fire({
+          icon: 'error',
+          iconColor: 'red',
+          title: `Somehow cart went empty during checkout step! Please retry the purchasing process again :/`,
+        }).then((result) => {
+          if (result.isConfirmed || result.dismiss) {
+            console.log(form)
+            navigate('/')
+          }
+        })
       }
     }
   }
