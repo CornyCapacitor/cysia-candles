@@ -107,7 +107,8 @@ export const Checkout = () => {
     comments: comments,
     deliveryType: selectedDelivery,
     paymentMethod: selectedPayment,
-    totalPrice: (Number(candlesPrice) + deliveryCost + paymentCost).toFixed(2)
+    totalPrice: (Number(candlesPrice) + deliveryCost + paymentCost).toFixed(2),
+    items: cart
   }
 
   const validate = () => {
@@ -169,6 +170,22 @@ export const Checkout = () => {
       addError("Please enter proper e-mail adress e.g. michalowczarzak@gmail.com")
     }
 
+    const sendForm = async () => {
+
+      const { data, error } = await supabase
+        .from('orders')
+        .insert([form])
+        .select()
+
+      if (data) {
+        console.log("Order sent to database")
+      }
+
+      if (error) {
+        console.error(error)
+      }
+    }
+
     const proceed = () => {
       Swal.fire({
         icon: 'info',
@@ -176,7 +193,6 @@ export const Checkout = () => {
         title: `Normaly you'd be sent to payment window right now, but instead, we've noticed your order and we'll message you when the order is ready :)`,
       }).then((result) => {
         if (result.isConfirmed || result.dismiss) {
-          console.log(form)
           navigate('/')
         }
       })
@@ -184,8 +200,8 @@ export const Checkout = () => {
     }
 
     if (candlesPrice !== "0.00" && firstInput && secondInput && isValidStreet && houseNumber && apartmentValue && isValidCity && zipCode && isValidPhoneNumber && isValidEmail && country) {
+      sendForm();
       proceed();
-      console.log(candlesPrice)
     } else {
       if (!houseNumber) {
         addError("Please enter proper house number e.g. 47")
@@ -212,7 +228,6 @@ export const Checkout = () => {
           title: `Somehow cart went empty during checkout step! Please retry the purchasing process again :/`,
         }).then((result) => {
           if (result.isConfirmed || result.dismiss) {
-            console.log(form)
             navigate('/')
           }
         })
