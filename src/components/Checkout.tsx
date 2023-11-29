@@ -58,7 +58,6 @@ export const Checkout = () => {
       available: false
     }
   ]);
-
   const [city, setCity] = useState<string>("");
   const [zipCode, setZipCode] = useState<string>("");
   const [phoneNumber, setPhoneNumber] = useState<string>("");
@@ -100,6 +99,7 @@ export const Checkout = () => {
     streetName: streetName,
     houseNumber: houseNumber,
     apartmentValue: apartmentValue,
+    country: country,
     city: city,
     zipCode: zipCode,
     phoneNumber: phoneNumber,
