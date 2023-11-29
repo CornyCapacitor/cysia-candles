@@ -21,6 +21,26 @@
   }
 }
 
+.checkout-errors-list {
+  width: 360px;
+  padding: 10px 20px;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+  font-size: 12px;
+  color: #ff0000;
+
+  @media (max-width: 1400px) {
+    width: 310px;
+  }
+
+  @media (max-width: 550px) {
+    width: 260px;
+    padding: 5px 10px;
+  }
+}
+
 .customer-details {
   display: flex;
   width: 400px;

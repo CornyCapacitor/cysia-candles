@@ -34,9 +34,10 @@ export const Checkout = () => {
   const [phoneNumber, setPhoneNumber] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [comments, setComments] = useState<string>("");
+  const [checkoutErrors, setCheckoutErrors] = useState<string[]>([]);
 
   // Summary states
-  const [cart] = useAtom(cartAtom)
+  const [cart, setCart] = useAtom(cartAtom)
   const [deliveryCost, setDeliveryCost] = useState<number>(0);
   const [paymentCost, setPaymentCost] = useState<number>(0);
 
@@ -56,6 +57,116 @@ export const Checkout = () => {
     const quantity = candle.quantity || 0;
     return sum + quantity * (candle.volume === "130ml" ? 15.00 : 25.00);
   }, 0).toFixed(2);
+
+  const form = {
+    customerType: customerType,
+    customerName: customerName,
+    customerSecondName: customerSecondName,
+    companyName: companyName,
+    companyNumber: companyNumber,
+    invoice: invoice,
+    streetName: streetName,
+    houseNumber: houseNumber,
+    apartmentValue: apartmentValue,
+    city: city,
+    zipCode: zipCode,
+    phoneNumber: phoneNumber,
+    email: email,
+    comments: comments,
+    deliveryType: selectedDelivery,
+    paymentMethod: selectedPayment,
+    totalPrice: (Number(candlesPrice) + deliveryCost + paymentCost).toFixed(2)
+  }
+
+  const validate = () => {
+    const emailRegex = /^[A-Za-z0-9._%-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/;
+    const phoneNumberRegex = /^(?:\+(\d{1,4})\s)?\d(?:\s?\d){8}$/;
+    const onlyLettersRegex = /^[A-Za-z]+$/;
+    const onlyNumbersRegex = /^[0-9]+$/;
+    let firstInput = false;
+    let secondInput = false;
+
+    setCheckoutErrors([]);
+    const addError = (errorMessage: string) => {
+      setCheckoutErrors((p) => [...p, errorMessage])
+    }
+
+    if (customerType === "private-person") {
+      const isValidCustomerName = onlyLettersRegex.test(customerName);
+      firstInput = isValidCustomerName
+      if (!isValidCustomerName) {
+        addError("Wrong customer name")
+      }
+
+      const isValidCustomerSecondName = onlyLettersRegex.test(customerSecondName)
+      secondInput = isValidCustomerSecondName
+      if (!isValidCustomerSecondName) {
+        addError("Wrong customer second name")
+      }
+    } else if (customerType === "company") {
+      const isValidCompanyName = onlyLettersRegex.test(companyName);
+      firstInput = isValidCompanyName
+      if (!isValidCompanyName) {
+        addError("Wrong company name")
+      }
+
+      const isValidCompanyNumber = onlyNumbersRegex.test(companyNumber)
+      secondInput = isValidCompanyNumber
+      if (!isValidCompanyNumber) {
+        addError("Wrong company identification number")
+      }
+    }
+
+    const isValidStreet = onlyLettersRegex.test(streetName)
+    if (!isValidStreet) {
+      addError("Wrong street")
+    }
+
+    const isValidCity = onlyLettersRegex.test(city)
+    if (!isValidCity) {
+      addError("Wrong city")
+    }
+
+    const isValidPhoneNumber = phoneNumberRegex.test(phoneNumber)
+    if (!isValidPhoneNumber) {
+      addError("Wrong phone number")
+    }
+
+    const isValidEmail = emailRegex.test(email);
+    if (!isValidEmail) {
+      addError("Wrong email")
+    }
+
+    const proceed = () => {
+      Swal.fire({
+        icon: 'info',
+        iconColor: '#f568a9',
+        title: `Normaly you'd be sent to payment window right now, but instead, we've noticed your order and we'll message you when the order is ready :)`,
+      })
+      setCart([]);
+      console.log(form)
+    }
+
+    if (firstInput && secondInput && isValidStreet && houseNumber && apartmentValue && isValidCity && zipCode && isValidPhoneNumber && isValidEmail) {
+      proceed();
+    } else {
+      if (!houseNumber) {
+        addError("Wrong house number")
+      }
+      if (!apartmentValue) {
+        addError("Wrong apartment number")
+      }
+      if (!zipCode) {
+        addError("Wrong zip code")
+      }
+      if (!selectedDelivery) {
+        addError("You must select delivery type")
+      }
+      if (!selectedPayment) {
+        addError("You must select payment method")
+      }
+    }
+  }
 
   useEffect(() => {
     const fetchPaymentOptions = async () => {
@@ -124,34 +235,7 @@ export const Checkout = () => {
 
   const handleBuy = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
-
-    const form = {
-      customerType: customerType,
-      customerName: customerName,
-      customerSecondName: customerSecondName,
-      companyName: companyName,
-      companyNumber: companyNumber,
-      invoice: invoice,
-      streetName: streetName,
-      houseNumber: houseNumber,
-      apartmentValue: apartmentValue,
-      city: city,
-      zipCode: zipCode,
-      phoneNumber: phoneNumber,
-      email: email,
-      comments: comments,
-      deliveryType: selectedDelivery,
-      paymentMethod: selectedPayment,
-      totalPrice: (Number(candlesPrice) + deliveryCost + paymentCost).toFixed(2)
-    }
-
-    console.log(form)
-
-    Swal.fire({
-      icon: 'info',
-      iconColor: '#f568a9',
-      title: `Normaly you'd be sent to payment window right now, but instead, we've noticed your order and we'll message you when the order is ready :)`,
-    })
+    validate();
   }
 
   return (
@@ -223,16 +307,23 @@ export const Checkout = () => {
                   </>}
                 <input type="textbox" placeholder="Street name" className="customer-input" value={streetName} onChange={(e) => setStreetName(e.target.value)} />
                 <div className="adress-details">
-                  <input type="textbox" className="smaller-customer-input" placeholder="House number" value={houseNumber} onChange={(e) => setHouseNumber(e.target.value)} />
-                  <input className="smaller-customer-input" placeholder="Apartment/flat etc." value={apartmentValue} onChange={(e) => setApartmentValue(e.target.value)} />
+                  <input type="textbox" className="smaller-customer-input" placeholder="House number" value={houseNumber} onChange={(e) => setHouseNumber(e.target.value)} maxLength={4} />
+                  <input className="smaller-customer-input" placeholder="Apartment/flat etc." value={apartmentValue} onChange={(e) => setApartmentValue(e.target.value)} maxLength={4} />
                   <input className="smaller-customer-input" placeholder="City" value={city} onChange={(e) => setCity(e.target.value)} />
                   <input className="smaller-customer-input" placeholder="Zip code" value={zipCode} onChange={(e) => setZipCode(e.target.value)} />
                 </div>
                 <input type="textbox" placeholder="Phone number*" className="customer-input" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} />
                 <input type="textbox" placeholder="E-mail*" className="customer-input" value={email} onChange={(e) => setEmail(e.target.value)} />
                 <textarea placeholder="Comment" className="comments" value={comments} onChange={(e) => setComments(e.target.value)} />
-                <span style={{ fontSize: "12px" }}>* fields marked with a star are optional</span>
+                <span style={{ fontSize: "12px" }}>* fields marked with a star are necessary</span>
                 <button className="customer-button" onClick={(e) => handleBuy(e)}>Buy</button>
+                {checkoutErrors.length !== 0 ?
+                  <div className="checkout-errors-list">
+                    {checkoutErrors.map((error, index) => (
+                      <li key={index}>{error}</li>
+                    ))}
+                  </div>
+                  : <></>}
               </form>
             </div>
             <div className="summary-details">
