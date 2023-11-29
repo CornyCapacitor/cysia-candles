@@ -104,9 +104,9 @@ export const Checkout = () => {
         addError("Please enter proper second name e.g. Owczarzak")
       }
     } else if (customerType === "company") {
-      const isValidCompanyName = onlyLettersRegex.test(companyName);
-      firstInput = isValidCompanyName
-      if (!isValidCompanyName) {
+      if (companyName !== "") {
+        firstInput = true
+      } else if (!companyName) {
         addError("Please enter proper company name e.g. WK sp. z o.o.")
       }
 
@@ -166,6 +166,11 @@ export const Checkout = () => {
         addError("YPlease select one payment method")
       }
     }
+  }
+
+  const handleBuy = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault()
+    validate();
   }
 
   useEffect(() => {
@@ -232,11 +237,6 @@ export const Checkout = () => {
       setPaymentCost(0)
     }
   }, [selectedPayment, paymentOptions])
-
-  const handleBuy = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault()
-    validate();
-  }
 
   return (
     <div className="checkout-page">
