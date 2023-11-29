@@ -1,5 +1,6 @@
 import { useAtom } from 'jotai';
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { cartAtom } from '../atoms';
 import supabase from '../config/supabaseClient';
@@ -18,6 +19,11 @@ type PaymentOption = {
   available: boolean
 }
 
+type CountryOption = {
+  name: string,
+  available: boolean
+}
+
 export const Checkout = () => {
   // Customer form states
   const [customerType, setCustomerType] = useState<string>("private-person");
@@ -29,6 +35,30 @@ export const Checkout = () => {
   const [streetName, setStreetName] = useState<string>("");
   const [houseNumber, setHouseNumber] = useState<string>("");
   const [apartmentValue, setApartmentValue] = useState<string>("");
+  const [country, setCountry] = useState<string>("");
+  const [countryOptions] = useState<CountryOption[]>([
+    {
+      name: "Poland",
+      available: true
+    },
+    {
+      name: "United Kingdom",
+      available: false
+    },
+    {
+      name: "United States",
+      available: false
+    },
+    {
+      name: "Spain",
+      available: false
+    },
+    {
+      name: "Germany",
+      available: false
+    }
+  ]);
+
   const [city, setCity] = useState<string>("");
   const [zipCode, setZipCode] = useState<string>("");
   const [phoneNumber, setPhoneNumber] = useState<string>("");
@@ -52,6 +82,8 @@ export const Checkout = () => {
   // Fetch states
   const [paymentFetch, setPaymentFetch] = useState<boolean>(false);
   const [deliveryFetch, setDeliveryFetch] = useState<boolean>(false);
+
+  const navigate = useNavigate();
 
   const candlesPrice = cart.reduce((sum, candle) => {
     const quantity = candle.quantity || 0;
@@ -142,9 +174,13 @@ export const Checkout = () => {
         icon: 'info',
         iconColor: '#f568a9',
         title: `Normaly you'd be sent to payment window right now, but instead, we've noticed your order and we'll message you when the order is ready :)`,
+      }).then((result) => {
+        if (result.isConfirmed || result.dismiss) {
+          console.log(form)
+          navigate('/')
+        }
       })
       setCart([]);
-      console.log(form)
     }
 
     if (firstInput && secondInput && isValidStreet && houseNumber && apartmentValue && isValidCity && zipCode && isValidPhoneNumber && isValidEmail) {
@@ -159,11 +195,14 @@ export const Checkout = () => {
       if (!zipCode) {
         addError("Please enter proper zip code e.g. 85-047 or 12345-12345")
       }
+      if (!country) {
+        addError("Please select country");
+      }
       if (!selectedDelivery) {
         addError("Please select one of delivery options")
       }
       if (!selectedPayment) {
-        addError("YPlease select one payment method")
+        addError("Please select one payment method")
       }
     }
   }
@@ -312,6 +351,12 @@ export const Checkout = () => {
                   <input className="smaller-customer-input" placeholder="City" value={city} onChange={(e) => setCity(e.target.value)} />
                   <input className="smaller-customer-input" placeholder="Zip code" value={zipCode} onChange={(e) => setZipCode(e.target.value)} />
                 </div>
+                <select className="customer-select" value={country} onChange={(e) => setCountry(e.target.value)}>
+                  <option value="" disabled>Choose country</option>
+                  {countryOptions.map((option, index) => (
+                    <option key={index} disabled={!option.available}>{option.name}</option>
+                  ))}
+                </select>
                 <input type="textbox" placeholder="Phone number*" className="customer-input" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} />
                 <input type="textbox" placeholder="E-mail*" className="customer-input" value={email} onChange={(e) => setEmail(e.target.value)} />
                 <textarea placeholder="Comment" className="comments" value={comments} onChange={(e) => setComments(e.target.value)} />
