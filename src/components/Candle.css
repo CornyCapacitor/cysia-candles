@@ -32,6 +32,19 @@
   }
 }
 
+.confirm-button,
+.cancel-button {
+  font-family: Poppins, arial;
+}
+
+.confirm-button {
+  background-color: #f568a9 !important;
+}
+
+.cancel-button {
+  background-color: #12bca2 !important;
+}
+
 .candle-selections {
   display: flex;
   flex-direction: column;

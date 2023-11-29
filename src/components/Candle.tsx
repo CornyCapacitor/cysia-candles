@@ -1,5 +1,6 @@
 import { useAtom } from 'jotai';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { cartAtom } from '../atoms';
 import './Candle.css';
@@ -14,6 +15,8 @@ export const Candle = ({ image, name }: CandleProps) => {
   const [selectedColor, setSelectedColor] = useState<string>("#ffffff");
   const [selectedQuantity, setSelectedQuantity] = useState<string | number>(1);
   const [cart, setCart] = useAtom(cartAtom)
+
+  const navigate = useNavigate();
 
   const candlePrice = Number(selectedQuantity) * (selectedVolume === "130ml" ? 15.00 : 25.00)
 
@@ -39,8 +42,19 @@ export const Candle = ({ image, name }: CandleProps) => {
     Swal.fire({
       icon: 'success',
       title: `You've added ${selectedQuantity} ${name} candle(s) to cart!`,
-      showConfirmButton: false,
-      timer: 2000,
+      showCancelButton: true,
+      cancelButtonText: "Continue shopping",
+      showConfirmButton: true,
+      confirmButtonText: "Cart",
+      timer: 5000,
+      customClass: {
+        confirmButton: "confirm-button",
+        cancelButton: "cancel-button",
+      }
+    }).then((result) => {
+      if (result.isConfirmed) {
+        navigate('/cart')
+      }
     })
 
     const resetItem = () => {
