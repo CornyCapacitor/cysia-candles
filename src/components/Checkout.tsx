@@ -1,5 +1,6 @@
 import { useAtom } from 'jotai';
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { cartAtom } from '../atoms';
 import supabase from '../config/supabaseClient';
@@ -18,6 +19,11 @@ type PaymentOption = {
   available: boolean
 }
 
+type CountryOption = {
+  name: string,
+  available: boolean
+}
+
 export const Checkout = () => {
   // Customer form states
   const [customerType, setCustomerType] = useState<string>("private-person");
@@ -29,14 +35,38 @@ export const Checkout = () => {
   const [streetName, setStreetName] = useState<string>("");
   const [houseNumber, setHouseNumber] = useState<string>("");
   const [apartmentValue, setApartmentValue] = useState<string>("");
+  const [country, setCountry] = useState<string>("");
+  const [countryOptions] = useState<CountryOption[]>([
+    {
+      name: "Poland",
+      available: true
+    },
+    {
+      name: "United Kingdom",
+      available: false
+    },
+    {
+      name: "United States",
+      available: false
+    },
+    {
+      name: "Spain",
+      available: false
+    },
+    {
+      name: "Germany",
+      available: false
+    }
+  ]);
   const [city, setCity] = useState<string>("");
   const [zipCode, setZipCode] = useState<string>("");
   const [phoneNumber, setPhoneNumber] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [comments, setComments] = useState<string>("");
+  const [checkoutErrors, setCheckoutErrors] = useState<string[]>([]);
 
   // Summary states
-  const [cart] = useAtom(cartAtom)
+  const [cart, setCart] = useAtom(cartAtom)
   const [deliveryCost, setDeliveryCost] = useState<number>(0);
   const [paymentCost, setPaymentCost] = useState<number>(0);
 
@@ -52,10 +82,163 @@ export const Checkout = () => {
   const [paymentFetch, setPaymentFetch] = useState<boolean>(false);
   const [deliveryFetch, setDeliveryFetch] = useState<boolean>(false);
 
+  const navigate = useNavigate();
+
   const candlesPrice = cart.reduce((sum, candle) => {
     const quantity = candle.quantity || 0;
     return sum + quantity * (candle.volume === "130ml" ? 15.00 : 25.00);
   }, 0).toFixed(2);
+
+  const form = {
+    customerType: customerType,
+    customerName: customerName,
+    customerSecondName: customerSecondName,
+    companyName: companyName,
+    companyNumber: companyNumber,
+    invoice: invoice,
+    streetName: streetName,
+    houseNumber: houseNumber,
+    apartmentValue: apartmentValue,
+    country: country,
+    city: city,
+    zipCode: zipCode,
+    phoneNumber: phoneNumber,
+    email: email,
+    comments: comments,
+    deliveryType: selectedDelivery,
+    paymentMethod: selectedPayment,
+    totalPrice: (Number(candlesPrice) + deliveryCost + paymentCost).toFixed(2),
+    items: cart
+  }
+
+  const validate = () => {
+    const emailRegex = /^[A-Za-z0-9._%-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/;
+    const phoneNumberRegex = /^(?:\+(\d{1,4})\s)?\d(?:\s?\d){8}$/;
+    const onlyLettersRegex = /^[A-Za-z]+$/;
+    const onlyNumbersRegex = /^[0-9]+$/;
+    let firstInput = false;
+    let secondInput = false;
+
+    setCheckoutErrors([]);
+    const addError = (errorMessage: string) => {
+      setCheckoutErrors((p) => [...p, errorMessage])
+    }
+
+    if (customerType === "private-person") {
+      const isValidCustomerName = onlyLettersRegex.test(customerName);
+      firstInput = isValidCustomerName
+      if (!isValidCustomerName) {
+        addError("Please enter proper name e.g. Michał")
+      }
+
+      const isValidCustomerSecondName = onlyLettersRegex.test(customerSecondName)
+      secondInput = isValidCustomerSecondName
+      if (!isValidCustomerSecondName) {
+        addError("Please enter proper second name e.g. Owczarzak")
+      }
+    } else if (customerType === "company") {
+      if (companyName !== "") {
+        firstInput = true
+      } else if (!companyName) {
+        addError("Please enter proper company name e.g. WK sp. z o.o.")
+      }
+
+      const isValidCompanyNumber = onlyNumbersRegex.test(companyNumber)
+      secondInput = isValidCompanyNumber
+      if (!isValidCompanyNumber) {
+        addError("Please enter proper company identification number e.g. 7010633012")
+      }
+    }
+
+    const isValidStreet = onlyLettersRegex.test(streetName)
+    if (!isValidStreet) {
+      addError("Please enter proper street name e.g. Bydgoska")
+    }
+
+    const isValidCity = onlyLettersRegex.test(city)
+    if (!isValidCity) {
+      addError("Please enter proper city name e.g. Warszawa")
+    }
+
+    const isValidPhoneNumber = phoneNumberRegex.test(phoneNumber)
+    if (!isValidPhoneNumber) {
+      addError("Please enter proper phone number e.g. +48123456789 or 123456789")
+    }
+
+    const isValidEmail = emailRegex.test(email);
+    if (!isValidEmail) {
+      addError("Please enter proper e-mail adress e.g. michalowczarzak@gmail.com")
+    }
+
+    const sendForm = async () => {
+
+      const { data, error } = await supabase
+        .from('orders')
+        .insert([form])
+        .select()
+
+      if (data) {
+        console.log("Order sent to database")
+      }
+
+      if (error) {
+        console.error(error)
+      }
+    }
+
+    const proceed = () => {
+      Swal.fire({
+        icon: 'info',
+        iconColor: '#f568a9',
+        title: `Normaly you'd be sent to payment window right now, but instead, we've noticed your order and we'll message you when the order is ready :)`,
+      }).then((result) => {
+        if (result.isConfirmed || result.dismiss) {
+          navigate('/')
+        }
+      })
+      setCart([]);
+    }
+
+    if (candlesPrice !== "0.00" && firstInput && secondInput && isValidStreet && houseNumber && apartmentValue && isValidCity && zipCode && isValidPhoneNumber && isValidEmail && country) {
+      sendForm();
+      proceed();
+    } else {
+      if (!houseNumber) {
+        addError("Please enter proper house number e.g. 47")
+      }
+      if (!apartmentValue) {
+        addError("Please enter proper apartment/flat number e.g. 1. In case there's no such a numeration for your adress, type 0")
+      }
+      if (!zipCode) {
+        addError("Please enter proper zip code e.g. 85-047 or 12345-12345")
+      }
+      if (!country) {
+        addError("Please select country");
+      }
+      if (!selectedDelivery) {
+        addError("Please select one of delivery options")
+      }
+      if (!selectedPayment) {
+        addError("Please select one payment method")
+      }
+      if (candlesPrice === "0.00") {
+        Swal.fire({
+          icon: 'error',
+          iconColor: 'red',
+          title: `Somehow cart went empty during checkout step! Please retry the purchasing process again :/`,
+        }).then((result) => {
+          if (result.isConfirmed || result.dismiss) {
+            navigate('/')
+          }
+        })
+      }
+    }
+  }
+
+  const handleBuy = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault()
+    validate();
+  }
 
   useEffect(() => {
     const fetchPaymentOptions = async () => {
@@ -121,38 +304,6 @@ export const Checkout = () => {
       setPaymentCost(0)
     }
   }, [selectedPayment, paymentOptions])
-
-  const handleBuy = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault()
-
-    const form = {
-      customerType: customerType,
-      customerName: customerName,
-      customerSecondName: customerSecondName,
-      companyName: companyName,
-      companyNumber: companyNumber,
-      invoice: invoice,
-      streetName: streetName,
-      houseNumber: houseNumber,
-      apartmentValue: apartmentValue,
-      city: city,
-      zipCode: zipCode,
-      phoneNumber: phoneNumber,
-      email: email,
-      comments: comments,
-      deliveryType: selectedDelivery,
-      paymentMethod: selectedPayment,
-      totalPrice: (Number(candlesPrice) + deliveryCost + paymentCost).toFixed(2)
-    }
-
-    console.log(form)
-
-    Swal.fire({
-      icon: 'info',
-      iconColor: '#f568a9',
-      title: `Normaly you'd be sent to payment window right now, but instead, we've noticed your order and we'll message you when the order is ready :)`,
-    })
-  }
 
   return (
     <div className="checkout-page">
@@ -223,16 +374,29 @@ export const Checkout = () => {
                   </>}
                 <input type="textbox" placeholder="Street name" className="customer-input" value={streetName} onChange={(e) => setStreetName(e.target.value)} />
                 <div className="adress-details">
-                  <input type="textbox" className="smaller-customer-input" placeholder="House number" value={houseNumber} onChange={(e) => setHouseNumber(e.target.value)} />
-                  <input className="smaller-customer-input" placeholder="Apartment/flat etc." value={apartmentValue} onChange={(e) => setApartmentValue(e.target.value)} />
+                  <input type="textbox" className="smaller-customer-input" placeholder="House number" value={houseNumber} onChange={(e) => setHouseNumber(e.target.value)} maxLength={4} />
+                  <input className="smaller-customer-input" placeholder="Apartment/flat etc." value={apartmentValue} onChange={(e) => setApartmentValue(e.target.value)} maxLength={4} />
                   <input className="smaller-customer-input" placeholder="City" value={city} onChange={(e) => setCity(e.target.value)} />
                   <input className="smaller-customer-input" placeholder="Zip code" value={zipCode} onChange={(e) => setZipCode(e.target.value)} />
                 </div>
+                <select className="customer-select" value={country} onChange={(e) => setCountry(e.target.value)}>
+                  <option value="" disabled>Choose country</option>
+                  {countryOptions.map((option, index) => (
+                    <option key={index} disabled={!option.available}>{option.name}</option>
+                  ))}
+                </select>
                 <input type="textbox" placeholder="Phone number*" className="customer-input" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} />
                 <input type="textbox" placeholder="E-mail*" className="customer-input" value={email} onChange={(e) => setEmail(e.target.value)} />
                 <textarea placeholder="Comment" className="comments" value={comments} onChange={(e) => setComments(e.target.value)} />
-                <span style={{ fontSize: "12px" }}>* fields marked with a star are optional</span>
+                <span style={{ fontSize: "12px" }}>* fields marked with a star are necessary</span>
                 <button className="customer-button" onClick={(e) => handleBuy(e)}>Buy</button>
+                {checkoutErrors.length !== 0 ?
+                  <div className="checkout-errors-list">
+                    {checkoutErrors.map((error, index) => (
+                      <li key={index}>{error}</li>
+                    ))}
+                  </div>
+                  : <></>}
               </form>
             </div>
             <div className="summary-details">
