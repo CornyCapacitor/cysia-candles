@@ -1,7 +1,7 @@
 import { useAtom } from 'jotai';
 import { favouritesAtom } from "../atoms";
 import { Candle } from "./Candle";
-import './Candles.css';
+import './Favourites.css';
 
 type CandleProps = {
   id: number,
@@ -13,13 +13,17 @@ export const Favourites = () => {
   const [favourites] = useAtom<CandleProps[]>(favouritesAtom)
 
   return (
-    <div className="candles">
-      <div className="candles-info">
-        <span>Here are your favourite candles.</span>
+    <div className="favourites">
+      <div className="favourites-info">
+        {favourites.length > 0 ?
+          <span>Here are your favourite candles.</span>
+          :
+          <span>You don't have any favourite candle.</span>
+        }
       </div>
       {favourites ? favourites.map((candle) => (
         <Candle key={candle.id} image={candle.image} name={candle.name} />
-      )) : <>Loading products...</>}
+      )) : <></>}
     </div>
   )
 }
