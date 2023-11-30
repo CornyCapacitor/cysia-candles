@@ -24,3 +24,7 @@ export const favouritesCountAtom = atom((get) => {
   const favourites = get(favouritesAtom);
   return favourites.length
 })
+
+export const themeAtom = atomWithStorage('theme', 'light')
+
+export const languageAtom = atomWithStorage('language', 'eng')
