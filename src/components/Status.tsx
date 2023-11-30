@@ -14,13 +14,13 @@ export const Status = () => {
     <div className={`shopping-status ${theme === "light" ? "light-bg" : "dark-toned-bg"}`}>
       <Link to="/favourites">
         <div className="shopping-status-container">
-          <img className="shopping-status-icon" src={theme === "light" ? "/public/black-border-heart.svg" : "/public/white-border-heart.svg"} />
+          <img className="shopping-status-icon" src={theme === "light" ? "black-border-heart.svg" : "white-border-heart.svg"} />
           <span className="shopping-status-number redbg">{favouriteCount}</span>
         </div>
       </Link>
       <Link to="/cart">
         <div className="shopping-status-container">
-          <img className="shopping-status-icon" src={theme === "light" ? "/public/black-shopping-cart.svg" : "/public/white-shopping-cart.svg"} />
+          <img className="shopping-status-icon" src={theme === "light" ? "black-shopping-cart.svg" : "white-shopping-cart.svg"} />
           <span className="shopping-status-number bluebg">{cartCount}</span>
         </div>
       </Link>
