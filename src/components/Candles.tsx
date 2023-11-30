@@ -39,9 +39,11 @@ export const Candles = () => {
       <div className={`candles-info ${theme === "light" ? "light-bg black-font" : "dark-toned-bg white-font"}`}>
         <span>Make sure to select correct volume, color and quantity for your candle. If not changed, candle will remain white.</span>
       </div>
-      {isFetched ? candles.map((candle) => (
-        <Candle key={candle.id} image={candle.image} name={candle.name} />
-      )) : <>Loading products...</>}
+      <div className="candles-container">
+        {isFetched ? candles.map((candle) => (
+          <Candle key={candle.id} image={candle.image} name={candle.name} />
+        )) : <>Loading products...</>}
+      </div>
     </div>
   )
 }
