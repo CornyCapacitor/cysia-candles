@@ -39,7 +39,7 @@ export const Navbar = () => {
       <div className={`upper-section ${theme === "light" ? "light-bg" : "dark-bg"}`}>
         <Link to="/">
           <div className={theme === "light" ? "logo light-logo" : "logo dark-logo"}>
-            <img src={theme === "light" ? "/public/light-logo.svg" : "/public/dark-logo.svg"} className="logo-img" />
+            <img src={theme === "light" ? "light-logo.svg" : "dark-logo.svg"} className="logo-img" />
             <p className={theme === "light" ? "logo-name light-logo-name" : "logo-name dark-logo-name"}>Cysia Candles</p>
           </div>
         </Link>
@@ -52,11 +52,11 @@ export const Navbar = () => {
           <span style={theme === "light" ? { color: "black" } : { color: "white" }}>Ask us a question</span>
         </Link>
         <Link className={`nav-button ${theme === "light" ? "black-font black-hover" : "white-font white-hover"}`} to="/favourites">
-          <img className="button-icon" src={theme === "light" ? "/public/black-border-heart.svg" : "/public/white-border-heart.svg"} />
+          <img className="button-icon" src={theme === "light" ? "black-border-heart.svg" : "white-border-heart.svg"} />
           <span style={theme === "light" ? { color: "black" } : { color: "white" }}>Favourites</span>
         </Link>
         <Link className={`nav-button ${theme === "light" ? "black-font black-hover" : "white-font white-hover"}`} to="/cart">
-          <img className="button-icon" src={theme === "light" ? "/public/black-shopping-cart.svg" : "/public/white-shopping-cart.svg"} />
+          <img className="button-icon" src={theme === "light" ? "black-shopping-cart.svg" : "white-shopping-cart.svg"} />
           <span style={theme === "light" ? { color: "black" } : { color: "white" }}>Cart</span>
         </Link>
         <div className={`nav-button ${theme === "light" ? "black-font black-hover" : "white-font white-hover"}`} onClick={() => changeTheme(theme)}>

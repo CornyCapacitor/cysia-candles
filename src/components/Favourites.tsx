@@ -23,9 +23,11 @@ export const Favourites = () => {
           <span>You don't have any favourite candle.</span>
         }
       </div>
-      {favourites ? favourites.map((candle) => (
-        <Candle key={candle.id} image={candle.image} name={candle.name} />
-      )) : <></>}
+      <div className="favourites-container">
+        {favourites ? favourites.map((candle) => (
+          <Candle key={candle.id} image={candle.image} name={candle.name} />
+        )) : <></>}
+      </div>
     </div>
   )
 }

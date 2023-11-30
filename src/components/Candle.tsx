@@ -120,7 +120,7 @@ export const Candle = ({ image, name }: CandleProps) => {
       </div>
       <span className={`candle-price ${theme === "light" ? "light-var-font" : "dark-var-font"}`}>{candlePrice.toFixed(2)}</span>
       <button className={`candle-button ${theme === "light" ? "light-var-bg" : "dark-var-bg"}`} onClick={addToCart}>Add to cart</button>
-      <img src={isFavourite ? "/public/red-heart.svg" : theme === "light" ? "/public/black-border-heart.svg" : "/public/white-border-heart.svg"} className="favourite-icon" onClick={() => addToFavourites()} />
+      <img src={isFavourite ? "red-heart.svg" : theme === "light" ? "black-border-heart.svg" : "white-border-heart.svg"} className="favourite-icon" onClick={() => addToFavourites()} />
     </div>
   )
 }
