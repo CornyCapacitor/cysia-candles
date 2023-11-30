@@ -1,19 +1,10 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import { useAtom } from 'jotai';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { cartAtom, favouritesAtom } from '../atoms';
 import './Navbar.css';
 
 export const Navbar = () => {
   const [saleTime] = useState<boolean>(false);
-
-  const [cart] = useAtom(cartAtom)
-  const [, setFavourites] = useAtom(favouritesAtom)
-
-  const resetFavourites = () => {
-    setFavourites([]);
-  }
 
   return (
     <nav>
@@ -47,8 +38,6 @@ export const Navbar = () => {
           <img className="button-icon" src="shopping-cart.svg" />
           <span>Cart</span>
         </Link>
-        <div className="nav-button" onClick={resetFavourites}>Clear favs</div>
-        <div className="nav-button" onClick={() => console.log(cart)}>Console log cart</div>
       </div>
     </nav>
   )
