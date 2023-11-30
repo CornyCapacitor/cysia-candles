@@ -1,19 +1,19 @@
 .candles {
-  display: flex;
   align-items: center;
-  justify-content: center;
+  display: flex;
   flex-wrap: wrap;
-  padding: 20px;
   gap: 20px;
+  justify-content: center;
+  padding: 20px;
 }
 
 .candles-info {
-  display: flex;
   align-items: center;
-  justify-content: center;
-  width: 90%;
-  border-radius: 10px;
   background-color: white;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
   padding: 5px;
   text-align: center;
+  width: 90%;
 }
