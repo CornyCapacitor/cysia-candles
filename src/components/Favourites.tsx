@@ -15,7 +15,7 @@ export const Favourites = () => {
 
   return (
     <div className={`favourites ${theme === "light" ? "light-toned-bg" : "dark-bg"}`}>
-      <div className="favourites-info">
+      <div className={`favourites-info ${theme === "light" ? "light-bg black-font" : "dark-toned-bg white-font"}`}>
         {favourites.length > 0 ?
           <span>Here are your favourite candles.</span>
           :
