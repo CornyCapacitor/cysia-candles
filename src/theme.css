@@ -44,6 +44,7 @@
 
 .dark-var-outline {
   outline-color: var(--secondary);
+  outline-offset: 2px;
 }
 
 .light-var-border {

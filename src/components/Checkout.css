@@ -10,13 +10,11 @@
 .checkbox {
   height: 20px;
   margin: 0;
-  outline-color: var(--primary);
   width: 20px;
 }
 
 .checkout-display {
   align-items: flex-start;
-  background-color: #ffffff;
   border-radius: 10px;
   display: flex;
   gap: 20px;
@@ -54,6 +52,7 @@
   align-items: center;
   display: flex;
   justify-content: center;
+  min-height: 100vh;
 }
 
 .comments {
@@ -64,7 +63,6 @@
   max-width: 360px;
   min-width: 360px;
   min-height: 120px;
-  outline-color: var(--primary);
   padding: 5px 20px;
 
   @media (max-width: 550px) {
@@ -75,7 +73,6 @@
 
 .customer-button {
   align-self: center;
-  background-color: var(--primary);
   border: none;
   color: #ffffff;
   font-family: Poppins;
@@ -115,7 +112,6 @@
 .customer-header {
   align-items: center;
   align-self: center;
-  background-color: var(--primary);
   color: #ffffff;
   display: flex;
   font-size: 18px;
@@ -141,7 +137,6 @@
   box-shadow: 0px 0px 1px 1px #808080;
   font-family: Poppins, sans-serif;
   height: 30px;
-  outline-color: var(--primary);
   padding: 5px 20px;
   width: 360px;
 
@@ -156,7 +151,6 @@
   box-shadow: 0px 0px 1px 1px #808080;
   font-family: Poppins, sans-serif;
   height: 40px;
-  outline-color: var(--primary);
   padding: 5px 20px;
   width: 100%;
 }
@@ -186,7 +180,6 @@
 .delivery-header {
   align-items: center;
   align-self: center;
-  background-color: var(--primary);
   color: #ffffff;
   display: flex;
   font-size: 18px;
@@ -283,7 +276,6 @@
 .payment-header {
   align-items: center;
   align-self: center;
-  background-color: var(--primary);
   color: #ffffff;
   display: flex;
   font-size: 18px;
@@ -303,7 +295,6 @@
   align-self: center;
   height: 20px;
   margin: 0;
-  outline-color: var(--primary);
   width: 20px;
 
   &:hover {
@@ -314,7 +305,6 @@
 .section-header {
   align-items: center;
   align-self: center;
-  background-color: var(--primary);
   color: #ffffff;
   display: flex;
   font-size: 18px;
@@ -336,7 +326,6 @@
   box-shadow: 0px 0px 1px 1px #808080;
   font-family: Poppins, sans-serif;
   height: 30px;
-  outline-color: var(--primary);
   padding: 5px 20px;
   width: 140px;
 
@@ -375,7 +364,6 @@
 .summary-header {
   align-items: center;
   align-self: center;
-  background-color: var(--primary);
   color: #ffffff;
   display: flex;
   font-size: 18px;
