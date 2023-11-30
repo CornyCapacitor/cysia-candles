@@ -54,6 +54,16 @@
   border-color: var(--secondary);
 }
 
-.test {
-  color: blue;
+.black-hover {
+  &:hover {
+    color: #000000;
+    background-color: #bbbbbb;
+  }
+}
+
+.white-hover {
+  &:hover {
+    color: #ffffff;
+    background-color: #bbbbbb;
+  }
 }
