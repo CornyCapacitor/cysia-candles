@@ -1,10 +1,21 @@
 /* eslint-disable react-hooks/rules-of-hooks */
+import { useAtom } from 'jotai';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { themeAtom } from '../atoms';
 import './Navbar.css';
 
 export const Navbar = () => {
   const [saleTime] = useState<boolean>(false);
+  const [theme, setTheme] = useAtom(themeAtom)
+
+  const changeTheme = (theme: string) => {
+    if (theme === "light") {
+      setTheme("dark")
+    } else if (theme === "dark") {
+      setTheme("light")
+    }
+  }
 
   return (
     <nav>
@@ -38,6 +49,9 @@ export const Navbar = () => {
           <img className="button-icon" src="shopping-cart.svg" />
           <span>Cart</span>
         </Link>
+        <div className="nav-button" onClick={() => changeTheme(theme)}>
+          <span>Switch to {theme === "light" ? <>dark</> : <>light</>} theme</span>
+        </div>
       </div>
     </nav>
   )
