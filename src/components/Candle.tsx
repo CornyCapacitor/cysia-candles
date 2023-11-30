@@ -2,7 +2,8 @@ import { useAtom } from 'jotai';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
-import { cartAtom, favouritesAtom } from '../atoms';
+import { cartAtom, favouritesAtom, themeAtom } from '../atoms';
+import '../theme.css';
 import './Candle.css';
 
 type CandleProps = {
@@ -16,6 +17,7 @@ export const Candle = ({ image, name }: CandleProps) => {
   const [selectedQuantity, setSelectedQuantity] = useState<string | number>(1);
   const [cart, setCart] = useAtom(cartAtom)
   const [favourites, setFavourites] = useAtom(favouritesAtom)
+  const [theme] = useAtom(themeAtom)
 
   const navigate = useNavigate();
 
@@ -92,33 +94,33 @@ export const Candle = ({ image, name }: CandleProps) => {
   const isFavourite = favourites.some(item => item.name === nameToCheck)
 
   return (
-    <div className="candle">
+    <div className={`candle ${theme === "light" ? "light-bg" : "dark-toned-bg"}`}>
       <img className="candle-image" src={`${image}`} alt={`Image of a ${name}`} />
-      <span className="candle-name">{name}</span>
+      <span className={`candle-name ${theme === "light" ? "light-var-font" : "dark-var-font"}`}>{name}</span>
       <div className="candle-selections">
         <div className="candle-selection">
-          <span className="candle-header">Select volume:</span>
-          <select className="candle-select" value={selectedVolume} onChange={(e) => setSelectedVolume(e.target.value)}>
+          <span className={`candle-header ${theme === "light" ? "light-var-font" : "dark-var-font"}`}>Select volume:</span>
+          <select className={`candle-select ${theme === "light" ? "light-var-outline light-var-border" : "dark-var-outline dark-var-border dark-toned-bg white-font"}`} value={selectedVolume} onChange={(e) => setSelectedVolume(e.target.value)}>
             <option value="130ml">130ml</option>
             <option value="250ml">250ml</option>
           </select>
         </div>
         <div className="candle-selection">
-          <span className="candle-header">Select color:</span>
-          <input className="candle-color" type="color" value={selectedColor} onChange={(e) => setSelectedColor(e.target.value)} />
+          <span className={`candle-header ${theme === "light" ? "light-var-font" : "dark-var-font"}`}>Select color:</span>
+          <input className={`candle-color ${theme === "light" ? "light-var-outline light-var-border" : "dark-var-outline dark-var-border dark-toned-bg white-font"}`} type="color" value={selectedColor} onChange={(e) => setSelectedColor(e.target.value)} />
         </div>
         <div className="candle-selection">
-          <span className="candle-header">Quantity:</span>
-          <select className="candle-select" value={selectedQuantity} onChange={(e) => setSelectedQuantity(e.target.value)}>
+          <span className={`candle-header ${theme === "light" ? "light-var-font" : "dark-var-font"}`}>Quantity:</span>
+          <select className={`candle-select ${theme === "light" ? "light-var-outline light-var-border" : "dark-var-outline dark-var-border dark-toned-bg white-font"}`} value={selectedQuantity} onChange={(e) => setSelectedQuantity(e.target.value)}>
             {options.map((value) => (
               <option key={value} value={value}>{value}</option>
             ))}
           </select>
         </div>
       </div>
-      <span className="candle-price">{candlePrice.toFixed(2)}</span>
-      <button className="candle-button" onClick={addToCart}>Add to cart</button>
-      <img src={isFavourite ? "/public/red-heart.svg" : "/public/empty-heart.svg"} className="favourite-icon" onClick={() => addToFavourites()} />
+      <span className={`candle-price ${theme === "light" ? "light-var-font" : "dark-var-font"}`}>{candlePrice.toFixed(2)}</span>
+      <button className={`candle-button ${theme === "light" ? "light-var-bg" : "dark-var-bg"}`} onClick={addToCart}>Add to cart</button>
+      <img src={isFavourite ? "/public/red-heart.svg" : theme === "light" ? "/public/black-border-heart.svg" : "/public/white-border-heart.svg"} className="favourite-icon" onClick={() => addToFavourites()} />
     </div>
   )
 }
