@@ -96,7 +96,7 @@ export const Contact = () => {
                 <option value={topic} key={topic}>{topic}</option>
               ))}
             </select>
-            <textarea className="contact-comments" placeholder="" value={comment} onChange={(e) => setComment(e.target.value)} />
+            <textarea className="contact-comments" placeholder="Describe your topic here" value={comment} onChange={(e) => setComment(e.target.value)} />
             <button className="contact-button" onClick={(e) => handleSend(e)}>Send</button>
             {contactErrors.length !== 0 ?
               <div className="contact-error-list">
