@@ -68,6 +68,10 @@ export const Candle = ({ image, name }: CandleProps) => {
 
   const options = Array.from({ length: 20 }, (_, index) => index + 1)
 
+  const addToFavourites = () => {
+    console.log(`Adding ${name} to favourites!`)
+  }
+
   return (
     <div className="candle">
       <img className="candle-image" src={`${image}`} alt={`Image of a ${name}`} />
@@ -95,6 +99,7 @@ export const Candle = ({ image, name }: CandleProps) => {
       </div>
       <span className="candle-price">{candlePrice.toFixed(2)}</span>
       <button className="candle-button" onClick={addToCart}>Add to cart</button>
+      <img src="/public/heart.svg" className="favourite-icon" onClick={() => addToFavourites()} />
     </div>
   )
 }

@@ -134,8 +134,8 @@
 .favourite-icon {
   width: 30px;
   position: absolute;
-  margin-top: -500px;
-  margin-right: -250px;
+  margin-top: -570px;
+  margin-right: -260px;
 
   &:hover {
     cursor: pointer;
