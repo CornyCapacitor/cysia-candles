@@ -78,13 +78,18 @@ export const Candle = ({ image, name }: CandleProps) => {
       const existingItem = updatedFavourites[existingItemIndex];
 
       if (existingItem) {
-        console.log("Item is already your favourite!")
+        console.log(`Removing ${name} from favourites!`);
+        updatedFavourites.splice(existingItemIndex, 1);
+        setFavourites(updatedFavourites);
       }
     } else {
       setFavourites((prevFavourites) => [...prevFavourites, newItem]);
       console.log(`Adding ${name} to favourites!`)
     }
   }
+
+  const nameToCheck = name;
+  const isFavourite = favourites.some(item => item.name === nameToCheck)
 
   return (
     <div className="candle">
@@ -113,7 +118,7 @@ export const Candle = ({ image, name }: CandleProps) => {
       </div>
       <span className="candle-price">{candlePrice.toFixed(2)}</span>
       <button className="candle-button" onClick={addToCart}>Add to cart</button>
-      <img src="/public/heart.svg" className="favourite-icon" onClick={() => addToFavourites()} />
+      <img src={isFavourite ? "/public/red-heart.svg" : "/public/empty-heart.svg"} className="favourite-icon" onClick={() => addToFavourites()} />
     </div>
   )
 }
