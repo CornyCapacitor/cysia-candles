@@ -1,5 +1,6 @@
 import { useAtom } from 'jotai';
 import { favouritesAtom, themeAtom } from "../atoms";
+import '../theme.css';
 import { Candle } from "./Candle";
 import './Favourites.css';
 

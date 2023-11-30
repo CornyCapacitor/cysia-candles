@@ -3,6 +3,7 @@ import { useAtom } from 'jotai';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { languageAtom, themeAtom } from '../atoms';
+import '../theme.css';
 import './Navbar.css';
 
 export const Navbar = () => {

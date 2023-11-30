@@ -27,10 +27,8 @@
 }
 
 .cart-button {
-  background-color: var(--primary);
   border: none;
   color: #ffffff;
-  filter: brightness(85%);
   font-family: Poppins;
   font-size: 18px;
   font-weight: 500;
@@ -49,6 +47,7 @@
   }
 
   &:hover {
+    filter: brightness(85%);
     cursor: pointer;
   }
 }
@@ -95,7 +94,6 @@
 
 .cart-display {
   align-items: center;
-  background-color: white;
   border-radius: 10px;
   display: flex;
   flex-direction: column;
@@ -108,7 +106,6 @@
 
 .cart-header {
   align-items: center;
-  background-color: var(--primary);
   border-radius: 5px;
   color: white;
   display: flex;
@@ -160,7 +157,6 @@
 .cart-select {
   background-color: var(--primary);
   border-radius: 20px;
-  box-shadow: 0px 0px 10px 3px var(--primary);
   height: 25px;
   transition: 0.2s;
   width: 25px;
