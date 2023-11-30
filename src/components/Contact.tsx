@@ -1,7 +1,10 @@
+import { useAtom } from 'jotai';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import { themeAtom } from '../atoms';
 import supabase from '../config/supabaseClient';
+import '../theme.css';
 import './Contact.css';
 
 export const Contact = () => {
@@ -10,6 +13,7 @@ export const Contact = () => {
   const [topic, setTopic] = useState<string>("");
   const [comment, setComment] = useState<string>("");
   const [contactErrors, setContactErrors] = useState<string[]>([]);
+  const [theme] = useAtom(themeAtom)
 
   const navigate = useNavigate()
 
@@ -84,20 +88,20 @@ export const Contact = () => {
   }
 
   return (
-    <div className="contact-page">
-      <div className="contact-display">
+    <div className={`contact-page ${theme === "light" ? "light-toned-bg" : "dark-bg"}`}>
+      <div className={`contact-display ${theme === "light" ? "light-bg" : "dark-toned-bg"}`}>
         <div className="contact-details">
-          <header className="contact-header">Ask us a question</header>
+          <header className={`contact-header ${theme === "light" ? "light-var-bg" : "dark-var-bg"}`}>Ask us a question</header>
           <form className="contact-form">
-            <input className="contact-input" type="textbox" placeholder="E-mail adress" value={email} onChange={(e) => setEmail(e.target.value)} />
-            <select className="contact-select" value={topic} onChange={(e) => setTopic(e.target.value)}>
+            <input className={`contact-input ${theme === "light" ? "light-var-outline" : "dark-var-outline"}`} type="textbox" placeholder="E-mail adress" value={email} onChange={(e) => setEmail(e.target.value)} />
+            <select className={`contact-select ${theme === "light" ? "light-var-outline" : "dark-var-outline"}`} value={topic} onChange={(e) => setTopic(e.target.value)}>
               <option value="" disabled>Choose the topic</option>
               {topics.map((topic) => (
                 <option value={topic} key={topic}>{topic}</option>
               ))}
             </select>
-            <textarea className="contact-comments" placeholder="Describe your topic here" value={comment} onChange={(e) => setComment(e.target.value)} />
-            <button className="contact-button" onClick={(e) => handleSend(e)}>Send</button>
+            <textarea className={`contact-comments ${theme === "light" ? "light-var-outline" : "dark-var-outline"}`} placeholder="Describe your topic here" value={comment} onChange={(e) => setComment(e.target.value)} />
+            <button className={`contact-button ${theme === "light" ? "light-var-bg" : "dark-var-bg"}`} onClick={(e) => handleSend(e)}>Send</button>
             {contactErrors.length !== 0 ?
               <div className="contact-error-list">
                 {contactErrors.map((error, index) => (
