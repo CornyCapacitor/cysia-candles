@@ -2,7 +2,7 @@ import { useAtom } from 'jotai';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
-import { cartAtom } from '../atoms';
+import { cartAtom, favouritesAtom } from '../atoms';
 import './Candle.css';
 
 type CandleProps = {
@@ -15,6 +15,7 @@ export const Candle = ({ image, name }: CandleProps) => {
   const [selectedColor, setSelectedColor] = useState<string>("#ffffff");
   const [selectedQuantity, setSelectedQuantity] = useState<string | number>(1);
   const [cart, setCart] = useAtom(cartAtom)
+  const [favourites, setFavourites] = useAtom(favouritesAtom)
 
   const navigate = useNavigate();
 
@@ -69,7 +70,20 @@ export const Candle = ({ image, name }: CandleProps) => {
   const options = Array.from({ length: 20 }, (_, index) => index + 1)
 
   const addToFavourites = () => {
-    console.log(`Adding ${name} to favourites!`)
+    const newItem = { id: Math.random(), name: name, image: image };
+    const existingItemIndex = favourites.findIndex(item => item.name === name);
+
+    if (existingItemIndex !== -1) {
+      const updatedFavourites = [...favourites];
+      const existingItem = updatedFavourites[existingItemIndex];
+
+      if (existingItem) {
+        console.log("Item is already your favourite!")
+      }
+    } else {
+      setFavourites((prevFavourites) => [...prevFavourites, newItem]);
+      console.log(`Adding ${name} to favourites!`)
+    }
   }
 
   return (
