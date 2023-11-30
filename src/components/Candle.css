@@ -1,106 +1,55 @@
 .candle {
+  align-items: center;
+  background-color: #ffffff;
+  border-radius: 5px;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 300px;
-  padding: 10px;
   gap: 5px;
-  background-color: #ffffff;
+  justify-content: center;
+  padding: 10px;
   transition: 0.2s;
-  border-radius: 5px;
+  width: 300px;
 
   &:hover {
     box-shadow: 0px 0px 10px 1px gray;
   }
 }
 
-.candle-image {
-  width: 280px;
-  margin-bottom: 10px;
-}
-
-.candle-name {
-  font-size: 20px;
+.candle-button {
+  background-color: var(--primary);
+  border: none;
+  color: #ffffff;
+  font-family: Poppins;
+  font-size: 18px;
   font-weight: 500;
-  color: var(--primary);
+  height: 50px;
   transition: 0.2s;
+  width: 90%;
 
   &:hover {
     cursor: pointer;
     filter: brightness(85%);
   }
-}
-
-.confirm-button,
-.cancel-button {
-  font-family: Poppins, arial;
-}
-
-.confirm-button {
-  background-color: #f568a9 !important;
-}
-
-.cancel-button {
-  background-color: #12bca2 !important;
-}
-
-.candle-selections {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  gap: 10px;
-}
-
-.candle-selection {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  flex-direction: column;
-}
-
-.candle-select {
-  height: 30px;
-  width: 70%;
-  border: solid 1px var(--primary);
-  border-radius: 5px;
-  font-family: Poppins;
-  text-align: center;
-  outline-color: var(--primary);
 }
 
 .candle-color {
-  height: 30px;
-  width: 70%;
   border: solid 1px var(--primary);
   border-radius: 5px;
+  height: 30px;
   outline-color: var(--primary);
+  width: 70%;
 }
 
-.candle-price {
-  font-size: 20px;
-  font-weight: 500;
-  color: var(--primary);
-}
-
-.candle-button {
-  width: 90%;
-  font-size: 18px;
-  font-family: Poppins;
-  font-weight: 500;
-  background-color: var(--primary);
-  border: none;
-  height: 50px;
+.candle-discount {
+  background-color: var(--secondary);
   color: #ffffff;
-  transition: 0.2s;
-
-  &:hover {
-    cursor: pointer;
-    filter: brightness(85%);
-  }
+  display: flex;
+  height: 30px;
+  justify-content: center;
+  margin-left: -235px;
+  margin-top: -500px;
+  position: absolute;
+  width: 50px;
 }
 
 .candle-discount-container {
@@ -108,36 +57,83 @@
   gap: 10px;
 }
 
-.original-price {
-  text-decoration-line: line-through;
-  color: #808080;
-}
-
-.candle-discount {
-  position: absolute;
-  height: 30px;
-  width: 50px;
-  background-color: var(--secondary);
-  color: #ffffff;
-  margin-top: -500px;
-  margin-left: -235px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
 .candle-header {
   color: var(--primary);
   font-weight: 500;
 }
 
+.candle-image {
+  margin-bottom: 10px;
+  width: 280px;
+}
+
+.candle-name {
+  color: var(--primary);
+  font-size: 20px;
+  font-weight: 500;
+  transition: 0.2s;
+
+  &:hover {
+    cursor: pointer;
+    filter: brightness(85%);
+  }
+}
+
+.candle-price {
+  color: var(--primary);
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.candle-select {
+  border: solid 1px var(--primary);
+  border-radius: 5px;
+  font-family: Poppins;
+  height: 30px;
+  outline-color: var(--primary);
+  text-align: center;
+  width: 70%;
+}
+
+.candle-selection {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+}
+
+.candle-selections {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  justify-content: center;
+  width: 100%;
+}
+
+.cancel-button {
+  background-color: #12bca2 !important;
+  font-family: Poppins, arial;
+}
+
+.confirm-button {
+  background-color: #f568a9 !important;
+  font-family: Poppins, arial;
+}
+
 .favourite-icon {
-  width: 30px;
-  position: absolute;
-  margin-top: -570px;
   margin-right: -260px;
+  margin-top: -570px;
+  position: absolute;
+  width: 30px;
 
   &:hover {
     cursor: pointer;
   }
+}
+
+.original-price {
+  color: #808080;
+  text-decoration-line: line-through;
 }
