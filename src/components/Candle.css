@@ -1,6 +1,5 @@
 .candle {
   align-items: center;
-  background-color: #ffffff;
   border-radius: 5px;
   display: flex;
   flex-direction: column;
@@ -16,7 +15,6 @@
 }
 
 .candle-button {
-  background-color: var(--primary);
   border: none;
   color: #ffffff;
   font-family: Poppins;
@@ -33,10 +31,8 @@
 }
 
 .candle-color {
-  border: solid 1px var(--primary);
   border-radius: 5px;
   height: 30px;
-  outline-color: var(--primary);
   width: 70%;
 }
 
@@ -58,7 +54,6 @@
 }
 
 .candle-header {
-  color: var(--primary);
   font-weight: 500;
 }
 
@@ -68,7 +63,6 @@
 }
 
 .candle-name {
-  color: var(--primary);
   font-size: 20px;
   font-weight: 500;
   transition: 0.2s;
@@ -80,17 +74,14 @@
 }
 
 .candle-price {
-  color: var(--primary);
   font-size: 20px;
   font-weight: 500;
 }
 
 .candle-select {
-  border: solid 1px var(--primary);
   border-radius: 5px;
   font-family: Poppins;
   height: 30px;
-  outline-color: var(--primary);
   text-align: center;
   width: 70%;
 }

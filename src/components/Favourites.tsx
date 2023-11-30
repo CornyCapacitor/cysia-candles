@@ -1,5 +1,6 @@
 import { useAtom } from 'jotai';
-import { favouritesAtom } from "../atoms";
+import { favouritesAtom, themeAtom } from "../atoms";
+import '../theme.css';
 import { Candle } from "./Candle";
 import './Favourites.css';
 
@@ -11,10 +12,11 @@ type CandleProps = {
 
 export const Favourites = () => {
   const [favourites] = useAtom<CandleProps[]>(favouritesAtom)
+  const [theme] = useAtom(themeAtom)
 
   return (
-    <div className="favourites">
-      <div className="favourites-info">
+    <div className={`favourites ${theme === "light" ? "light-toned-bg" : "dark-bg"}`}>
+      <div className={`favourites-info ${theme === "light" ? "light-bg black-font" : "dark-toned-bg white-font"}`}>
         {favourites.length > 0 ?
           <span>Here are your favourite candles.</span>
           :
