@@ -27,7 +27,7 @@ export const Navbar = () => {
         <Link className="nav-button" to="/">
           Candles
         </Link>
-        <Link className="nav-button" to="/ask">
+        <Link className="nav-button" to="/contact">
           Ask us a question
         </Link>
         <Link className="nav-button" to="/favourites">
