@@ -1,5 +1,5 @@
 import { useAtom } from 'jotai'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { cartAtom, themeAtom } from '../atoms'
 import '../theme.css'
@@ -27,6 +27,10 @@ export const Cart = () => {
     setCart((p) => p.filter((candle) => !selected.includes(candle.id)))
     setSelected([]);
   };
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  })
 
   return (
     <div className={`cart-page ${theme === "light" ? "light-toned-bg" : "dark-bg"}`}>
