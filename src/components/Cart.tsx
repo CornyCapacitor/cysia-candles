@@ -30,7 +30,7 @@ export const Cart = () => {
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
-  })
+  }, [])
 
   return (
     <div className={`cart-page ${theme === "light" ? "light-toned-bg" : "dark-bg"}`}>
