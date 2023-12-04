@@ -1,5 +1,5 @@
 import { useAtom } from 'jotai';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { themeAtom } from '../atoms';
@@ -86,6 +86,14 @@ export const Contact = () => {
     e.preventDefault()
     validate()
   }
+
+  useEffect(() => {
+    const scrollToTop = () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    setTimeout(scrollToTop, 250)
+  }, [])
 
   return (
     <div className={`contact-page ${theme === "light" ? "light-toned-bg" : "dark-bg"}`}>

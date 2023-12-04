@@ -307,6 +307,14 @@ export const Checkout = () => {
     }
   }, [selectedPayment, paymentOptions])
 
+  useEffect(() => {
+    const scrollToTop = () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    setTimeout(scrollToTop, 250)
+  }, [])
+
   return (
     <div className={`checkout-page ${theme === "light" ? "light-toned-bg" : "dark-bg"}`}>
       <div className={`checkout-display ${theme === "light" ? "light-bg" : "dark-toned-bg"}`}>
