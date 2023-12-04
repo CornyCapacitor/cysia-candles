@@ -23,6 +23,10 @@ export const Cart = () => {
     }
   }
 
+  const selectAll = () => {
+    console.log("Selecting all cart items")
+  }
+
   const removeItems = () => {
     setCart((p) => p.filter((candle) => !selected.includes(candle.id)))
     setSelected([]);
@@ -70,9 +74,14 @@ export const Cart = () => {
             ))}
             <div className="bottom-section">
               <div className="bottom-upper-section">
-                {selected.length > 0 ?
-                  <button className={`cart-button ${theme === "light" ? "light-var-bg" : "dark-var-bg"}`} onClick={() => removeItems()}>Delete selected items</button>
-                  : <span></span>}
+                <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+                  {cart.length > 1 ?
+                    <button className={`cart-button ${theme === "light" ? "light-var-bg" : "dark-var-bg"}`} onClick={() => selectAll()}>Select all</button>
+                    : <></>}
+                  {selected.length > 0 ?
+                    <button className={`cart-button ${theme === "light" ? "light-var-bg" : "dark-var-bg"}`} onClick={() => removeItems()}>Delete selected items</button>
+                    : <span></span>}
+                </div>
                 <div className={`total-price ${theme === "light" ? "black-font" : "white-font"}`}>
                   <span>Total price:</span>
                   <span>{totalPrice}</span>
