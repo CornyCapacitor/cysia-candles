@@ -34,6 +34,14 @@ export const Candles = () => {
     fetchCandles();
   }, []);
 
+  useEffect(() => {
+    const scrollToTop = () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    setTimeout(scrollToTop, 250)
+  }, [])
+
   return (
     <div className={`candles ${theme === "light" ? "light-toned-bg" : "dark-bg"}`}>
       <div className={`candles-info ${theme === "light" ? "light-bg black-font" : "dark-toned-bg white-font"}`}>

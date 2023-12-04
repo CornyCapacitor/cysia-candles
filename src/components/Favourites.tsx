@@ -1,4 +1,5 @@
 import { useAtom } from 'jotai';
+import { useEffect } from 'react';
 import { favouritesAtom, themeAtom } from "../atoms";
 import '../theme.css';
 import { Candle } from "./Candle";
@@ -13,6 +14,14 @@ type CandleProps = {
 export const Favourites = () => {
   const [favourites] = useAtom<CandleProps[]>(favouritesAtom)
   const [theme] = useAtom(themeAtom)
+
+  useEffect(() => {
+    const scrollToTop = () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    setTimeout(scrollToTop, 250)
+  }, [])
 
   return (
     <div className={`favourites ${theme === "light" ? "light-toned-bg" : "dark-bg"}`}>
