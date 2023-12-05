@@ -8,6 +8,7 @@ import './Cart.css'
 export const Cart = () => {
   const [cart, setCart] = useAtom(cartAtom)
   const [selected, setSelected] = useState<number[]>([]);
+  const [selectedAll, setSelectedAll] = useState<boolean>(false);
   const [theme] = useAtom(themeAtom);
 
   const totalPrice = cart.reduce((sum, candle) => {
@@ -24,7 +25,19 @@ export const Cart = () => {
   }
 
   const selectAll = () => {
+    if (!selectedAll) {
+      const allIds = cart.map(item => item.id)
+      setSelected(allIds)
+      setSelectedAll(true);
+    } else if (selectedAll) {
+      setSelected([])
+      setSelectedAll(false);
+    }
     console.log("Selecting all cart items")
+  }
+
+  const isCandleSelected = (id: number) => {
+    return selected.includes(id);
   }
 
   const removeItems = () => {
@@ -57,7 +70,7 @@ export const Cart = () => {
             {cart.map((candle) => (
               <div className={`cart-item ${theme === "light" ? "black-font" : "white-font"}`} key={candle.id}>
                 <div className="cart-width-medium">
-                  <input className={`cart-select ${theme === "light" ? "light-var-shadow" : "dark-var-shadow"}`} type="checkbox" onChange={() => selectItem(candle.id)} />
+                  <input className={`cart-select ${theme === "light" ? "light-var-shadow" : "dark-var-shadow"}`} type="checkbox" onChange={() => selectItem(candle.id)} checked={isCandleSelected(candle.id)} />
                 </div>
                 <img className="cart-image cart-width-medium" src={candle.image} />
                 <div className="cart-name cart-width-large">{candle.name}</div>
@@ -76,7 +89,7 @@ export const Cart = () => {
               <div className="bottom-upper-section">
                 <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
                   {cart.length > 1 ?
-                    <button className={`cart-button ${theme === "light" ? "light-var-bg" : "dark-var-bg"}`} onClick={() => selectAll()}>Select all</button>
+                    <button className={`cart-button ${theme === "light" ? "light-var-bg" : "dark-var-bg"}`} onClick={() => selectAll()}>{selectedAll ? <>Unselect all</> : <>Select all</>}</button>
                     : <></>}
                   {selected.length > 0 ?
                     <button className={`cart-button ${theme === "light" ? "light-var-bg" : "dark-var-bg"}`} onClick={() => removeItems()}>Delete selected items</button>
