@@ -189,9 +189,23 @@ export const Checkout = () => {
     }
 
     const proceed = () => {
+
+      let themeBackground
+      let themeColor
+
+      if (theme === "light") {
+        themeBackground = "#ffffff"
+        themeColor = "#000000"
+      } else if (theme === "dark") {
+        themeBackground = "#000000"
+        themeColor = "#ffffff"
+      }
+
       Swal.fire({
         icon: 'info',
         iconColor: '#f568a9',
+        background: `${themeBackground}`,
+        color: `${themeColor}`,
         title: `Normaly you'd be sent to payment window right now, but instead, we've noticed your order and we'll message you when the order is ready :)`,
       }).then((result) => {
         if (result.isConfirmed || result.dismiss) {
