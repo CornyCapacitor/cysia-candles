@@ -42,6 +42,17 @@ export const Candle = ({ image, name }: CandleProps) => {
       setCart((prevCart) => [...prevCart, itemToAdd]);
     }
 
+    let themeBackground
+    let themeColor
+
+    if (theme === "light") {
+      themeBackground = "#ffffff"
+      themeColor = "#000000"
+    } else if (theme === "dark") {
+      themeBackground = "#000000"
+      themeColor = "#ffffff"
+    }
+
     Swal.fire({
       icon: 'success',
       title: `You've added ${selectedQuantity} ${name} candle(s) to cart!`,
@@ -49,6 +60,8 @@ export const Candle = ({ image, name }: CandleProps) => {
       cancelButtonText: "Continue shopping",
       showConfirmButton: true,
       confirmButtonText: "Cart",
+      background: `${themeBackground}`,
+      color: `${themeColor}`,
       timer: 5000,
       customClass: {
         confirmButton: "confirm-button",
