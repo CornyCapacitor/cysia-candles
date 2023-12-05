@@ -93,7 +93,7 @@ export const Cart = () => {
                 </Link>
               </div>
             </div>
-          </> : <>Cart is empty</>}
+          </> : <span className={theme === "light" ? "black-font" : "white-font"}>Cart is empty</span>}
       </div>
     </div>
   )
