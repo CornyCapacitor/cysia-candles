@@ -1,0 +1,70 @@
+.admin-page {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  justify-content: flex-start;
+  padding: 20px;
+  min-height: 1000px;
+}
+
+.auth-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  width: 100%;
+
+}
+
+.auth-info {
+  align-items: center;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  padding: 5px;
+  text-align: center;
+  width: 90%;
+  text-wrap: wrap;
+}
+
+.auth-input {
+  border: none;
+  box-shadow: 0px 0px 1px 1px #808080;
+  font-family: Poppins, sans-serif;
+  height: 30px;
+  padding: 5px 20px;
+  width: 360px;
+
+  @media (max-width: 550px) {
+    width: 260px;
+  }
+}
+
+.auth-button {
+  border: none;
+  color: #ffffff;
+  font-family: Poppins;
+  font-size: 18px;
+  font-weight: 500;
+  height: 50px;
+  transition: 0.2s;
+  width: 200px;
+
+  &:hover {
+    cursor: pointer;
+    filter: brightness(85%);
+  }
+}
+
+.admin-display {
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  align-items: center;
+  justify-content: flex-start;
+  border-radius: 5px;
+  padding: 10px;
+  gap: 10px;
+}
