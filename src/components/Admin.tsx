@@ -162,8 +162,8 @@ export const Admin = () => {
         <div className={`admin-display ${theme === "light" ? "light-bg black-font" : "dark-toned-bg white-font"}`}>
           <></>
           <button className={`admin-button ${theme === "light" ? "light-var-bg" : "dark-var-bg"}`} onClick={() => getCandles()}>Manage candles</button>
-          {candles ?
-            <div>
+          {candles.length > 0 ?
+            <div className="admin-section">
               {candles.map((candle) => (
                 <div key={candle.id} className="admin-candle">
                   <p className="admin-candle-info">{candle.id}</p>
@@ -175,64 +175,115 @@ export const Admin = () => {
             </div>
             : <></>}
           <button className={`admin-button ${theme === "light" ? "light-var-bg" : "dark-var-bg"}`} onClick={() => getQuestions()}>Show questions</button>
-          {questions ?
-            <div>
+          {questions.length > 0 ?
+            <div className="admin-section">
               {questions.map((question) => (
                 <div key={question.id} className="admin-question">
-                  <p>{question.id}</p>
-                  {cleanDate(question.created_at)}
-                  <p>{question.email}</p>
-                  <p>{question.topic}</p>
-                  <p>{question.comment}</p>
+                  <p className="admin-question-info">{question.id}</p>
+                  <p className="admin-question-info">{cleanDate(question.created_at)}</p>
+                  <p className="admin-question-info">{question.email}</p>
+                  <p className="admin-question-info">{question.topic}</p>
+                  <p className="admin-question-info">{question.comment}</p>
                 </div>
               ))}
             </div>
             : <></>}
           <button className={`admin-button ${theme === "light" ? "light-var-bg" : "dark-var-bg"}`} onClick={() => getOrders()}>Show orders</button>
-          {orders ?
-            <div>
+          {orders.length > 0 ?
+            <div className="admin-section">
               {orders.map((order) => (
-                <div key={order.id}>
-                  <p>{order.id}</p>
-                  <p>{cleanDate(order.created_at)}</p>
-                  <p>{order.customerType}</p>
-                  {order.customerType === "private-person" ?
-                    <p>{order.customerName}</p>
-                    :
-                    <p>{order.companyName}</p>
-                  }
-                  {order.customerType === "private-person" ?
-                    <p>{order.customerSecondName}</p>
-                    :
-                    <p>{order.companyNumber}</p>
-                  }
-                  {order.invoice ?
-                    <p>Invoice</p>
-                    :
-                    <p>No invoice</p>
-                  }
-                  <p>{order.streetName}</p>
-                  <p>{order.houseNumber}</p>
-                  <p>{order.apartmentValue}</p>
-                  <p>{order.city}</p>
-                  <p>{order.zipCode}</p>
-                  <p>{order.country}</p>
-                  <p>{order.phoneNumber}</p>
-                  <p>{order.email}</p>
-                  <p>{order.comments}</p>
-                  <p>{order.deliveryType}</p>
-                  <p>{order.paymentMethod}</p>
-                  <p>{order.totalPrice}</p>
-                  {order.items.map((item) => (
-                    <div key={item.id}>
-                      <p>{item.id}</p>
-                      <p>{item.name}</p>
-                      <p>{item.color}</p>
-                      <p>{item.image}</p>
-                      <p>{item.volume}</p>
-                      <p>{item.quantity}</p>
+                <div key={order.id} className="admin-order">
+                  <header>Order {order.id}</header>
+                  <div className="admin-order-section">
+                    <header>General info</header>
+                    <div className="admin-order-section-headers">
+                      <p className="admin-order-info">Id:</p>
+                      <p className="admin-order-info">Date:</p>
+                      <p className="admin-order-info">Customer type:</p>
+                      <p className="admin-order-info">{order.customerType === "private-person" ? "Customer name:" : "Company name:"}</p>
+                      <p className="admin-order-info">{order.customerType === "private-person" ? "Second name:" : "Company number:"}</p>
+                      <p className="admin-order-info">Invoice:</p>
                     </div>
-                  ))}
+                    <div className="admin-order-section-data">
+                      <p className="admin-order-info">{order.id}</p>
+                      <p className="admin-order-info">{cleanDate(order.created_at)}</p>
+                      <p className="admin-order-info">{order.customerType}</p>
+                      {order.customerType === "private-person" ?
+                        <p className="admin-order-info">{order.customerName}</p>
+                        :
+                        <p className="admin-order-info">{order.companyName}</p>
+                      }
+                      {order.customerType === "private-person" ?
+                        <p className="admin-order-info">{order.customerSecondName}</p>
+                        :
+                        <p className="admin-order-info">{order.companyNumber}</p>
+                      }
+                      {order.invoice ?
+                        <p className="admin-order-info">Yes</p>
+                        :
+                        <p className="admin-order-info">No</p>
+                      }
+                    </div>
+                  </div>
+                  <div className="admin-order-section">
+                    <header>Localization:</header>
+                    <div className="admin-order-section-headers">
+                      <p className="admin-order-info">Street name:</p>
+                      <p className="admin-order-info">House number:</p>
+                      <p className="admin-order-info">Apartment number</p>
+                      <p className="admin-order-info">City:</p>
+                      <p className="admin-order-info">Zip code:</p>
+                      <p className="admin-order-info">Country:</p>
+                    </div>
+                    <div className="admin-order-section-data">
+                      <p className="admin-order-info">{order.streetName}</p>
+                      <p className="admin-order-info">{order.houseNumber}</p>
+                      <p className="admin-order-info">{order.apartmentValue === "0" ? "-" : order.apartmentValue}</p>
+                      <p className="admin-order-info">{order.city}</p>
+                      <p className="admin-order-info">{order.zipCode}</p>
+                      <p className="admin-order-info">{order.country}</p>
+                    </div>
+                  </div>
+                  <div className="admin-order-section">
+                    <header>Purchase details:</header>
+                    <div className="admin-order-section-headers">
+                      <p className="admin-order-info">Phone number:</p>
+                      <p className="admin-order-info">Email:</p>
+                      <p className="admin-order-info">Delivery type:</p>
+                      <p className="admin-order-info">Payment method:</p>
+                      <p className="admin-order-info">Comments:</p>
+                      <p className="admin-order-info">Total price:</p>
+                    </div>
+                    <div className="admin-order-section-data">
+                      <p className="admin-order-info">{order.phoneNumber}</p>
+                      <p className="admin-order-info">{order.email}</p>
+                      <p className="admin-order-info">{order.deliveryType}</p>
+                      <p className="admin-order-info">{order.paymentMethod}</p>
+                      <p className="admin-order-info">{order.comments}</p>
+                      <p className="admin-order-info">{order.totalPrice}</p>
+                    </div>
+                  </div>
+                  <div className="admin-order-section">
+                    <header>Items:</header>
+                    <div className="admin-order-section-headers">
+                      <p className="admin-order-info">Id:</p>
+                      <p className="admin-order-info">Name:</p>
+                      <p className="admin-order-info">Color:</p>
+                      <p className="admin-order-info">Image:</p>
+                      <p className="admin-order-info">Volume:</p>
+                      <p className="admin-order-info">Quantity:</p>
+                    </div>
+                    {order.items.map((item) => (
+                      <div className="admin-order-section-data" key={item.id}>
+                        <p className="admin-order-info">{item.id}</p>
+                        <p className="admin-order-info">{item.name}</p>
+                        <p className="admin-order-info">{item.color}</p>
+                        <p className="admin-order-info">{item.image}</p>
+                        <p className="admin-order-info">{item.volume}</p>
+                        <p className="admin-order-info">{item.quantity}</p>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               ))}
             </div>
