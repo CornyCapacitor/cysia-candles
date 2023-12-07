@@ -80,10 +80,6 @@ export const Admin = () => {
     }
   }
 
-  const candleEdit = (id: number, name: string) => {
-    console.log(`Editing ${name} candle with id ${id}`)
-  }
-
   const getQuestions = () => {
     if (questions.length === 0) {
       const fetchQuestions = async () => {
@@ -131,7 +127,6 @@ export const Admin = () => {
 
         if (data) {
           setOrders(data);
-          console.log(data)
         }
       };
 
@@ -150,12 +145,28 @@ export const Admin = () => {
     }
   }
 
+  const deleteOrder = (orderId: number) => {
+    console.log("Deleting order with id " + orderId)
+  }
+
+  const deleteQuestion = (questionId: number) => {
+    console.log("Deleting question with id " + questionId)
+  }
+
+  const candleEdit = (id: number) => {
+    console.log(`Editing ${candles[id - 1].name} candle with id ${id}`)
+  }
+
+  const createNewCandle = () => {
+    console.log("Creating new candle!")
+  }
+
   return (
     <div className={`admin-page ${theme === "light" ? "light-toned-bg dark-font" : "dark-bg white-font"}`}>
       {!isAdmin ?
         <div className="auth-container">
           <span className={`auth-info ${theme === "light" ? "light-bg black-font" : "dark-toned-bg white-font"}`}>You probably shouldn't be here. If you should, please type correct password to proceed. Otherwise, you'll be sent to home page.</span>
-          <input className={`auth-input ${theme === "light" ? "light-var-outline" : "dark-var-outline"}`} type="textbox" placeholder="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+          <input className={`auth-input ${theme === "light" ? "light-var-outline" : "dark-var-outline"}`} type="password" placeholder="password" value={password} onChange={(e) => setPassword(e.target.value)} />
           <button className={`admin-button ${theme === "light" ? "light-var-bg" : "dark-var-bg"}`} onClick={() => validate()}>Validate</button>
         </div>
         :
@@ -163,130 +174,101 @@ export const Admin = () => {
           <></>
           <button className={`admin-button ${theme === "light" ? "light-var-bg" : "dark-var-bg"}`} onClick={() => getCandles()}>Manage candles</button>
           {candles.length > 0 ?
-            <div className="admin-section">
+            <section className="section">
               {candles.map((candle) => (
-                <div key={candle.id} className="admin-candle">
-                  <p className="admin-candle-info">{candle.id}</p>
-                  <p className="admin-candle-info">{candle.name}</p>
-                  <p className="admin-candle-info">{candle.image}</p>
-                  <button className={`admin-button ${theme === "light" ? "light-var-bg" : "dark-var-bg"}`} onClick={() => candleEdit(candle.id, candle.name)}>Edit this candle</button>
+                <div key={candle.id} className={`section-single ${theme === "light" ? "light-toned-bg dark-font" : "dark-bg white-font"}`}>
+                  <header className={theme === "light" ? "light-var-font" : "dark-var-font"}>{candle.name}</header>
+                  <img className="admin-candle-image" src={`${candle.image}`} />
+                  <button className={`admin-button ${theme === "light" ? "light-var-bg" : "dark-var-bg"}`} style={{ alignSelf: "center" }} onClick={() => candleEdit(candle.id)}>Edit candle</button>
                 </div>
               ))}
-            </div>
+              <div className={`section-single ${theme === "light" ? "light-toned-bg dark-font" : "dark-bg white-font"}`}>
+                <header className={theme === "light" ? "light-var-font" : "dark-var-font"}>Create new candle</header>
+                <img className="admin-candle-image" src={theme === "light" ? "black-circled-question-mark.svg" : "white-circled-question-mark.svg"} />
+                <button className={`admin-button ${theme === "light" ? "light-var-bg" : "dark-var-bg"}`} style={{ alignSelf: "center" }} onClick={() => createNewCandle()}>Create</button>
+              </div>
+            </section>
             : <></>}
           <button className={`admin-button ${theme === "light" ? "light-var-bg" : "dark-var-bg"}`} onClick={() => getQuestions()}>Show questions</button>
           {questions.length > 0 ?
-            <div className="admin-section">
+            <section className="section">
               {questions.map((question) => (
-                <div key={question.id} className="admin-question">
-                  <p className="admin-question-info">{question.id}</p>
-                  <p className="admin-question-info">{cleanDate(question.created_at)}</p>
-                  <p className="admin-question-info">{question.email}</p>
-                  <p className="admin-question-info">{question.topic}</p>
-                  <p className="admin-question-info">{question.comment}</p>
+                <div key={question.id} className={`section-single ${theme === "light" ? "light-toned-bg dark-font" : "dark-bg white-font"}`}>
+                  <header className={theme === "light" ? "light-var-font" : "dark-var-font"}>{question.id}</header>
+                  <div className="single-order-details">
+                    <header className={theme === "light" ? "light-var-font" : "dark-var-font"}>Date:</header>
+                    <span>{cleanDate(question.created_at)}</span>
+                    <header className={theme === "light" ? "light-var-font" : "dark-var-font"}>Email adress:</header>
+                    <span>{question.email}</span>
+                    <header className={theme === "light" ? "light-var-font" : "dark-var-font"}>Topic:</header>
+                    <span>{question.topic}</span>
+                    <header className={theme === "light" ? "light-var-font" : "dark-var-font"}>Comment:</header>
+                    <span>{question.comment}</span>
+                    <button className={`admin-button ${theme === "light" ? "light-var-bg" : "dark-var-bg"}`} style={{ alignSelf: "center" }} onClick={() => deleteQuestion(question.id)}>Delete question</button>
+                  </div>
                 </div>
               ))}
-            </div>
+            </section>
             : <></>}
           <button className={`admin-button ${theme === "light" ? "light-var-bg" : "dark-var-bg"}`} onClick={() => getOrders()}>Show orders</button>
           {orders.length > 0 ?
-            <div className="admin-section">
+            <section className="section">
               {orders.map((order) => (
-                <div key={order.id} className="admin-order">
-                  <header>Order {order.id}</header>
-                  <div className="admin-order-section">
-                    <header>General info</header>
-                    <div className="admin-order-section-headers">
-                      <p className="admin-order-info">Id:</p>
-                      <p className="admin-order-info">Date:</p>
-                      <p className="admin-order-info">Customer type:</p>
-                      <p className="admin-order-info">{order.customerType === "private-person" ? "Customer name:" : "Company name:"}</p>
-                      <p className="admin-order-info">{order.customerType === "private-person" ? "Second name:" : "Company number:"}</p>
-                      <p className="admin-order-info">Invoice:</p>
-                    </div>
-                    <div className="admin-order-section-data">
-                      <p className="admin-order-info">{order.id}</p>
-                      <p className="admin-order-info">{cleanDate(order.created_at)}</p>
-                      <p className="admin-order-info">{order.customerType}</p>
-                      {order.customerType === "private-person" ?
-                        <p className="admin-order-info">{order.customerName}</p>
-                        :
-                        <p className="admin-order-info">{order.companyName}</p>
-                      }
-                      {order.customerType === "private-person" ?
-                        <p className="admin-order-info">{order.customerSecondName}</p>
-                        :
-                        <p className="admin-order-info">{order.companyNumber}</p>
-                      }
-                      {order.invoice ?
-                        <p className="admin-order-info">Yes</p>
-                        :
-                        <p className="admin-order-info">No</p>
-                      }
-                    </div>
-                  </div>
-                  <div className="admin-order-section">
-                    <header>Localization:</header>
-                    <div className="admin-order-section-headers">
-                      <p className="admin-order-info">Street name:</p>
-                      <p className="admin-order-info">House number:</p>
-                      <p className="admin-order-info">Apartment number</p>
-                      <p className="admin-order-info">City:</p>
-                      <p className="admin-order-info">Zip code:</p>
-                      <p className="admin-order-info">Country:</p>
-                    </div>
-                    <div className="admin-order-section-data">
-                      <p className="admin-order-info">{order.streetName}</p>
-                      <p className="admin-order-info">{order.houseNumber}</p>
-                      <p className="admin-order-info">{order.apartmentValue === "0" ? "-" : order.apartmentValue}</p>
-                      <p className="admin-order-info">{order.city}</p>
-                      <p className="admin-order-info">{order.zipCode}</p>
-                      <p className="admin-order-info">{order.country}</p>
-                    </div>
-                  </div>
-                  <div className="admin-order-section">
-                    <header>Purchase details:</header>
-                    <div className="admin-order-section-headers">
-                      <p className="admin-order-info">Phone number:</p>
-                      <p className="admin-order-info">Email:</p>
-                      <p className="admin-order-info">Delivery type:</p>
-                      <p className="admin-order-info">Payment method:</p>
-                      <p className="admin-order-info">Comments:</p>
-                      <p className="admin-order-info">Total price:</p>
-                    </div>
-                    <div className="admin-order-section-data">
-                      <p className="admin-order-info">{order.phoneNumber}</p>
-                      <p className="admin-order-info">{order.email}</p>
-                      <p className="admin-order-info">{order.deliveryType}</p>
-                      <p className="admin-order-info">{order.paymentMethod}</p>
-                      <p className="admin-order-info">{order.comments}</p>
-                      <p className="admin-order-info">{order.totalPrice}</p>
-                    </div>
-                  </div>
-                  <div className="admin-order-section">
-                    <header>Items:</header>
-                    <div className="admin-order-section-headers">
-                      <p className="admin-order-info">Id:</p>
-                      <p className="admin-order-info">Name:</p>
-                      <p className="admin-order-info">Color:</p>
-                      <p className="admin-order-info">Image:</p>
-                      <p className="admin-order-info">Volume:</p>
-                      <p className="admin-order-info">Quantity:</p>
+                <div className={`section-single ${theme === "light" ? "light-toned-bg dark-font" : "dark-bg white-font"}`} key={order.id}>
+                  <header className={theme === "light" ? "light-var-font" : "dark-var-font"}>{order.id} ({order.customerType === "private-person" ? `Person` : `Company`}) </header>
+                  <div className="single-order-details">
+                    <header className={theme === "light" ? "light-var-font" : "dark-var-font"}>Date:</header>
+                    <span>{cleanDate(order.created_at)}</span>
+                    <header className={theme === "light" ? "light-var-font" : "dark-var-font"}>{order.customerType === "private-person" ? "Customer name:" : "Company name"}</header>
+                    <span>{order.customerType === "private-person" ? `${order.customerName}` : `${order.companyName}`}</span>
+                    <header className={theme === "light" ? "light-var-font" : "dark-var-font"}>{order.customerType === "private-person" ? "Second name:" : "Company number"}</header>
+                    <span>{order.customerType === "private-person" ? `${order.customerSecondName}` : `${order.companyNumber}`}</span>
+                    <header className={theme === "light" ? "light-var-font" : "dark-var-font"}>Wants invoice?</header>
+                    <span>{order.invoice ? `Yes` : `No`}</span>
+                    <header className={theme === "light" ? "light-var-font" : "dark-var-font"}>Street name:</header>
+                    <span>{order.streetName}</span>
+                    <header className={theme === "light" ? "light-var-font" : "dark-var-font"}>House number:</header>
+                    <span>{order.houseNumber}</span>
+                    <header className={theme === "light" ? "light-var-font" : "dark-var-font"}>Apartment number:</header>
+                    <span>{order.apartmentValue !== "0" ? `${order.apartmentValue}` : `-`}</span>
+                    <header className={theme === "light" ? "light-var-font" : "dark-var-font"}>Country:</header>
+                    <span>{order.country}</span>
+                    <header className={theme === "light" ? "light-var-font" : "dark-var-font"}>City:</header>
+                    <span>{order.city}</span>
+                    <header className={theme === "light" ? "light-var-font" : "dark-var-font"}>Zip code:</header>
+                    <span>{order.zipCode}</span>
+                    <header className={theme === "light" ? "light-var-font" : "dark-var-font"}>Phone number:</header>
+                    <span>{order.phoneNumber}</span>
+                    <header className={theme === "light" ? "light-var-font" : "dark-var-font"}>Email adress:</header>
+                    <span>{order.email}</span>
+                    <header className={theme === "light" ? "light-var-font" : "dark-var-font"}>Comments:</header>
+                    <span>{order.comments ? `${order.comments}` : `-`}</span>
+                    <header className={theme === "light" ? "light-var-font" : "dark-var-font"}>Delivery type:</header>
+                    <span>{order.deliveryType}</span>
+                    <header className={theme === "light" ? "light-var-font" : "dark-var-font"}>Payment method:</header>
+                    <span>{order.paymentMethod}</span>
+                    <header className={theme === "light" ? "light-var-font" : "dark-var-font"}>Items:</header>
+                    <div className="single-order-item">
+                      <span className="item-detail">Smell:</span>
+                      <span className="item-detail">Color:</span>
+                      <span className="item-detail">Volume:</span>
+                      <span className="item-detail">Quantity:</span>
                     </div>
                     {order.items.map((item) => (
-                      <div className="admin-order-section-data" key={item.id}>
-                        <p className="admin-order-info">{item.id}</p>
-                        <p className="admin-order-info">{item.name}</p>
-                        <p className="admin-order-info">{item.color}</p>
-                        <p className="admin-order-info">{item.image}</p>
-                        <p className="admin-order-info">{item.volume}</p>
-                        <p className="admin-order-info">{item.quantity}</p>
+                      <div className="single-order-item" key={item.id}>
+                        <span className="item-detail">{item.name}</span>
+                        <span className="item-detail">{item.color}</span>
+                        <span className="item-detail">{item.volume}</span>
+                        <span className="item-detail">{item.quantity}</span>
                       </div>
                     ))}
+                    <header className={theme === "light" ? "light-var-font" : "dark-var-font"}>Total price:</header>
+                    <span>{order.totalPrice} PLN</span>
+                    <button className={`admin-button ${theme === "light" ? "light-var-bg" : "dark-var-bg"}`} style={{ alignSelf: "center" }} onClick={() => deleteOrder(order.id)}>Delete order</button>
                   </div>
                 </div>
               ))}
-            </div>
+            </section>
             : <></>}
         </div>
       }
