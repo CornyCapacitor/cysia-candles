@@ -80,11 +80,11 @@ export const CandleCreate = () => {
     <div className={`admin-page ${theme === "light" ? "light-toned-bg dark-font" : "dark-bg white-font"}`}>
       <div className={`admin-display ${theme === "light" ? "light-bg black-font" : "dark-toned-bg white-font"}`}>
         <div className="section" style={{ borderTop: "none", paddingTop: "0px" }}>
-          <div className={`section-single ${theme === "light" ? "light-toned-bg dark-font" : "dark-bg white-font"}`}>
+          <div className={`section-single ${theme === "light" ? "light-toned-bg dark-font" : "dark-bg white-font"}`} style={{ gap: "5px" }}>
             <span className={theme === "light" ? "light-var-font" : "dark-var-font"}>Name:</span>
-            <input value={name} type="textbox" onChange={(e) => setName(e.target.value)} />
+            <input className={`admin-input ${theme === "light" ? "light-var-outline" : "dark-var-outline"}`} value={name} type="textbox" onChange={(e) => setName(e.target.value)} />
             <span className={theme === "light" ? "light-var-font" : "dark-var-font"}>Image path:</span>
-            <input value={image} type="textbox" onChange={(e) => setImage(e.target.value)} />
+            <input className={`admin-input ${theme === "light" ? "light-var-outline" : "dark-var-outline"}`} value={image} type="textbox" onChange={(e) => setImage(e.target.value)} />
             <span></span>
           </div>
           <div className={`section-single ${theme === "light" ? "light-toned-bg dark-font" : "dark-bg white-font"}`} style={{ alignSelf: "center" }}>

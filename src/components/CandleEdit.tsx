@@ -172,11 +172,12 @@ export const CandleEdit = () => {
               <header className={theme === "light" ? "light-var-font" : "dark-var-font"}>After</header>
               <span className={theme === "light" ? "light-var-font" : "dark-var-font"}>Id:</span>
               <span>{candle.id}</span>
-              <span className={theme === "light" ? "light-var-font" : "dark-var-font"}>Name:</span>
-              <input value={name} type="textbox" onChange={(e) => setName(e.target.value)} />
-              <span className={theme === "light" ? "light-var-font" : "dark-var-font"}>Image path:</span>
-              <input value={image} type="textbox" onChange={(e) => setImage(e.target.value)} />
-              <span></span>
+              <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "5px" }}>
+                <span className={theme === "light" ? "light-var-font" : "dark-var-font"}>Name:</span>
+                <input className={`admin-input ${theme === "light" ? "light-var-outline" : "dark-var-outline"}`} value={name} type="textbox" onChange={(e) => setName(e.target.value)} />
+                <span className={theme === "light" ? "light-var-font" : "dark-var-font"}>Image path:</span>
+                <input className={`admin-input ${theme === "light" ? "light-var-outline" : "dark-var-outline"}`} value={image} type="textbox" onChange={(e) => setImage(e.target.value)} />
+              </div>
             </div>
           </div>
           <div id={candleId} className={`section-single ${theme === "light" ? "light-toned-bg dark-font" : "dark-bg white-font"}`} style={{ alignSelf: "center" }}>
