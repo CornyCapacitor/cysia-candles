@@ -370,7 +370,7 @@ export const Admin = () => {
                         {order.items.map((item) => (
                           <div className="single-order-item" key={item.id}>
                             <span className="item-detail">{item.name}</span>
-                            <span className="item-detail">{item.color}</span>
+                            <span className="item-detail" style={{ backgroundColor: `${item.color}`, color: `${item.color}`, border: "solid 1px black" }}>{item.color}</span>
                             <span className="item-detail">{item.volume}</span>
                             <span className="item-detail">{item.quantity}</span>
                           </div>

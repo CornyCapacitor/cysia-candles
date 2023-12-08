@@ -182,7 +182,7 @@ export const CandleEdit = () => {
           </div>
           <div id={candleId} className={`section-single ${theme === "light" ? "light-toned-bg dark-font" : "dark-bg white-font"}`} style={{ alignSelf: "center" }}>
             <header className={theme === "light" ? "light-var-font" : "dark-var-font"}>Image display:</header>
-            <img className="admin-candle-image" src={`/${candle.image}`} />
+            <img className="admin-candle-image" src={`/${image}`} />
           </div>
         </div>
         <div style={{ display: "flex", gap: "20px" }}>
