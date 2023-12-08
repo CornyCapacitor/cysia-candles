@@ -28,3 +28,5 @@ export const favouritesCountAtom = atom((get) => {
 export const themeAtom = atomWithStorage('theme', 'light')
 
 export const languageAtom = atomWithStorage('language', 'eng')
+
+export const adminAtom = atomWithStorage('isAdmin', false)

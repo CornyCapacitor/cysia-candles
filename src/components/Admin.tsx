@@ -2,7 +2,7 @@ import { useAtom } from "jotai"
 import { useEffect, useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import Swal from "sweetalert2"
-import { themeAtom } from "../atoms"
+import { adminAtom, themeAtom } from "../atoms"
 import supabase from "../config/supabaseClient"
 import './Admin.css'
 
@@ -54,7 +54,7 @@ export const Admin = () => {
   // Auth states
   const [pagePassword] = useState<string>("adminos")
   const [password, setPassword] = useState<string>("");
-  const [isAdmin, setIsAdmin] = useState<boolean>(false);
+  const [isAdmin, setIsAdmin] = useAtom(adminAtom);
 
   // Management states
   const [candles, setCandles] = useState<Candle[]>([]);
@@ -263,6 +263,7 @@ export const Admin = () => {
     getOrders();
 
     setTimeout(scrollToTop, 250)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (
