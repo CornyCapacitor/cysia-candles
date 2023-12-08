@@ -77,7 +77,7 @@ export const Cart = () => {
                 <div className="cart-width-medium">{candle.quantity}</div>
                 <div className="cart-width-medium">{candle.volume}</div>
                 <div className="cart-candle-container cart-width-medium">
-                  <img className="cart-candle-image" src={theme === "light" ? "cart-candle.svg" : "gray-cart-candle.svg"} />
+                  <img className="cart-candle-image" src={theme === "light" ? "/cart-candle.svg" : "/gray-cart-candle.svg"} />
                   <div className="cart-candle-color" style={{ backgroundColor: `${candle.color}`, color: `${candle.color}` }}>{candle.color}</div>
                 </div>
                 <div className="cart-width-medium">

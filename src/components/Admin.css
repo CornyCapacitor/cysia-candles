@@ -48,6 +48,7 @@
   font-size: 18px;
   font-weight: 500;
   height: 50px;
+  min-width: 150px;
   transition: 0.2s;
   width: 200px;
 
@@ -95,18 +96,20 @@
 .admin-question {
   display: flex;
   flex-direction: row;
+  min-height: 50px;
   gap: 20px;
-  align-self: center;
-  align-items: center;
   justify-content: space-evenly;
   text-align: center;
   border: solid 1px;
-  padding: 5px 10px;
 }
 
 .admin-question-info {
   width: 200px;
   margin: 0px;
+  border-right: solid 1px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .admin-order {
@@ -136,8 +139,6 @@
 
 .admin-order-section-data {
   display: flex;
-  align-items: center;
-  justify-content: center;
   border: solid 1px;
   border-right: none;
 }
@@ -145,11 +146,9 @@
 .admin-order-info {
   width: 200px;
   min-height: 50px;
-  margin: 0px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  margin: 0;
   border-right: solid 1px;
+  overflow-wrap: break-word;
 }
 
 .admin-order-items-section {
@@ -168,4 +167,86 @@
   width: 100%;
   border: solid 1px;
   border-right: none;
+}
+
+.color-square {
+  display: flex;
+  width: 30px;
+  height: 30px;
+  box-shadow: 0px 0px 2px 1px gray;
+}
+
+.section {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  width: 90%;
+}
+
+.section-single {
+  display: flex;
+  width: 400px;
+  height: max-content;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  border-radius: 10px;
+  padding: 10px 20px;
+}
+
+.section-single header {
+  font-size: larger;
+  font-weight: 500;
+  margin: 10px;
+}
+
+.single-order-details {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.single-order-details header {
+  font-weight: 500;
+  font-size: medium;
+  margin: 0;
+}
+
+.single-order-item {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.item-detail {
+  display: flex;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  border: solid 1px;
+  width: 88px;
+  height: 50px;
+  word-break: break-all;
+}
+
+.admin-candle-image {
+  width: 300px;
+  margin-bottom: 10px;
+}
+
+.admin-input {
+  border: none;
+  box-shadow: 0px 0px 1px 1px #808080;
+  font-family: Poppins, sans-serif;
+  height: 30px;
+  padding: 5px 20px;
+  width: 360px;
+
+  @media (max-width: 550px) {
+    width: 260px;
+  }
 }
