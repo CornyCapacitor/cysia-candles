@@ -77,6 +77,7 @@ export const CandleEdit = () => {
         background: `${themeBackground}`,
         color: `${themeColor}`,
         title: `Name and image cannot be empty!`,
+        timer: 5000,
       })
       return
     }
