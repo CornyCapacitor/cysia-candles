@@ -107,6 +107,52 @@ export const CandleEdit = () => {
     }
   }
 
+  const handleDelete = (e: { preventDefault: () => void }) => {
+    e.preventDefault()
+
+    let themeBackground
+    let themeColor
+
+    if (theme === "light") {
+      themeBackground = "#ffffff"
+      themeColor = "#000000"
+    } else if (theme === "dark") {
+      themeBackground = "#000000"
+      themeColor = "#ffffff"
+    }
+
+    const deleteCandle = async () => {
+      const { data, error } = await supabase
+        .from('candles')
+        .delete()
+        .eq('id', candleId)
+
+      if (data) {
+        console.log(data)
+      }
+
+      if (error) {
+        console.error(error)
+      }
+    }
+
+    Swal.fire({
+      icon: 'info',
+      iconColor: '#f568a9',
+      background: `${themeBackground}`,
+      color: `${themeColor}`,
+      confirmButtonText: "Proceed",
+      title: `Are you sure you want to delete "${candle.name}" from database? You won't be able to revert this!`,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        deleteCandle()
+        navigate('/admin')
+      } else {
+        return
+      }
+    })
+  }
+
   return (
     <div className={`admin-page ${theme === "light" ? "light-toned-bg dark-font" : "dark-bg white-font"}`}>
       <div className={`admin-display ${theme === "light" ? "light-bg black-font" : "dark-toned-bg white-font"}`}>
@@ -140,6 +186,7 @@ export const CandleEdit = () => {
         </div>
         <div style={{ display: "flex", gap: "20px" }}>
           <button className={`admin-button ${theme === "light" ? "light-var-bg" : "dark-var-bg"}`} onClick={(e) => handleSubmit(e)}>Save changes</button>
+          <button className={`admin-button ${theme === "light" ? "light-var-bg" : "dark-var-bg"}`} onClick={(e) => handleDelete(e)}>Delete candle</button>
           <Link to="/admin">
             <button className={`admin-button ${theme === "light" ? "light-var-bg" : "dark-var-bg"}`}>Cancel editing</button>
           </Link>
