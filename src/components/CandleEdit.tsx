@@ -1,6 +1,7 @@
 import { useAtom } from "jotai"
 import { useEffect, useState } from "react"
-import { Link, useParams } from "react-router-dom"
+import { Link, useNavigate, useParams } from "react-router-dom"
+import Swal from "sweetalert2"
 import { themeAtom } from "../atoms"
 import supabase from "../config/supabaseClient"
 import './Admin.css'
@@ -22,6 +23,8 @@ export const CandleEdit = () => {
 
   const [name, setName] = useState<string>("");
   const [image, setImage] = useState<string>("");
+
+  const navigate = useNavigate()
 
   useEffect(() => {
     const scrollToTop = () => {
@@ -56,8 +59,25 @@ export const CandleEdit = () => {
   const handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault()
 
+    let themeBackground
+    let themeColor
+
+    if (theme === "light") {
+      themeBackground = "#ffffff"
+      themeColor = "#000000"
+    } else if (theme === "dark") {
+      themeBackground = "#000000"
+      themeColor = "#ffffff"
+    }
+
     if (!name || !image) {
-      console.error("Inputs cant be empty")
+      Swal.fire({
+        icon: 'error',
+        iconColor: '#e71f1f',
+        background: `${themeBackground}`,
+        color: `${themeColor}`,
+        title: `Name and image cannot be empty!`,
+      })
       return
     }
 
@@ -68,11 +88,21 @@ export const CandleEdit = () => {
       .select()
 
     if (error) {
-      console.error(error)
+      console.log(error)
     }
 
     if (data) {
-      console.log("Popup")
+      Swal.fire({
+        icon: 'info',
+        iconColor: '#f568a9',
+        background: `${themeBackground}`,
+        color: `${themeColor}`,
+        title: `You've succesfully updated candle!`,
+      }).then((result) => {
+        if (result.isConfirmed || result.dismiss) {
+          navigate('/admin')
+        }
+      })
     }
   }
 
