@@ -1,6 +1,7 @@
 import { useAtom } from "jotai"
 import { useEffect, useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
+import Swal from "sweetalert2"
 import { themeAtom } from "../atoms"
 import supabase from "../config/supabaseClient"
 import './Admin.css'
@@ -57,8 +58,11 @@ export const Admin = () => {
 
   // Management states
   const [candles, setCandles] = useState<Candle[]>([]);
+  const [showCandles, setShowCandles] = useState<boolean>(false);
   const [questions, setQuestions] = useState<Question[]>([]);
+  const [showQuestions, setShowQuestions] = useState<boolean>(false);
   const [orders, setOrders] = useState<Order[]>([]);
+  const [showOrders, setShowOrders] = useState<boolean>(false);
 
   const getCandles = () => {
     if (candles.length === 0) {
@@ -145,12 +149,100 @@ export const Admin = () => {
     }
   }
 
-  const deleteOrder = (orderId: number) => {
-    console.log("Deleting order with id " + orderId)
+  const deleteQuestion = (e: { preventDefault: () => void }, id: number) => {
+    e.preventDefault()
+
+    let themeBackground
+    let themeColor
+
+    if (theme === "light") {
+      themeBackground = "#ffffff"
+      themeColor = "#000000"
+    } else if (theme === "dark") {
+      themeBackground = "#000000"
+      themeColor = "#ffffff"
+    }
+
+    const deleteQuestion = async () => {
+      const { data, error } = await supabase
+        .from('contact')
+        .delete()
+        .eq('id', id)
+
+      if (data) {
+        console.log(data)
+      }
+
+      if (error) {
+        console.error(error)
+      }
+    }
+
+    Swal.fire({
+      icon: 'info',
+      iconColor: '#f568a9',
+      background: `${themeBackground}`,
+      color: `${themeColor}`,
+      confirmButtonText: "Proceed",
+      title: `Are you sure you want to delete "Question ${id}" from database? You won't be able to revert this!`,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        deleteQuestion()
+        setQuestions([])
+        Swal.fire(`Succesfully deleted "Question ${id}"`)
+        return
+      } else {
+        return
+      }
+    })
   }
 
-  const deleteQuestion = (questionId: number) => {
-    console.log("Deleting question with id " + questionId)
+  const deleteOrder = (e: { preventDefault: () => void }, id: number) => {
+    e.preventDefault()
+
+    let themeBackground
+    let themeColor
+
+    if (theme === "light") {
+      themeBackground = "#ffffff"
+      themeColor = "#000000"
+    } else if (theme === "dark") {
+      themeBackground = "#000000"
+      themeColor = "#ffffff"
+    }
+
+    const deleteOrder = async () => {
+      const { data, error } = await supabase
+        .from('orders')
+        .delete()
+        .eq('id', id)
+
+      if (data) {
+        console.log(data)
+      }
+
+      if (error) {
+        console.error(error)
+      }
+    }
+
+    Swal.fire({
+      icon: 'info',
+      iconColor: '#f568a9',
+      background: `${themeBackground}`,
+      color: `${themeColor}`,
+      confirmButtonText: "Proceed",
+      title: `Are you sure you want to delete "Order ${id}" from database? You won't be able to revert this!`,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        deleteOrder()
+        setOrders([])
+        Swal.fire(`Succesfully deleted "Order ${id}"`)
+        return
+      } else {
+        return
+      }
+    })
   }
 
   const candleEdit = (id: number) => {
@@ -166,6 +258,10 @@ export const Admin = () => {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
+    getCandles();
+    getQuestions();
+    getOrders();
+
     setTimeout(scrollToTop, 250)
   }, [])
 
@@ -180,9 +276,16 @@ export const Admin = () => {
         :
         <div className={`admin-display ${theme === "light" ? "light-bg black-font" : "dark-toned-bg white-font"}`}>
           <></>
-          <button className={`admin-button ${theme === "light" ? "light-var-bg" : "dark-var-bg"}`} onClick={() => getCandles()}>Manage candles</button>
-          {candles.length > 0 ?
+          <button className={`admin-button ${theme === "light" ? "light-var-bg" : "dark-var-bg"}`} onClick={() => setShowCandles(!showCandles)}>{showCandles ? "Hide candles" : "Show candles"}</button>
+          {showCandles === true ?
             <section className="section">
+              <div className={`section-single ${theme === "light" ? "light-toned-bg dark-font" : "dark-bg white-font"}`}>
+                <header className={theme === "light" ? "light-var-font" : "dark-var-font"}>Create new candle</header>
+                <img className="admin-candle-image" src={theme === "light" ? "/black-circled-question-mark.svg" : "/white-circled-question-mark.svg"} />
+                <Link to="/admin/create">
+                  <button className={`admin-button ${theme === "light" ? "light-var-bg" : "dark-var-bg"}`} style={{ alignSelf: "center" }} onClick={() => createNewCandle()}>Create</button>
+                </Link>
+              </div>
               {candles.map((candle) => (
                 <div key={candle.id} className={`section-single ${theme === "light" ? "light-toned-bg dark-font" : "dark-bg white-font"}`}>
                   <header className={theme === "light" ? "light-var-font" : "dark-var-font"}>{candle.name}</header>
@@ -192,94 +295,93 @@ export const Admin = () => {
                   </Link>
                 </div>
               ))}
-              <div className={`section-single ${theme === "light" ? "light-toned-bg dark-font" : "dark-bg white-font"}`}>
-                <header className={theme === "light" ? "light-var-font" : "dark-var-font"}>Create new candle</header>
-                <img className="admin-candle-image" src={theme === "light" ? "/black-circled-question-mark.svg" : "/white-circled-question-mark.svg"} />
-                <Link to="/admin/create">
-                  <button className={`admin-button ${theme === "light" ? "light-var-bg" : "dark-var-bg"}`} style={{ alignSelf: "center" }} onClick={() => createNewCandle()}>Create</button>
-                </Link>
-              </div>
             </section>
             : <></>}
-          <button className={`admin-button ${theme === "light" ? "light-var-bg" : "dark-var-bg"}`} onClick={() => getQuestions()}>Show questions</button>
-          {questions.length > 0 ?
+          <button className={`admin-button ${theme === "light" ? "light-var-bg" : "dark-var-bg"}`} onClick={() => setShowQuestions(!showQuestions)}>{showQuestions ? "Hide questions" : "Show questions"}</button>
+          {showQuestions === true ?
             <section className="section">
-              {questions.map((question) => (
-                <div key={question.id} className={`section-single ${theme === "light" ? "light-toned-bg dark-font" : "dark-bg white-font"}`}>
-                  <header className={theme === "light" ? "light-var-font" : "dark-var-font"}>{question.id}</header>
-                  <div className="single-order-details">
-                    <header className={theme === "light" ? "light-var-font" : "dark-var-font"}>Date:</header>
-                    <span>{cleanDate(question.created_at)}</span>
-                    <header className={theme === "light" ? "light-var-font" : "dark-var-font"}>Email adress:</header>
-                    <span>{question.email}</span>
-                    <header className={theme === "light" ? "light-var-font" : "dark-var-font"}>Topic:</header>
-                    <span>{question.topic}</span>
-                    <header className={theme === "light" ? "light-var-font" : "dark-var-font"}>Comment:</header>
-                    <span>{question.comment}</span>
-                    <button className={`admin-button ${theme === "light" ? "light-var-bg" : "dark-var-bg"}`} style={{ alignSelf: "center" }} onClick={() => deleteQuestion(question.id)}>Delete question</button>
-                  </div>
-                </div>
-              ))}
-            </section>
-            : <></>}
-          <button className={`admin-button ${theme === "light" ? "light-var-bg" : "dark-var-bg"}`} onClick={() => getOrders()}>Show orders</button>
-          {orders.length > 0 ?
-            <section className="section">
-              {orders.map((order) => (
-                <div className={`section-single ${theme === "light" ? "light-toned-bg dark-font" : "dark-bg white-font"}`} key={order.id}>
-                  <header className={theme === "light" ? "light-var-font" : "dark-var-font"}>{order.id} ({order.customerType === "private-person" ? `Person` : `Company`}) </header>
-                  <div className="single-order-details">
-                    <header className={theme === "light" ? "light-var-font" : "dark-var-font"}>Date:</header>
-                    <span>{cleanDate(order.created_at)}</span>
-                    <header className={theme === "light" ? "light-var-font" : "dark-var-font"}>{order.customerType === "private-person" ? "Customer name:" : "Company name"}</header>
-                    <span>{order.customerType === "private-person" ? `${order.customerName}` : `${order.companyName}`}</span>
-                    <header className={theme === "light" ? "light-var-font" : "dark-var-font"}>{order.customerType === "private-person" ? "Second name:" : "Company number"}</header>
-                    <span>{order.customerType === "private-person" ? `${order.customerSecondName}` : `${order.companyNumber}`}</span>
-                    <header className={theme === "light" ? "light-var-font" : "dark-var-font"}>Wants invoice?</header>
-                    <span>{order.invoice ? `Yes` : `No`}</span>
-                    <header className={theme === "light" ? "light-var-font" : "dark-var-font"}>Street name:</header>
-                    <span>{order.streetName}</span>
-                    <header className={theme === "light" ? "light-var-font" : "dark-var-font"}>House number:</header>
-                    <span>{order.houseNumber}</span>
-                    <header className={theme === "light" ? "light-var-font" : "dark-var-font"}>Apartment number:</header>
-                    <span>{order.apartmentValue !== "0" ? `${order.apartmentValue}` : `-`}</span>
-                    <header className={theme === "light" ? "light-var-font" : "dark-var-font"}>Country:</header>
-                    <span>{order.country}</span>
-                    <header className={theme === "light" ? "light-var-font" : "dark-var-font"}>City:</header>
-                    <span>{order.city}</span>
-                    <header className={theme === "light" ? "light-var-font" : "dark-var-font"}>Zip code:</header>
-                    <span>{order.zipCode}</span>
-                    <header className={theme === "light" ? "light-var-font" : "dark-var-font"}>Phone number:</header>
-                    <span>{order.phoneNumber}</span>
-                    <header className={theme === "light" ? "light-var-font" : "dark-var-font"}>Email adress:</header>
-                    <span>{order.email}</span>
-                    <header className={theme === "light" ? "light-var-font" : "dark-var-font"}>Comments:</header>
-                    <span>{order.comments ? `${order.comments}` : `-`}</span>
-                    <header className={theme === "light" ? "light-var-font" : "dark-var-font"}>Delivery type:</header>
-                    <span>{order.deliveryType}</span>
-                    <header className={theme === "light" ? "light-var-font" : "dark-var-font"}>Payment method:</header>
-                    <span>{order.paymentMethod}</span>
-                    <header className={theme === "light" ? "light-var-font" : "dark-var-font"}>Items:</header>
-                    <div className="single-order-item">
-                      <span className="item-detail">Smell:</span>
-                      <span className="item-detail">Color:</span>
-                      <span className="item-detail">Volume:</span>
-                      <span className="item-detail">Quantity:</span>
-                    </div>
-                    {order.items.map((item) => (
-                      <div className="single-order-item" key={item.id}>
-                        <span className="item-detail">{item.name}</span>
-                        <span className="item-detail">{item.color}</span>
-                        <span className="item-detail">{item.volume}</span>
-                        <span className="item-detail">{item.quantity}</span>
+              {questions.length > 0 ?
+                <>
+                  {questions.map((question) => (
+                    <div key={question.id} className={`section-single ${theme === "light" ? "light-toned-bg dark-font" : "dark-bg white-font"}`}>
+                      <header className={theme === "light" ? "light-var-font" : "dark-var-font"}>{question.id}</header>
+                      <div className="single-order-details">
+                        <header className={theme === "light" ? "light-var-font" : "dark-var-font"}>Date:</header>
+                        <span>{cleanDate(question.created_at)}</span>
+                        <header className={theme === "light" ? "light-var-font" : "dark-var-font"}>Email adress:</header>
+                        <span>{question.email}</span>
+                        <header className={theme === "light" ? "light-var-font" : "dark-var-font"}>Topic:</header>
+                        <span>{question.topic}</span>
+                        <header className={theme === "light" ? "light-var-font" : "dark-var-font"}>Comment:</header>
+                        <span>{question.comment}</span>
+                        <button className={`admin-button ${theme === "light" ? "light-var-bg" : "dark-var-bg"}`} style={{ alignSelf: "center" }} onClick={(e) => deleteQuestion(e, question.id)}>Delete question</button>
                       </div>
-                    ))}
-                    <header className={theme === "light" ? "light-var-font" : "dark-var-font"}>Total price:</header>
-                    <span>{order.totalPrice} PLN</span>
-                    <button className={`admin-button ${theme === "light" ? "light-var-bg" : "dark-var-bg"}`} style={{ alignSelf: "center" }} onClick={() => deleteOrder(order.id)}>Delete order</button>
-                  </div>
-                </div>
-              ))}
+                    </div>
+                  ))}
+                </> : <span>You don't have any new question</span>}
+            </section>
+            : <></>}
+          <button className={`admin-button ${theme === "light" ? "light-var-bg" : "dark-var-bg"}`} onClick={() => setShowOrders(!showOrders)}>{showOrders ? "Hide orders" : "Show orders"}</button>
+          {showOrders === true ?
+            <section className="section">
+              {orders.length > 0 ?
+                <>
+                  {orders.map((order) => (
+                    <div className={`section-single ${theme === "light" ? "light-toned-bg dark-font" : "dark-bg white-font"}`} key={order.id}>
+                      <header className={theme === "light" ? "light-var-font" : "dark-var-font"}>{order.id} ({order.customerType === "private-person" ? `Person` : `Company`}) </header>
+                      <div className="single-order-details">
+                        <header className={theme === "light" ? "light-var-font" : "dark-var-font"}>Date:</header>
+                        <span>{cleanDate(order.created_at)}</span>
+                        <header className={theme === "light" ? "light-var-font" : "dark-var-font"}>{order.customerType === "private-person" ? "Customer name:" : "Company name"}</header>
+                        <span>{order.customerType === "private-person" ? `${order.customerName}` : `${order.companyName}`}</span>
+                        <header className={theme === "light" ? "light-var-font" : "dark-var-font"}>{order.customerType === "private-person" ? "Second name:" : "Company number"}</header>
+                        <span>{order.customerType === "private-person" ? `${order.customerSecondName}` : `${order.companyNumber}`}</span>
+                        <header className={theme === "light" ? "light-var-font" : "dark-var-font"}>Wants invoice?</header>
+                        <span>{order.invoice ? `Yes` : `No`}</span>
+                        <header className={theme === "light" ? "light-var-font" : "dark-var-font"}>Street name:</header>
+                        <span>{order.streetName}</span>
+                        <header className={theme === "light" ? "light-var-font" : "dark-var-font"}>House number:</header>
+                        <span>{order.houseNumber}</span>
+                        <header className={theme === "light" ? "light-var-font" : "dark-var-font"}>Apartment number:</header>
+                        <span>{order.apartmentValue !== "0" ? `${order.apartmentValue}` : `-`}</span>
+                        <header className={theme === "light" ? "light-var-font" : "dark-var-font"}>Country:</header>
+                        <span>{order.country}</span>
+                        <header className={theme === "light" ? "light-var-font" : "dark-var-font"}>City:</header>
+                        <span>{order.city}</span>
+                        <header className={theme === "light" ? "light-var-font" : "dark-var-font"}>Zip code:</header>
+                        <span>{order.zipCode}</span>
+                        <header className={theme === "light" ? "light-var-font" : "dark-var-font"}>Phone number:</header>
+                        <span>{order.phoneNumber}</span>
+                        <header className={theme === "light" ? "light-var-font" : "dark-var-font"}>Email adress:</header>
+                        <span>{order.email}</span>
+                        <header className={theme === "light" ? "light-var-font" : "dark-var-font"}>Comments:</header>
+                        <span>{order.comments ? `${order.comments}` : `-`}</span>
+                        <header className={theme === "light" ? "light-var-font" : "dark-var-font"}>Delivery type:</header>
+                        <span>{order.deliveryType}</span>
+                        <header className={theme === "light" ? "light-var-font" : "dark-var-font"}>Payment method:</header>
+                        <span>{order.paymentMethod}</span>
+                        <header className={theme === "light" ? "light-var-font" : "dark-var-font"}>Items:</header>
+                        <div className="single-order-item">
+                          <span className="item-detail">Smell:</span>
+                          <span className="item-detail">Color:</span>
+                          <span className="item-detail">Volume:</span>
+                          <span className="item-detail">Quantity:</span>
+                        </div>
+                        {order.items.map((item) => (
+                          <div className="single-order-item" key={item.id}>
+                            <span className="item-detail">{item.name}</span>
+                            <span className="item-detail">{item.color}</span>
+                            <span className="item-detail">{item.volume}</span>
+                            <span className="item-detail">{item.quantity}</span>
+                          </div>
+                        ))}
+                        <header className={theme === "light" ? "light-var-font" : "dark-var-font"}>Total price:</header>
+                        <span>{order.totalPrice} PLN</span>
+                        <button className={`admin-button ${theme === "light" ? "light-var-bg" : "dark-var-bg"}`} style={{ alignSelf: "center" }} onClick={(e) => deleteOrder(e, order.id)}>Delete order</button>
+                      </div>
+                    </div>
+                  ))}
+                </> : <span>You don't have any new orders</span>}
             </section>
             : <></>}
         </div>
