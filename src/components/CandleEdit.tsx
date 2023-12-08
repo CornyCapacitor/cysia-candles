@@ -2,7 +2,7 @@ import { useAtom } from "jotai"
 import { useEffect, useState } from "react"
 import { Link, useNavigate, useParams } from "react-router-dom"
 import Swal from "sweetalert2"
-import { themeAtom } from "../atoms"
+import { adminAtom, themeAtom } from "../atoms"
 import supabase from "../config/supabaseClient"
 import './Admin.css'
 
@@ -15,6 +15,8 @@ type Candle = {
 export const CandleEdit = () => {
   const { candleId } = useParams()
   const [theme] = useAtom(themeAtom)
+  const [isAdmin] = useAtom(adminAtom)
+
   const [candle, setCandle] = useState<Candle>({
     id: -1,
     name: "Example name",
@@ -155,44 +157,47 @@ export const CandleEdit = () => {
 
   return (
     <div className={`admin-page ${theme === "light" ? "light-toned-bg dark-font" : "dark-bg white-font"}`}>
-      <div className={`admin-display ${theme === "light" ? "light-bg black-font" : "dark-toned-bg white-font"}`}>
-        <div className="section" style={{ borderTop: "none", paddingTop: "0px" }}>
-          <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
-            <div id={candleId} className={`section-single ${theme === "light" ? "light-toned-bg dark-font" : "dark-bg white-font"}`}>
-              <header className={theme === "light" ? "light-var-font" : "dark-var-font"}>Before</header>
-              <span className={theme === "light" ? "light-var-font" : "dark-var-font"}>Id:</span>
-              <span>{candle.id}</span>
-              <span className={theme === "light" ? "light-var-font" : "dark-var-font"}>Name:</span>
-              <span>{candle.name}</span>
-              <span className={theme === "light" ? "light-var-font" : "dark-var-font"}>Image path:</span>
-              <span>{candle.image}</span>
-              <span></span>
-            </div>
-            <div id={candleId} className={`section-single ${theme === "light" ? "light-toned-bg dark-font" : "dark-bg white-font"}`}>
-              <header className={theme === "light" ? "light-var-font" : "dark-var-font"}>After</header>
-              <span className={theme === "light" ? "light-var-font" : "dark-var-font"}>Id:</span>
-              <span>{candle.id}</span>
-              <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "5px" }}>
+      {isAdmin ?
+
+        <div className={`admin-display ${theme === "light" ? "light-bg black-font" : "dark-toned-bg white-font"}`}>
+          <div className="section" style={{ borderTop: "none", paddingTop: "0px" }}>
+            <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
+              <div id={candleId} className={`section-single ${theme === "light" ? "light-toned-bg dark-font" : "dark-bg white-font"}`}>
+                <header className={theme === "light" ? "light-var-font" : "dark-var-font"}>Before</header>
+                <span className={theme === "light" ? "light-var-font" : "dark-var-font"}>Id:</span>
+                <span>{candle.id}</span>
                 <span className={theme === "light" ? "light-var-font" : "dark-var-font"}>Name:</span>
-                <input className={`admin-input ${theme === "light" ? "light-var-outline" : "dark-var-outline"}`} value={name} type="textbox" onChange={(e) => setName(e.target.value)} />
+                <span>{candle.name}</span>
                 <span className={theme === "light" ? "light-var-font" : "dark-var-font"}>Image path:</span>
-                <input className={`admin-input ${theme === "light" ? "light-var-outline" : "dark-var-outline"}`} value={image} type="textbox" onChange={(e) => setImage(e.target.value)} />
+                <span>{candle.image}</span>
+                <span></span>
+              </div>
+              <div id={candleId} className={`section-single ${theme === "light" ? "light-toned-bg dark-font" : "dark-bg white-font"}`}>
+                <header className={theme === "light" ? "light-var-font" : "dark-var-font"}>After</header>
+                <span className={theme === "light" ? "light-var-font" : "dark-var-font"}>Id:</span>
+                <span>{candle.id}</span>
+                <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "5px" }}>
+                  <span className={theme === "light" ? "light-var-font" : "dark-var-font"}>Name:</span>
+                  <input className={`admin-input ${theme === "light" ? "light-var-outline" : "dark-var-outline"}`} value={name} type="textbox" onChange={(e) => setName(e.target.value)} />
+                  <span className={theme === "light" ? "light-var-font" : "dark-var-font"}>Image path:</span>
+                  <input className={`admin-input ${theme === "light" ? "light-var-outline" : "dark-var-outline"}`} value={image} type="textbox" onChange={(e) => setImage(e.target.value)} />
+                </div>
               </div>
             </div>
+            <div id={candleId} className={`section-single ${theme === "light" ? "light-toned-bg dark-font" : "dark-bg white-font"}`} style={{ alignSelf: "center" }}>
+              <header className={theme === "light" ? "light-var-font" : "dark-var-font"}>Image display:</header>
+              <img className="admin-candle-image" src={`/${image}`} />
+            </div>
           </div>
-          <div id={candleId} className={`section-single ${theme === "light" ? "light-toned-bg dark-font" : "dark-bg white-font"}`} style={{ alignSelf: "center" }}>
-            <header className={theme === "light" ? "light-var-font" : "dark-var-font"}>Image display:</header>
-            <img className="admin-candle-image" src={`/${image}`} />
+          <div style={{ display: "flex", gap: "20px" }}>
+            <button className={`admin-button ${theme === "light" ? "light-var-bg" : "dark-var-bg"}`} onClick={(e) => handleSubmit(e)}>Save changes</button>
+            <button className={`admin-button ${theme === "light" ? "light-var-bg" : "dark-var-bg"}`} onClick={(e) => handleDelete(e)}>Delete candle</button>
+            <Link to="/admin">
+              <button className={`admin-button ${theme === "light" ? "light-var-bg" : "dark-var-bg"}`}>Cancel editing</button>
+            </Link>
           </div>
         </div>
-        <div style={{ display: "flex", gap: "20px" }}>
-          <button className={`admin-button ${theme === "light" ? "light-var-bg" : "dark-var-bg"}`} onClick={(e) => handleSubmit(e)}>Save changes</button>
-          <button className={`admin-button ${theme === "light" ? "light-var-bg" : "dark-var-bg"}`} onClick={(e) => handleDelete(e)}>Delete candle</button>
-          <Link to="/admin">
-            <button className={`admin-button ${theme === "light" ? "light-var-bg" : "dark-var-bg"}`}>Cancel editing</button>
-          </Link>
-        </div>
-      </div>
+        : <>You shouldn't be here</>}
     </div>
   )
 }

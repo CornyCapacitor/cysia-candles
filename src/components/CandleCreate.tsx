@@ -2,12 +2,13 @@ import { useAtom } from "jotai";
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
-import { themeAtom } from "../atoms";
+import { adminAtom, themeAtom } from "../atoms";
 import supabase from "../config/supabaseClient";
 import './Admin.css';
 
 export const CandleCreate = () => {
   const [theme] = useAtom(themeAtom)
+  const [isAdmin] = useAtom(adminAtom)
 
   const [name, setName] = useState<string>("");
   const [image, setImage] = useState<string>("");
@@ -78,27 +79,29 @@ export const CandleCreate = () => {
 
   return (
     <div className={`admin-page ${theme === "light" ? "light-toned-bg dark-font" : "dark-bg white-font"}`}>
-      <div className={`admin-display ${theme === "light" ? "light-bg black-font" : "dark-toned-bg white-font"}`}>
-        <div className="section" style={{ borderTop: "none", paddingTop: "0px" }}>
-          <div className={`section-single ${theme === "light" ? "light-toned-bg dark-font" : "dark-bg white-font"}`} style={{ gap: "5px" }}>
-            <span className={theme === "light" ? "light-var-font" : "dark-var-font"}>Name:</span>
-            <input className={`admin-input ${theme === "light" ? "light-var-outline" : "dark-var-outline"}`} value={name} type="textbox" onChange={(e) => setName(e.target.value)} />
-            <span className={theme === "light" ? "light-var-font" : "dark-var-font"}>Image path:</span>
-            <input className={`admin-input ${theme === "light" ? "light-var-outline" : "dark-var-outline"}`} value={image} type="textbox" onChange={(e) => setImage(e.target.value)} />
-            <span></span>
+      {isAdmin ?
+        <div className={`admin-display ${theme === "light" ? "light-bg black-font" : "dark-toned-bg white-font"}`}>
+          <div className="section" style={{ borderTop: "none", paddingTop: "0px" }}>
+            <div className={`section-single ${theme === "light" ? "light-toned-bg dark-font" : "dark-bg white-font"}`} style={{ gap: "5px" }}>
+              <span className={theme === "light" ? "light-var-font" : "dark-var-font"}>Name:</span>
+              <input className={`admin-input ${theme === "light" ? "light-var-outline" : "dark-var-outline"}`} value={name} type="textbox" onChange={(e) => setName(e.target.value)} />
+              <span className={theme === "light" ? "light-var-font" : "dark-var-font"}>Image path:</span>
+              <input className={`admin-input ${theme === "light" ? "light-var-outline" : "dark-var-outline"}`} value={image} type="textbox" onChange={(e) => setImage(e.target.value)} />
+              <span></span>
+            </div>
+            <div className={`section-single ${theme === "light" ? "light-toned-bg dark-font" : "dark-bg white-font"}`} style={{ alignSelf: "center" }}>
+              <header className={theme === "light" ? "light-var-font" : "dark-var-font"}>Image display:</header>
+              <img className="admin-candle-image" src={`/${image}`} />
+            </div>
           </div>
-          <div className={`section-single ${theme === "light" ? "light-toned-bg dark-font" : "dark-bg white-font"}`} style={{ alignSelf: "center" }}>
-            <header className={theme === "light" ? "light-var-font" : "dark-var-font"}>Image display:</header>
-            <img className="admin-candle-image" src={`/${image}`} />
+          <div style={{ display: "flex", gap: "20px" }}>
+            <button className={`admin-button ${theme === "light" ? "light-var-bg" : "dark-var-bg"}`} onClick={(e) => handleCreate(e)}>Add new candle</button>
+            <Link to="/admin">
+              <button className={`admin-button ${theme === "light" ? "light-var-bg" : "dark-var-bg"}`}>Cancel creating</button>
+            </Link>
           </div>
         </div>
-        <div style={{ display: "flex", gap: "20px" }}>
-          <button className={`admin-button ${theme === "light" ? "light-var-bg" : "dark-var-bg"}`} onClick={(e) => handleCreate(e)}>Add new candle</button>
-          <Link to="/admin">
-            <button className={`admin-button ${theme === "light" ? "light-var-bg" : "dark-var-bg"}`}>Cancel creating</button>
-          </Link>
-        </div>
-      </div>
+        : <>You shouldn't be here</>}
     </div>
   )
 }
