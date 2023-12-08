@@ -1,6 +1,6 @@
 import { useAtom } from "jotai"
-import { useState } from "react"
-import { useNavigate } from "react-router-dom"
+import { useEffect, useState } from "react"
+import { Link, useNavigate } from "react-router-dom"
 import { themeAtom } from "../atoms"
 import supabase from "../config/supabaseClient"
 import './Admin.css'
@@ -161,6 +161,14 @@ export const Admin = () => {
     console.log("Creating new candle!")
   }
 
+  useEffect(() => {
+    const scrollToTop = () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    setTimeout(scrollToTop, 250)
+  }, [])
+
   return (
     <div className={`admin-page ${theme === "light" ? "light-toned-bg dark-font" : "dark-bg white-font"}`}>
       {!isAdmin ?
@@ -179,13 +187,17 @@ export const Admin = () => {
                 <div key={candle.id} className={`section-single ${theme === "light" ? "light-toned-bg dark-font" : "dark-bg white-font"}`}>
                   <header className={theme === "light" ? "light-var-font" : "dark-var-font"}>{candle.name}</header>
                   <img className="admin-candle-image" src={`${candle.image}`} />
-                  <button className={`admin-button ${theme === "light" ? "light-var-bg" : "dark-var-bg"}`} style={{ alignSelf: "center" }} onClick={() => candleEdit(candle.id)}>Edit candle</button>
+                  <Link to={'/admin/' + candle.id}>
+                    <button className={`admin-button ${theme === "light" ? "light-var-bg" : "dark-var-bg"}`} style={{ alignSelf: "center" }} onClick={() => candleEdit(candle.id)}>Edit candle</button>
+                  </Link>
                 </div>
               ))}
               <div className={`section-single ${theme === "light" ? "light-toned-bg dark-font" : "dark-bg white-font"}`}>
                 <header className={theme === "light" ? "light-var-font" : "dark-var-font"}>Create new candle</header>
-                <img className="admin-candle-image" src={theme === "light" ? "black-circled-question-mark.svg" : "white-circled-question-mark.svg"} />
-                <button className={`admin-button ${theme === "light" ? "light-var-bg" : "dark-var-bg"}`} style={{ alignSelf: "center" }} onClick={() => createNewCandle()}>Create</button>
+                <img className="admin-candle-image" src={theme === "light" ? "/black-circled-question-mark.svg" : "/white-circled-question-mark.svg"} />
+                <Link to="/admin/create">
+                  <button className={`admin-button ${theme === "light" ? "light-var-bg" : "dark-var-bg"}`} style={{ alignSelf: "center" }} onClick={() => createNewCandle()}>Create</button>
+                </Link>
               </div>
             </section>
             : <></>}

@@ -10,8 +10,6 @@ import { EditPage } from './pages/EditPage'
 import { FavouritesPage } from './pages/FavouritesPage'
 
 function App() {
-
-
   return (
     <Routes>
       <Route path="/" element={<CandlesPage />} />
@@ -20,8 +18,8 @@ function App() {
       <Route path="/cart" element={<CartPage />} />
       <Route path="/checkout" element={<CheckoutPage />} />
       <Route path="/admin" element={<AdminPage />} />
-      <Route path="/admin/:id" element={<EditPage />} />
       <Route path="/admin/create" element={<CreatePage />} />
+      <Route path="/admin/:candleId" element={<EditPage />} />
     </Routes>
   )
 }
