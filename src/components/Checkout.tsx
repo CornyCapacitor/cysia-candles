@@ -215,7 +215,7 @@ export const Checkout = () => {
       setCart([]);
     }
 
-    if (candlesPrice !== "0.00" && firstInput && secondInput && isValidStreet && houseNumber && apartmentValue && isValidCity && zipCode && isValidPhoneNumber && isValidEmail && country) {
+    if (candlesPrice !== "0.00" && firstInput && secondInput && isValidStreet && houseNumber && apartmentValue && isValidCity && zipCode && isValidPhoneNumber && isValidEmail && country && selectedDelivery && selectedPayment) {
       sendForm();
       proceed();
     } else {
