@@ -19,7 +19,7 @@ function App() {
       <Route path="/checkout" element={<CheckoutPage />} />
       <Route path="/admin" element={<AdminPage />} />
       <Route path="/admin/create" element={<CreatePage />} />
-      <Route path="/admin/:candleId" element={<EditPage />} />
+      <Route path="/admin/candle/:candleId" element={<EditPage />} />
     </Routes>
   )
 }

@@ -47,6 +47,21 @@ type Order = {
   items: Candle[],
 }
 
+type PaymentMethod = {
+  id: number,
+  name: string,
+  price: number,
+  available: boolean,
+}
+
+type DeliveryType = {
+  id: number,
+  name: string,
+  estimatedTime: string,
+  price: number,
+  available: boolean,
+}
+
 export const Admin = () => {
   const [theme] = useAtom(themeAtom)
   const navigate = useNavigate()
@@ -63,6 +78,10 @@ export const Admin = () => {
   const [showQuestions, setShowQuestions] = useState<boolean>(false);
   const [orders, setOrders] = useState<Order[]>([]);
   const [showOrders, setShowOrders] = useState<boolean>(false);
+  const [paymentMethods, setPaymentMethods] = useState<PaymentMethod[]>([]);
+  const [showPaymentMethods, setShowPaymentMethods] = useState<boolean>(false);
+  const [deliveryTypes, setDeliveryTypes] = useState<DeliveryType[]>([]);
+  const [showDeliveryTypes, setShowDeliveryTypes] = useState<boolean>(false);
 
   const getCandles = () => {
     if (candles.length === 0) {
@@ -104,22 +123,6 @@ export const Admin = () => {
     }
   }
 
-  const cleanDate = (created_at: Date) => {
-    const date = new Date(created_at)
-
-    const formattedDate = date.toLocaleString('en-US', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-      hour: 'numeric',
-      minute: 'numeric',
-      second: 'numeric',
-      timeZoneName: 'short',
-    })
-
-    return formattedDate
-  }
-
   const getOrders = () => {
     if (orders.length === 0) {
       const fetchOrders = async () => {
@@ -138,6 +141,62 @@ export const Admin = () => {
     } else {
       setOrders([])
     }
+  }
+
+  const getDeliveryTypes = () => {
+    if (deliveryTypes.length === 0) {
+      const fetchDeliveryTypes = async () => {
+        const { data, error } = await supabase.from('delivery-options').select();
+
+        if (error) {
+          console.error(error);
+        }
+
+        if (data) {
+          setDeliveryTypes(data);
+        }
+      };
+
+      fetchDeliveryTypes();
+    } else {
+      setDeliveryTypes([])
+    }
+  }
+
+  const getPaymentMethods = () => {
+    if (paymentMethods.length === 0) {
+      const fetchPaymentMethods = async () => {
+        const { data, error } = await supabase.from('payment-options').select();
+
+        if (error) {
+          console.error(error);
+        }
+
+        if (data) {
+          setPaymentMethods(data);
+        }
+      };
+
+      fetchPaymentMethods();
+    } else {
+      setPaymentMethods([])
+    }
+  }
+
+  const cleanDate = (created_at: Date) => {
+    const date = new Date(created_at)
+
+    const formattedDate = date.toLocaleString('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+      hour: 'numeric',
+      minute: 'numeric',
+      second: 'numeric',
+      timeZoneName: 'short',
+    })
+
+    return formattedDate
   }
 
   const validate = () => {
@@ -261,6 +320,8 @@ export const Admin = () => {
     getCandles();
     getQuestions();
     getOrders();
+    getPaymentMethods();
+    getDeliveryTypes();
 
     setTimeout(scrollToTop, 250)
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -291,7 +352,7 @@ export const Admin = () => {
                 <div key={candle.id} className={`section-single ${theme === "light" ? "light-toned-bg dark-font" : "dark-bg white-font"}`}>
                   <header className={theme === "light" ? "light-var-font" : "dark-var-font"}>{candle.name}</header>
                   <img className="admin-candle-image" src={`${candle.image}`} />
-                  <Link to={'/admin/' + candle.id}>
+                  <Link to={'/admin/candle/' + candle.id}>
                     <button className={`admin-button ${theme === "light" ? "light-var-bg" : "dark-var-bg"}`} style={{ alignSelf: "center" }} onClick={() => candleEdit(candle.id)}>Edit candle</button>
                   </Link>
                 </div>
@@ -385,11 +446,55 @@ export const Admin = () => {
                 </> : <span>You don't have any new orders</span>}
             </section>
             : <></>}
-        </div>
+          <button className={`admin-button ${theme === "light" ? "light-var-bg" : "dark-var-bg"}`} onClick={() => setShowPaymentMethods(!showPaymentMethods)}>{showPaymentMethods ? "Hide payment methods" : "Show payment methods"}</button>
+          {showPaymentMethods === true ?
+            <section style={{ width: "100%" }} className="section">
+              {paymentMethods.length > 0 ?
+                <section className="section">
+                  {paymentMethods.map((method) => (
+                    <div className={`section-single ${theme === "light" ? "light-toned-bg dark-font" : "dark-bg white-font"}`} key={method.id}>
+                      <header className={theme === "light" ? "light-var-font" : "dark-var-font"}>Name:</header>
+                      <span>{method.name}</span>
+                      <header className={theme === "light" ? "light-var-font" : "dark-var-font"}>Price:</header>
+                      <span>{method.price}</span>
+                      <header className={theme === "light" ? "light-var-font" : "dark-var-font"}>Is available:</header>
+                      <span>{method.available ? <span style={{ color: "#3dff3d" }}>&#10003;</span> : <span style={{ color: "#ff3838" }}>&#10007;</span>}</span>
+                      <button style={{ marginTop: "10px" }} className={`admin-button ${theme === "light" ? "light-var-bg" : "dark-var-bg"}`} >Edit</button>
+                    </div>
+                  ))}
+                </section> : <span>Failed to load payment methods</span>}
+            </section>
+            : <></>}
+          <button className={`admin-button ${theme === "light" ? "light-var-bg" : "dark-var-bg"}`} onClick={() => setShowDeliveryTypes(!showDeliveryTypes)}>{showDeliveryTypes ? "Hide delivery types" : "Show delivery types"}</button>
+          {showDeliveryTypes === true ?
+            <section style={{ width: "100%" }} className="section">
+              {deliveryTypes.length > 0 ?
+                <section className="section">
+                  {deliveryTypes.map((delivery) => (
+                    <>
+                      <div className={`section-single ${theme === "light" ? "light-toned-bg dark-font" : "dark-bg white-font"}`} key={delivery.id}>
+                        <header className={theme === "light" ? "light-var-font" : "dark-var-font"}>Name:</header>
+                        <span>{delivery.name}</span>
+                        <header className={theme === "light" ? "light-var-font" : "dark-var-font"}>Price:</header>
+                        <span>{delivery.price}</span>
+                        <header className={theme === "light" ? "light-var-font" : "dark-var-font"}>Estimated time:</header>
+                        <span>{delivery.estimatedTime}</span>
+                        <header className={theme === "light" ? "light-var-font" : "dark-var-font"}>Is available:</header>
+                        <span>{delivery.available ? <span style={{ color: "#3dff3d" }}>&#10003;</span> : <span style={{ color: "#ff3838" }}>&#10007;</span>}</span>
+                        <button style={{ marginTop: "10px" }} className={`admin-button ${theme === "light" ? "light-var-bg" : "dark-var-bg"}`} >Edit</button>
+                      </div>
+                    </>
+                  ))}
+                </section> : <span>Failed to load delivery types</span>}
+            </section>
+            : <></>}
+        </div >
       }
-      {isAdmin ?
-        <button onClick={() => setIsAdmin(false)}>Log out</button>
-        : <></>}
-    </div>
+      {
+        isAdmin ?
+          <button onClick={() => setIsAdmin(false)}>Log out</button>
+          : <></>
+      }
+    </div >
   )
 }
