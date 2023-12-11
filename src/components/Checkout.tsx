@@ -1,9 +1,12 @@
 import { useAtom } from 'jotai';
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { cartAtom, themeAtom } from '../atoms';
 import supabase from '../config/supabaseClient';
+
+import '../config/i18n';
 import '../theme.css';
 import './Checkout.css';
 
@@ -83,6 +86,8 @@ export const Checkout = () => {
   // Fetch states
   const [paymentFetch, setPaymentFetch] = useState<boolean>(false);
   const [deliveryFetch, setDeliveryFetch] = useState<boolean>(false);
+
+  const { t } = useTranslation()
 
   const navigate = useNavigate();
 
