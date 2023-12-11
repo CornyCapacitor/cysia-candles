@@ -1,19 +1,24 @@
 import { useAtom } from 'jotai';
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { themeAtom } from '../atoms';
 import supabase from '../config/supabaseClient';
+
+import '../config/i18n';
 import '../theme.css';
 import './Contact.css';
 
 export const Contact = () => {
-  const [topics] = useState<string[]>(["Question", "Bug report", "Collaboration", "Other"]);
+  const [topics] = useState<string[]>(["question", "bug_report", "collaboration", "other"]);
   const [email, setEmail] = useState<string>("");
   const [topic, setTopic] = useState<string>("");
   const [comment, setComment] = useState<string>("");
   const [contactErrors, setContactErrors] = useState<string[]>([]);
   const [theme] = useAtom(themeAtom)
+
+  const { t } = useTranslation();
 
   const navigate = useNavigate()
 
