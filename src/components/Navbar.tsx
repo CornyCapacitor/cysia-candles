@@ -1,15 +1,19 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import { useAtom } from 'jotai';
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-import { languageAtom, themeAtom } from '../atoms';
+import { themeAtom } from '../atoms';
 import '../theme.css';
+
+import '../config/i18n';
 import './Navbar.css';
 
 export const Navbar = () => {
   const [saleTime] = useState<boolean>(false);
   const [theme, setTheme] = useAtom(themeAtom)
-  const [language, setLanguage] = useAtom(languageAtom)
+
+  const { t } = useTranslation()
 
   const changeTheme = (theme: string) => {
     if (theme === "light") {
@@ -19,12 +23,15 @@ export const Navbar = () => {
     }
   }
 
-  const changeLanguage = (language: string) => {
-    if (language === "eng") {
-      setLanguage("pl")
-    } else if (language === "pl") {
-      setLanguage("eng")
+  const languageSwitch = () => {
+    const currentLanguage = localStorage.getItem('i18nextLng')
+    console.log(currentLanguage)
+    if (currentLanguage === "en") {
+      localStorage.setItem('i18nextLng', "pl")
+    } else {
+      localStorage.setItem('i18nextLng', "en")
     }
+    window.location.reload()
   }
 
   return (
@@ -46,24 +53,24 @@ export const Navbar = () => {
       </div>
       <div className={`lower-section ${theme === "light" ? "light-var-bg" : "dark-var-bg"}`}>
         <Link className={`nav-button ${theme === "light" ? "black-font black-hover" : "white-font white-hover"}`} to="/">
-          <span style={theme === "light" ? { color: "black" } : { color: "white" }}>Candles</span>
+          <span style={theme === "light" ? { color: "black" } : { color: "white" }}>{t('candles')}</span>
         </Link>
         <Link className={`nav-button ${theme === "light" ? "black-font black-hover" : "white-font white-hover"}`} to="/contact">
-          <span style={theme === "light" ? { color: "black" } : { color: "white" }}>Ask us a question</span>
+          <span style={theme === "light" ? { color: "black" } : { color: "white" }}>{t('ask_us_a_question')}</span>
         </Link>
         <Link className={`nav-button ${theme === "light" ? "black-font black-hover" : "white-font white-hover"}`} to="/favourites">
           <img className="button-icon" src={theme === "light" ? "/black-border-heart.svg" : "/white-border-heart.svg"} />
-          <span style={theme === "light" ? { color: "black" } : { color: "white" }}>Favourites</span>
+          <span style={theme === "light" ? { color: "black" } : { color: "white" }}>{t('favourites')}</span>
         </Link>
         <Link className={`nav-button ${theme === "light" ? "black-font black-hover" : "white-font white-hover"}`} to="/cart">
           <img className="button-icon" src={theme === "light" ? "/black-shopping-cart.svg" : "/white-shopping-cart.svg"} />
-          <span style={theme === "light" ? { color: "black" } : { color: "white" }}>Cart</span>
+          <span style={theme === "light" ? { color: "black" } : { color: "white" }}>{t('cart')}</span>
         </Link>
         <div className={`nav-button ${theme === "light" ? "black-font black-hover" : "white-font white-hover"}`} onClick={() => changeTheme(theme)}>
-          <span style={theme === "light" ? { color: "black" } : { color: "white" }}>Switch to {theme === "light" ? <>dark</> : <>light</>} theme</span>
+          <span style={theme === "light" ? { color: "black" } : { color: "white" }}>{t('switch_to')} {theme === "light" ? <>{t('dark_theme')}</> : <>{t('light_theme')}</>} {t('switch_theme')}</span>
         </div>
-        <div className={`nav-button ${theme === "light" ? "black-font black-hover" : "white-font white-hover"}`} onClick={() => changeLanguage(language)}>
-          <span style={theme === "light" ? { color: "black" } : { color: "white" }}>Switch to {language === "eng" ? <>polish</> : <>english</>} language</span>
+        <div className={`nav-button ${theme === "light" ? "black-font black-hover" : "white-font white-hover"}`} onClick={() => languageSwitch()}>
+          <span style={theme === "light" ? { color: "black" } : { color: "white" }}>{t('language_switch')}</span>
         </div>
       </div>
     </nav>
