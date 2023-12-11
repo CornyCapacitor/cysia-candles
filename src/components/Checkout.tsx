@@ -1,9 +1,12 @@
 import { useAtom } from 'jotai';
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { cartAtom, themeAtom } from '../atoms';
 import supabase from '../config/supabaseClient';
+
+import '../config/i18n';
 import '../theme.css';
 import './Checkout.css';
 
@@ -84,6 +87,8 @@ export const Checkout = () => {
   const [paymentFetch, setPaymentFetch] = useState<boolean>(false);
   const [deliveryFetch, setDeliveryFetch] = useState<boolean>(false);
 
+  const { t } = useTranslation()
+
   const navigate = useNavigate();
 
   const candlesPrice = cart.reduce((sum, candle) => {
@@ -130,46 +135,46 @@ export const Checkout = () => {
       const isValidCustomerName = onlyLettersRegex.test(customerName);
       firstInput = isValidCustomerName
       if (!isValidCustomerName) {
-        addError("Please enter proper name e.g. Michał")
+        addError("first_name_error")
       }
 
       const isValidCustomerSecondName = onlyLettersRegex.test(customerSecondName)
       secondInput = isValidCustomerSecondName
       if (!isValidCustomerSecondName) {
-        addError("Please enter proper second name e.g. Owczarzak")
+        addError("second_name_error")
       }
     } else if (customerType === "company") {
       if (companyName !== "") {
         firstInput = true
       } else if (!companyName) {
-        addError("Please enter proper company name e.g. WK sp. z o.o.")
+        addError("company_name_error")
       }
 
       const isValidCompanyNumber = onlyNumbersRegex.test(companyNumber)
       secondInput = isValidCompanyNumber
       if (!isValidCompanyNumber) {
-        addError("Please enter proper company identification number e.g. 7010633012")
+        addError("company_id_error")
       }
     }
 
     const isValidStreet = onlyLettersRegex.test(streetName)
     if (!isValidStreet) {
-      addError("Please enter proper street name e.g. Bydgoska")
+      addError("street_error")
     }
 
     const isValidCity = onlyLettersRegex.test(city)
     if (!isValidCity) {
-      addError("Please enter proper city name e.g. Warszawa")
+      addError("city_error")
     }
 
     const isValidPhoneNumber = phoneNumberRegex.test(phoneNumber)
     if (!isValidPhoneNumber) {
-      addError("Please enter proper phone number e.g. +48123456789 or 123456789")
+      addError("phone_error")
     }
 
     const isValidEmail = emailRegex.test(email);
     if (!isValidEmail) {
-      addError("Please enter proper e-mail adress e.g. michalowczarzak@gmail.com")
+      addError("email_error")
     }
 
     const sendForm = async () => {
@@ -206,7 +211,7 @@ export const Checkout = () => {
         iconColor: '#f568a9',
         background: `${themeBackground}`,
         color: `${themeColor}`,
-        title: `Normaly you'd be sent to payment window right now, but instead, we've noticed your order and we'll message you when the order is ready :)`,
+        title: `${t('checkout_swal_title_1')}`,
       }).then((result) => {
         if (result.isConfirmed || result.dismiss) {
           navigate('/')
@@ -220,28 +225,28 @@ export const Checkout = () => {
       proceed();
     } else {
       if (!houseNumber) {
-        addError("Please enter proper house number e.g. 47")
+        addError("house_error")
       }
       if (!apartmentValue) {
-        addError("Please enter proper apartment/flat number e.g. 1. In case there's no such a numeration for your adress, type 0")
+        addError("apartment_error")
       }
       if (!zipCode) {
-        addError("Please enter proper zip code e.g. 85-047 or 12345-12345")
+        addError("zip_code_error")
       }
       if (!country) {
-        addError("Please select country");
+        addError("country_error");
       }
       if (!selectedDelivery) {
-        addError("Please select one of delivery options")
+        addError("delivery_error")
       }
       if (!selectedPayment) {
-        addError("Please select one payment method")
+        addError("")
       }
       if (candlesPrice === "0.00") {
         Swal.fire({
           icon: 'error',
           iconColor: 'red',
-          title: `Somehow cart went empty during checkout step! Please retry the purchasing process again :/`,
+          title: `${t('checkout_swal_title_2')}`,
         }).then((result) => {
           if (result.isConfirmed || result.dismiss) {
             navigate('/')
@@ -336,14 +341,14 @@ export const Checkout = () => {
           <>
             <div style={{ display: `flex`, flexDirection: `column`, gap: `20px` }}>
               <div className="delivery-details">
-                <header className={`delivery-header ${theme === "light" ? "light-var-bg" : "dark-var-bg"}`}>Delivery</header>
+                <header className={`delivery-header ${theme === "light" ? "light-var-bg" : "dark-var-bg"}`}>{t('delivery')}</header>
                 <div className="delivery">
                   <fieldset className={`fieldset ${theme === "light" ? "" : "white-font"}`}>
                     {deliveryOptions.map((option) => (
                       <div className="delivery-option" key={option.name}>
                         <div className="delivery-option-info">
                           <input className={`radio ${theme === "light" ? "light-var-outline" : "dark-var-outline"}`} type="radio" id={option.name} name={option.name} value={option.name} onChange={() => setSelectedDelivery(option.name)} checked={selectedDelivery === option.name} disabled={!option.available} />
-                          <label style={{ color: option.available ? theme === "light" ? `#000000` : `#ffffff` : `#aaaaaa` }}>{option.name}</label>
+                          <label style={{ color: option.available ? theme === "light" ? `#000000` : `#ffffff` : `#aaaaaa` }}>{t(`${option.name}`)}</label>
                         </div>
                         <span className="delivery-option-price" style={{ color: option.available ? theme === "light" ? `#000000` : `#ffffff` : `#aaaaaa` }}>{option.price.toFixed(2)} PLN</span>
                       </div>
@@ -352,14 +357,14 @@ export const Checkout = () => {
                 </div>
               </div>
               <div className={`payment-details ${theme === "light" ? "black-font" : "white-font"}`}>
-                <header className={`payment-header ${theme === "light" ? "light-var-bg" : "dark-var-bg"}`}>Payment method</header>
+                <header className={`payment-header ${theme === "light" ? "light-var-bg" : "dark-var-bg"}`}>{t('payment_method')}</header>
                 <div className="payment">
                   <fieldset className="fieldset">
                     {paymentOptions.map((option) => (
                       <div className="delivery-option" key={option.name}>
                         <div className="delivery-option-info">
                           <input className={`radio ${theme === "light" ? "light-var-outline" : "dark-var-outline"}`} type="radio" id={option.name} name={option.name} value={option.name} onChange={() => setSelectedPayment(option.name)} checked={selectedPayment === option.name} disabled={!option.available} />
-                          <label style={{ color: option.available ? theme === "light" ? `#000000` : `#ffffff` : `#aaaaaa` }}>{option.name}</label>
+                          <label style={{ color: option.available ? theme === "light" ? `#000000` : `#ffffff` : `#aaaaaa` }}>{t(`${option.name}`)}</label>
                         </div>
                         <span className="delivery-option-price" style={{ color: option.available ? theme === "light" ? `#000000` : `#ffffff` : `#aaaaaa` }}>{option.price.toFixed(2)} PLN</span>
                       </div>
@@ -369,39 +374,39 @@ export const Checkout = () => {
               </div>
             </div>
             <div className={`customer-details ${theme === "light" ? "black-font" : "white-font"}`}>
-              <header className={`customer-header ${theme === "light" ? "light-var-bg" : "dark-var-bg"}`}>Customer information</header>
+              <header className={`customer-header ${theme === "light" ? "light-var-bg" : "dark-var-bg"}`}>{t('customer_information')}</header>
               <form className="form">
                 <fieldset className="fieldset">
                   <div className="fieldset-section">
                     <input className={`radio ${theme === "light" ? "light-var-outline" : "dark-var-outline"}`} id="private-person" type="radio" name="private-person" value="private-person" onChange={() => setCustomerType("private-person")} checked={customerType === "private-person"} />
-                    <label htmlFor="private-person">Private person</label>
+                    <label htmlFor="private-person">{t('private_person')}</label>
                   </div>
                   <div className="fieldset-section">
                     <input className={`radio ${theme === "light" ? "light-var-outline" : "dark-var-outline"}`} id="company" type="radio" name="private-person" value="company" onChange={() => setCustomerType("company")} checked={customerType === "company"} />
-                    <label htmlFor="company">Company</label>
+                    <label htmlFor="company">{t('company')}</label>
                   </div>
                 </fieldset>
                 {customerType === "private-person" ?
                   <>
-                    <input placeholder="First name" className={`customer-input ${theme === "light" ? "light-var-outline" : "dark-var-outline"}`} type="textbox" value={customerName} onChange={(e) => setCustomerName(e.target.value)} />
-                    <input placeholder="Secondary name" className={`customer-input ${theme === "light" ? "light-var-outline" : "dark-var-outline"}`} type="textbox" value={customerSecondName} onChange={(e) => setCustomerSecondName(e.target.value)} />
+                    <input placeholder={t('first_name')} className={`customer-input ${theme === "light" ? "light-var-outline" : "dark-var-outline"}`} type="textbox" value={customerName} onChange={(e) => setCustomerName(e.target.value)} />
+                    <input placeholder={t('second_name')} className={`customer-input ${theme === "light" ? "light-var-outline" : "dark-var-outline"}`} type="textbox" value={customerSecondName} onChange={(e) => setCustomerSecondName(e.target.value)} />
                     <div className="fieldset-section">
                       <input className={`checkbox ${theme === "light" ? "light-var-outline" : "dark-var-outline"}`} type="checkbox" onChange={() => setInvoice(!invoice)} checked={invoice === true} />
-                      <label>I want to receive an invoice</label>
+                      <label>{t('invoice_information')}</label>
                     </div>
                   </>
                   :
                   <>
-                    <input placeholder="Company name" className={`customer-input ${theme === "light" ? "light-var-outline" : "dark-var-outline"}`} type="textbox" value={companyName} onChange={(e) => setCompanyName(e.target.value)} />
-                    <input placeholder="Company Identication Number" className={`customer-input ${theme === "light" ? "light-var-outline" : "dark-var-outline"}`} type="textbox" value={companyNumber} onChange={(e) => setCompanyNumber(e.target.value)} />
+                    <input placeholder={t('company_name')} className={`customer-input ${theme === "light" ? "light-var-outline" : "dark-var-outline"}`} type="textbox" value={companyName} onChange={(e) => setCompanyName(e.target.value)} />
+                    <input placeholder={t('company_id')} className={`customer-input ${theme === "light" ? "light-var-outline" : "dark-var-outline"}`} type="textbox" value={companyNumber} onChange={(e) => setCompanyNumber(e.target.value)} />
                     <span style={{ height: "25px" }}></span>
                   </>}
-                <input type="textbox" placeholder="Street name" className={`customer-input ${theme === "light" ? "light-var-outline" : "dark-var-outline"}`} value={streetName} onChange={(e) => setStreetName(e.target.value)} />
+                <input type="textbox" placeholder={t('street_name')} className={`customer-input ${theme === "light" ? "light-var-outline" : "dark-var-outline"}`} value={streetName} onChange={(e) => setStreetName(e.target.value)} />
                 <div className="adress-details">
-                  <input type="textbox" className={`smaller-customer-input ${theme === "light" ? "light-var-outline" : "dark-var-outline"}`} placeholder="House number" value={houseNumber} onChange={(e) => setHouseNumber(e.target.value)} maxLength={4} />
-                  <input className={`smaller-customer-input ${theme === "light" ? "light-var-outline" : "dark-var-outline"}`} placeholder="Apartment/flat etc." value={apartmentValue} onChange={(e) => setApartmentValue(e.target.value)} maxLength={4} />
-                  <input className={`smaller-customer-input ${theme === "light" ? "light-var-outline" : "dark-var-outline"}`} placeholder="City" value={city} onChange={(e) => setCity(e.target.value)} />
-                  <input className={`smaller-customer-input ${theme === "light" ? "light-var-outline" : "dark-var-outline"}`} placeholder="Zip code" value={zipCode} onChange={(e) => setZipCode(e.target.value)} />
+                  <input type="textbox" className={`smaller-customer-input ${theme === "light" ? "light-var-outline" : "dark-var-outline"}`} placeholder={t('house_number')} value={houseNumber} onChange={(e) => setHouseNumber(e.target.value)} maxLength={4} />
+                  <input className={`smaller-customer-input ${theme === "light" ? "light-var-outline" : "dark-var-outline"}`} placeholder={t('apartment')} value={apartmentValue} onChange={(e) => setApartmentValue(e.target.value)} maxLength={4} />
+                  <input className={`smaller-customer-input ${theme === "light" ? "light-var-outline" : "dark-var-outline"}`} placeholder={t('city')} value={city} onChange={(e) => setCity(e.target.value)} />
+                  <input className={`smaller-customer-input ${theme === "light" ? "light-var-outline" : "dark-var-outline"}`} placeholder={t('zip_code')} value={zipCode} onChange={(e) => setZipCode(e.target.value)} />
                 </div>
                 <select className={`customer-select ${theme === "light" ? "light-var-outline" : "dark-var-outline"}`} value={country} onChange={(e) => setCountry(e.target.value)}>
                   <option value="" disabled>Choose country</option>
@@ -409,43 +414,43 @@ export const Checkout = () => {
                     <option key={index} disabled={!option.available}>{option.name}</option>
                   ))}
                 </select>
-                <input type="textbox" placeholder="Phone number*" className={`customer-input ${theme === "light" ? "light-var-outline" : "dark-var-outline"}`} value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} />
-                <input type="textbox" placeholder="E-mail*" className={`customer-input ${theme === "light" ? "light-var-outline" : "dark-var-outline"}`} value={email} onChange={(e) => setEmail(e.target.value)} />
-                <textarea placeholder="Comment" className={`comments ${theme === "light" ? "light-var-outline" : "dark-var-outline"}`} value={comments} onChange={(e) => setComments(e.target.value)} />
-                <span style={{ fontSize: "12px" }}>* fields marked with a star are necessary</span>
+                <input type="textbox" placeholder={`${t('phone_number')}*`} className={`customer-input ${theme === "light" ? "light-var-outline" : "dark-var-outline"}`} value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} />
+                <input type="textbox" placeholder={`${t('email_adress')}*`} className={`customer-input ${theme === "light" ? "light-var-outline" : "dark-var-outline"}`} value={email} onChange={(e) => setEmail(e.target.value)} />
+                <textarea placeholder={t('comment')} className={`comments ${theme === "light" ? "light-var-outline" : "dark-var-outline"}`} value={comments} onChange={(e) => setComments(e.target.value)} />
+                <span style={{ fontSize: "12px" }}>{t('star_info')}</span>
                 <button className={`customer-button ${theme === "light" ? "light-var-bg" : "dark-var-bg"}`} onClick={(e) => handleBuy(e)}>Buy</button>
                 {checkoutErrors.length !== 0 ?
                   <div className="checkout-errors-list">
                     {checkoutErrors.map((error, index) => (
-                      <li key={index}>{error}</li>
+                      <li key={index}>{t(`${error}`)}</li>
                     ))}
                   </div>
                   : <></>}
               </form>
             </div>
             <div className={`summary-details ${theme === "light" ? "black-font" : "white-font"}`}>
-              <header className={`summary-header ${theme === "light" ? "light-var-bg" : "dark-var-bg"}`}>Summary</header>
+              <header className={`summary-header ${theme === "light" ? "light-var-bg" : "dark-var-bg"}`}>{t('summary')}</header>
               <div className="summary">
                 <div className="summary-section">
-                  <span>Value of products:</span>
-                  <span>{candlesPrice} PLN</span>
+                  <span>{t('value_of_products')}</span>
+                  <span style={{ textAlign: "end" }}>{candlesPrice} PLN</span>
                 </div>
                 <div className="summary-section">
-                  <span>Shipment cost:</span>
+                  <span>{t('shipment_cost')}:</span>
                   <span>{deliveryCost.toFixed(2)} PLN</span>
                 </div>
                 <div className="summary-section">
-                  <span>Payment cost:</span>
+                  <span>{t('payment_cost')}:</span>
                   <span>{paymentCost.toFixed(2)} PLN</span>
                 </div>
                 <div className="summary-section">
-                  <span>Final price:</span>
+                  <span>{t('final_price')}:</span>
                   <span>{(Number(candlesPrice) + deliveryCost + paymentCost).toFixed(2)} PLN</span>
                 </div>
               </div>
             </div>
           </>
-          : <>Loading checkout data..</>}
+          : <>{t('loading_checkout_data')}</>}
       </div>
     </div>
   )
