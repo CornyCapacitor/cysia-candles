@@ -1,8 +1,11 @@
 import { useAtom } from 'jotai';
 import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { favouritesAtom, themeAtom } from "../atoms";
-import '../theme.css';
 import { Candle } from "./Candle";
+
+import '../config/i18n';
+import '../theme.css';
 import './Favourites.css';
 
 type CandleProps = {
@@ -14,6 +17,8 @@ type CandleProps = {
 export const Favourites = () => {
   const [favourites] = useAtom<CandleProps[]>(favouritesAtom)
   const [theme] = useAtom(themeAtom)
+
+  const { t } = useTranslation();
 
   useEffect(() => {
     const scrollToTop = () => {
@@ -27,9 +32,9 @@ export const Favourites = () => {
     <div className={`favourites ${theme === "light" ? "light-toned-bg" : "dark-bg"}`}>
       <div className={`favourites-info ${theme === "light" ? "light-bg black-font" : "dark-toned-bg white-font"}`}>
         {favourites.length > 0 ?
-          <span>Here are your favourite candles.</span>
+          <span>{t('favourite_candles')}</span>
           :
-          <span>You don't have any favourite candle.</span>
+          <span>{t('no_favourite_candles')}</span>
         }
       </div>
       <div className="favourites-container">
