@@ -60,11 +60,11 @@ export const Candle = ({ image, name }: CandleProps) => {
 
     Swal.fire({
       icon: 'success',
-      title: `You've added ${selectedQuantity} ${name} candle(s) to cart!`,
+      title: `${t('candle_swal_title_1')} ${selectedQuantity} ${name} ${t('candle_swal_title_2')}!`,
       showCancelButton: true,
-      cancelButtonText: "Continue shopping",
+      cancelButtonText: `${t('continue_shopping')}`,
       showConfirmButton: true,
-      confirmButtonText: "Cart",
+      confirmButtonText: `${t('cart')}`,
       background: `${themeBackground}`,
       color: `${themeColor}`,
       timer: 5000,
@@ -113,22 +113,22 @@ export const Candle = ({ image, name }: CandleProps) => {
 
   return (
     <div className={`candle ${theme === "light" ? "light-bg" : "dark-toned-bg"}`}>
-      <img className="candle-image" src={`${image}`} alt={`Image of a ${name}`} />
-      <span className={`candle-name ${theme === "light" ? "light-var-font" : "dark-var-font"}`}>{name}</span>
+      <img className="candle-image" src={`${image}`} alt={`${t('the_picture_shows')} ${t(`${name}`)}`} />
+      <span className={`candle-name ${theme === "light" ? "light-var-font" : "dark-var-font"}`}>{t(`${name}`)}</span>
       <div className="candle-selections">
         <div className="candle-selection">
-          <span className={`candle-header ${theme === "light" ? "light-var-font" : "dark-var-font"}`}>Select volume:</span>
+          <span className={`candle-header ${theme === "light" ? "light-var-font" : "dark-var-font"}`}>{t('select_volume')}</span>
           <select className={`candle-select ${theme === "light" ? "light-var-outline light-var-border" : "dark-var-outline dark-var-border dark-toned-bg white-font"}`} value={selectedVolume} onChange={(e) => setSelectedVolume(e.target.value)}>
             <option value="130ml">130ml</option>
             <option value="250ml">250ml</option>
           </select>
         </div>
         <div className="candle-selection">
-          <span className={`candle-header ${theme === "light" ? "light-var-font" : "dark-var-font"}`}>Select color:</span>
+          <span className={`candle-header ${theme === "light" ? "light-var-font" : "dark-var-font"}`}>{t('select_color')}</span>
           <input className={`candle-color ${theme === "light" ? "light-var-outline light-var-border" : "dark-var-outline dark-var-border dark-toned-bg white-font"}`} type="color" value={selectedColor} onChange={(e) => setSelectedColor(e.target.value)} />
         </div>
         <div className="candle-selection">
-          <span className={`candle-header ${theme === "light" ? "light-var-font" : "dark-var-font"}`}>Quantity:</span>
+          <span className={`candle-header ${theme === "light" ? "light-var-font" : "dark-var-font"}`}>{t('quantity')}</span>
           <select className={`candle-select ${theme === "light" ? "light-var-outline light-var-border" : "dark-var-outline dark-var-border dark-toned-bg white-font"}`} value={selectedQuantity} onChange={(e) => setSelectedQuantity(e.target.value)}>
             {options.map((value) => (
               <option key={value} value={value}>{value}</option>
@@ -137,7 +137,7 @@ export const Candle = ({ image, name }: CandleProps) => {
         </div>
       </div>
       <span className={`candle-price ${theme === "light" ? "light-var-font" : "dark-var-font"}`}>{candlePrice.toFixed(2)}</span>
-      <button className={`candle-button ${theme === "light" ? "light-var-bg" : "dark-var-bg"}`} onClick={addToCart}>Add to cart</button>
+      <button className={`candle-button ${theme === "light" ? "light-var-bg" : "dark-var-bg"}`} onClick={addToCart}>{t('add_to_cart')}</button>
       <img src={isFavourite ? "red-heart.svg" : theme === "light" ? "/black-border-heart.svg" : "/white-border-heart.svg"} className="favourite-icon" onClick={() => addToFavourites()} />
     </div>
   )
