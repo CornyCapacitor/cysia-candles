@@ -1,8 +1,11 @@
 import { useAtom } from 'jotai';
 import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { favouritesAtom, themeAtom } from "../atoms";
-import '../theme.css';
 import { Candle } from "./Candle";
+
+import '../config/i18n';
+import '../theme.css';
 import './Favourites.css';
 
 type CandleProps = {
@@ -14,6 +17,8 @@ type CandleProps = {
 export const Favourites = () => {
   const [favourites] = useAtom<CandleProps[]>(favouritesAtom)
   const [theme] = useAtom(themeAtom)
+
+  const { t } = useTranslation();
 
   useEffect(() => {
     const scrollToTop = () => {
