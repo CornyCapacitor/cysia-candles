@@ -60,7 +60,7 @@ export const Candle = ({ image, name }: CandleProps) => {
 
     Swal.fire({
       icon: 'success',
-      title: `${t('candle_swal_title_1')} ${selectedQuantity} ${t(`${name}`)} ${t('candle_swal_title_2')}!`,
+      title: `${t('candle_swal_title_1')} ${selectedQuantity} ${selectedQuantity === 1 ? `${t('candle_swal_singular')}` : `${t('candle_swal_plural')}`} ${t('candle_swal_title_2')}!`,
       showCancelButton: true,
       cancelButtonText: `${t('continue_shopping')}`,
       showConfirmButton: true,
