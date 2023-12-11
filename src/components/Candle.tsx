@@ -1,8 +1,11 @@
 import { useAtom } from 'jotai';
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { cartAtom, favouritesAtom, themeAtom } from '../atoms';
+
+import '../config/i18n';
 import '../theme.css';
 import './Candle.css';
 
@@ -20,6 +23,8 @@ export const Candle = ({ image, name }: CandleProps) => {
   const [theme] = useAtom(themeAtom)
 
   const navigate = useNavigate();
+
+  const { t } = useTranslation();
 
   const candlePrice = Number(selectedQuantity) * (selectedVolume === "130ml" ? 15.00 : 25.00)
 
