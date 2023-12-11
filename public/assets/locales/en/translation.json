@@ -43,5 +43,8 @@
   "Raspberry": "Raspberry",
   "Strawberry": "Strawberry",
   "Lavender": "Lavender",
-  "Green apple": "Green apple"
+  "Green apple": "Green apple",
+  "_comment4": "Candles.tsx",
+  "candles_header": "Make sure to select correct volume, color and quantity for your candle. If not changed, candle will remain white.",
+  "products_loading": "Loading products..."
 }

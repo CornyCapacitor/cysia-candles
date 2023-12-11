@@ -43,5 +43,8 @@
   "Raspberry": "Malina",
   "Strawberry": "Truskawka",
   "Lavender": "Lawenda",
-  "Green apple": "Zielone jabłko"
+  "Green apple": "Zielone jabłko",
+  "_comment4": "Candles.tsx",
+  "candles_header": "Upewnij się, że wybierasz odpowiednią ilość, kolor oraz pojemność dla wybranej świeczki. Brak zmiany koloru oznacza kolor biały.",
+  "products_loading": "Ładowanie produktów..."
 }
