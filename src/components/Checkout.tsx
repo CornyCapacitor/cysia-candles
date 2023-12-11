@@ -428,7 +428,7 @@ export const Checkout = () => {
               <div className="summary">
                 <div className="summary-section">
                   <span>Value of products:</span>
-                  <span>{candlesPrice} PLN</span>
+                  <span style={{ textAlign: "end" }}>{candlesPrice} PLN</span>
                 </div>
                 <div className="summary-section">
                   <span>Shipment cost:</span>
