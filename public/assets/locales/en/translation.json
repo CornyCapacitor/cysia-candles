@@ -49,5 +49,22 @@
   "products_loading": "Loading products...",
   "_comment5": "Favourites.tsx",
   "favourite_candles": "Here are your favourite candles.",
-  "no_favourite_candles": "You don't have any favourite candle."
+  "no_favourite_candles": "You don't have any favourite candle.",
+  "_comment6": "Contact.tsx",
+  "ask_us_a_question": "Ask us a question",
+  "email_adress": "E-mail adress",
+  "choose_the_topic": "Choose the topic",
+  "describe_your_topic_here": "Describe your topic here",
+  "_comment7": "Contact options",
+  "question": "Question",
+  "bug_report": "Bug report",
+  "collaboration": "Collaboration",
+  "other": "Other",
+  "send": "Send",
+  "_comment8": "Errors",
+  "email_error": "Please enter proper e-mail adress e.g. michalowczarzak@gmail.com",
+  "topic_error": "Please select topic that's closest to your problem",
+  "description_error": "Please describe your problem",
+  "description_length_error": "Problem description must be at least 50 characters long",
+  "": ""
 }
