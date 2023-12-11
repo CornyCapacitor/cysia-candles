@@ -49,5 +49,22 @@
   "products_loading": "Ładowanie produktów...",
   "_comment5": "Favourites.tsx",
   "favourite_candles": "Tutaj znajdziesz swoje ulubione świeczki.",
-  "no_favourite_candles": "Nie wybrałeś żadnej świeczki ulubioną."
+  "no_favourite_candles": "Nie wybrałeś żadnej świeczki ulubioną.",
+  "_comment6": "Contact.tsx",
+  "ask_us_a_question": "Zadaj nam pytanie",
+  "email_adress": "Adres e-mail",
+  "choose_the_topic": "Wybierz temat",
+  "describe_your_topic_here": "Opisz swój temat",
+  "_comment7": "Contact options",
+  "question": "Pytanie",
+  "bug_report": "Zgłoszenie błędu",
+  "collaboration": "Współpraca",
+  "other": "Inne",
+  "send": "Wyślij",
+  "_comment8": "Errors",
+  "email_error": "Wprowadź właściwy adres e-mail, np. e.g. michalowczarzak@gmail.com",
+  "topic_error": "Wybierz temat najbliżej odpowiadający twojemu problemowi",
+  "description_error": "Musisz opisać swój temat",
+  "description_length_error": "Opis musi zawierać co najmniej 50 znaków",
+  "": ""
 }
