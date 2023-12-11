@@ -1,7 +1,10 @@
 import { useAtom } from 'jotai'
 import { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 import { cartAtom, themeAtom } from '../atoms'
+
+import '../config/i18n'
 import '../theme.css'
 import './Cart.css'
 
@@ -10,6 +13,8 @@ export const Cart = () => {
   const [selected, setSelected] = useState<number[]>([]);
   const [selectedAll, setSelectedAll] = useState<boolean>(false);
   const [theme] = useAtom(themeAtom);
+
+  const { t } = useTranslation();
 
   const totalPrice = cart.reduce((sum, candle) => {
     const quantity = candle.quantity || 0;
@@ -33,7 +38,6 @@ export const Cart = () => {
       setSelected([])
       setSelectedAll(false);
     }
-    console.log("Selecting all cart items")
   }
 
   const isCandleSelected = (id: number) => {
