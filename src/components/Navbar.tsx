@@ -70,7 +70,7 @@ export const Navbar = () => {
           <span style={theme === "light" ? { color: "black" } : { color: "white" }}>{t('switch_to')} {theme === "light" ? <>{t('dark_theme')}</> : <>{t('light_theme')}</>} {t('switch_theme')}</span>
         </div>
         <div className={`nav-button ${theme === "light" ? "black-font black-hover" : "white-font white-hover"}`} onClick={() => languageSwitch()}>
-          <span style={theme === "light" ? { color: "black" } : { color: "white" }}>{t('language-switch')}</span>
+          <span style={theme === "light" ? { color: "black" } : { color: "white" }}>{t('language_switch')}</span>
         </div>
       </div>
     </nav>
