@@ -46,5 +46,8 @@
   "Green apple": "Green apple",
   "_comment4": "Candles.tsx",
   "candles_header": "Make sure to select correct volume, color and quantity for your candle. If not changed, candle will remain white.",
-  "products_loading": "Loading products..."
+  "products_loading": "Loading products...",
+  "_comment5": "Favourites.tsx",
+  "favourite_candles": "Here are your favourite candles.",
+  "no_favourite_candles": "You don't have any favourite candle."
 }
