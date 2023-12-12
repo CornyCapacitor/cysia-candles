@@ -405,7 +405,7 @@ export const Admin = () => {
                         <header className={theme === "light" ? "light-var-font" : "dark-var-font"}>{t('apartment_number')}:</header>
                         <span>{order.apartmentValue !== "0" ? `${order.apartmentValue}` : `-`}</span>
                         <header className={theme === "light" ? "light-var-font" : "dark-var-font"}>{t('country')}:</header>
-                        <span>{order.country}</span>
+                        <span>{t(`${order.country}`)}</span>
                         <header className={theme === "light" ? "light-var-font" : "dark-var-font"}>{t('city')}:</header>
                         <span>{order.city}</span>
                         <header className={theme === "light" ? "light-var-font" : "dark-var-font"}>{t('zip_code')}:</header>
@@ -417,9 +417,9 @@ export const Admin = () => {
                         <header className={theme === "light" ? "light-var-font" : "dark-var-font"}>{t('comments')}:</header>
                         <span>{order.comments ? `${order.comments}` : `-`}</span>
                         <header className={theme === "light" ? "light-var-font" : "dark-var-font"}>{t('delivery_type')}:</header>
-                        <span>{order.deliveryType}</span>
+                        <span>{t(`${order.deliveryType}`)}</span>
                         <header className={theme === "light" ? "light-var-font" : "dark-var-font"}>{t('payment_method')}:</header>
-                        <span>{order.paymentMethod}</span>
+                        <span>{t(`${order.paymentMethod}`)}</span>
                         <header className={theme === "light" ? "light-var-font" : "dark-var-font"}>{t('items')}:</header>
                         <div className="single-order-item">
                           <span className="item-detail">{t('smell')}:</span>
