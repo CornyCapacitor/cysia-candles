@@ -472,6 +472,12 @@ export const Admin = () => {
             <section style={{ width: "100%" }} className="section">
               {deliveryTypes.length > 0 ?
                 <section className="section">
+                  <div style={{ height: "356px", justifyContent: "center" }} className={`section-single ${theme === "light" ? "light-toned-bg dark-font" : "dark-bg white-font"}`}>
+                    <header className={theme === "light" ? "light-var-font" : "dark-var-font"}>Create new delivery type</header>
+                    <Link to="/admin/create">
+                      <button className={`admin-button ${theme === "light" ? "light-var-bg" : "dark-var-bg"}`} style={{ alignSelf: "center" }} onClick={() => createNewCandle()}>Create</button>
+                    </Link>
+                  </div>
                   {deliveryTypes.map((delivery) => (
                     <div className={`section-single ${theme === "light" ? "light-toned-bg dark-font" : "dark-bg white-font"}`} key={delivery.id}>
                       <header className={theme === "light" ? "light-var-font" : "dark-var-font"}>Name:</header>
