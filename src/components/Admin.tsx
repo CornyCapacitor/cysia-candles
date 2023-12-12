@@ -459,7 +459,9 @@ export const Admin = () => {
                       <span>{method.price}</span>
                       <header className={theme === "light" ? "light-var-font" : "dark-var-font"}>Is available:</header>
                       <span>{method.available ? <span style={{ color: "#3dff3d" }}>&#10003;</span> : <span style={{ color: "#ff3838" }}>&#10007;</span>}</span>
-                      <button style={{ marginTop: "10px" }} className={`admin-button ${theme === "light" ? "light-var-bg" : "dark-var-bg"}`} >Edit</button>
+                      <Link to={'/admin/payment/' + method.id}>
+                        <button style={{ marginTop: "10px" }} className={`admin-button ${theme === "light" ? "light-var-bg" : "dark-var-bg"}`} >Edit</button>
+                      </Link>
                     </div>
                   ))}
                 </section> : <span>Failed to load payment methods</span>}
@@ -471,19 +473,19 @@ export const Admin = () => {
               {deliveryTypes.length > 0 ?
                 <section className="section">
                   {deliveryTypes.map((delivery) => (
-                    <>
-                      <div className={`section-single ${theme === "light" ? "light-toned-bg dark-font" : "dark-bg white-font"}`} key={delivery.id}>
-                        <header className={theme === "light" ? "light-var-font" : "dark-var-font"}>Name:</header>
-                        <span>{delivery.name}</span>
-                        <header className={theme === "light" ? "light-var-font" : "dark-var-font"}>Price:</header>
-                        <span>{delivery.price}</span>
-                        <header className={theme === "light" ? "light-var-font" : "dark-var-font"}>Estimated time:</header>
-                        <span>{delivery.estimatedTime}</span>
-                        <header className={theme === "light" ? "light-var-font" : "dark-var-font"}>Is available:</header>
-                        <span>{delivery.available ? <span style={{ color: "#3dff3d" }}>&#10003;</span> : <span style={{ color: "#ff3838" }}>&#10007;</span>}</span>
+                    <div className={`section-single ${theme === "light" ? "light-toned-bg dark-font" : "dark-bg white-font"}`} key={delivery.id}>
+                      <header className={theme === "light" ? "light-var-font" : "dark-var-font"}>Name:</header>
+                      <span>{delivery.name}</span>
+                      <header className={theme === "light" ? "light-var-font" : "dark-var-font"}>Price:</header>
+                      <span>{delivery.price}</span>
+                      <header className={theme === "light" ? "light-var-font" : "dark-var-font"}>Estimated time:</header>
+                      <span>{delivery.estimatedTime}</span>
+                      <header className={theme === "light" ? "light-var-font" : "dark-var-font"}>Is available:</header>
+                      <span>{delivery.available ? <span style={{ color: "#3dff3d" }}>&#10003;</span> : <span style={{ color: "#ff3838" }}>&#10007;</span>}</span>
+                      <Link to={'/admin/delivery/' + delivery.id}>
                         <button style={{ marginTop: "10px" }} className={`admin-button ${theme === "light" ? "light-var-bg" : "dark-var-bg"}`} >Edit</button>
-                      </div>
-                    </>
+                      </Link>
+                    </div>
                   ))}
                 </section> : <span>Failed to load delivery types</span>}
             </section>
