@@ -106,7 +106,6 @@ export const DeliveryCreate = () => {
         <div className={`admin-display ${theme === "light" ? "light-bg black-font" : "dark-toned-bg white-font"}`}>
           <div className="section" style={{ borderTop: "none", paddingTop: "0px" }}>
             <div className={`section-single ${theme === "light" ? "light-toned-bg dark-font" : "dark-bg white-font"}`}>
-              <header className={theme === "light" ? "light-var-font" : "dark-var-font"}>After</header>
               <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "5px" }}>
                 <span className={theme === "light" ? "light-var-font" : "dark-var-font"}>Name:</span>
                 <input className={`admin-input ${theme === "light" ? "light-var-outline" : "dark-var-outline"}`} value={name} type="textbox" onChange={(e) => setName(e.target.value)} />
