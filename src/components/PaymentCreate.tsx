@@ -46,7 +46,7 @@ export const PaymentCreate = () => {
         iconColor: '#e71f1f',
         background: `${themeBackground}`,
         color: `${themeColor}`,
-        title: `Name can't be empty, price must be at least 0.00, availability must be either true or false!`,
+        title: `Name can't be empty, price must be at least 0.00, availability must be either "Yes" or "No"!`,
         timer: 5000,
       })
       return
@@ -123,7 +123,7 @@ export const PaymentCreate = () => {
               <span className={theme === "light" ? "light-var-font" : "dark-var-font"}>Name:</span>
               <span>{name}</span>
               <span className={theme === "light" ? "light-var-font" : "dark-var-font"}>Price:</span>
-              <span>{priceString}</span>
+              <span>{Number(priceString).toFixed(2)} PLN</span>
               <span className={theme === "light" ? "light-var-font" : "dark-var-font"}>Is available:</span>
               <span>{available ? <span style={{ color: "#3dff3d" }}>&#10003;</span> : <span style={{ color: "#ff3838" }}>&#10007;</span>}</span>
             </div>
