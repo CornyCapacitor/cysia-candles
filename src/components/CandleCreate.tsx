@@ -1,5 +1,6 @@
 import { useAtom } from "jotai";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { adminAtom, themeAtom } from "../atoms";
@@ -9,6 +10,8 @@ import './Admin.css';
 export const CandleCreate = () => {
   const [theme] = useAtom(themeAtom)
   const [isAdmin] = useAtom(adminAtom)
+
+  const { t } = useTranslation();
 
   const [name, setName] = useState<string>("");
   const [image, setImage] = useState<string>("");
@@ -43,7 +46,7 @@ export const CandleCreate = () => {
         iconColor: '#e71f1f',
         background: `${themeBackground}`,
         color: `${themeColor}`,
-        title: `Name and image cannot be empty!`,
+        title: `${t('create_candle_swal_error')}!`,
         timer: 5000,
       })
       return
@@ -60,7 +63,7 @@ export const CandleCreate = () => {
         iconColor: 'green',
         background: `${themeBackground}`,
         color: `${themeColor}`,
-        title: "You've succesfully created a new candle!",
+        title: `${t('create_candle_swal_success')}!`,
         showConfirmButton: true,
         confirmButtonText: "Ok",
         timer: 5000,
@@ -83,21 +86,21 @@ export const CandleCreate = () => {
         <div className={`admin-display ${theme === "light" ? "light-bg black-font" : "dark-toned-bg white-font"}`}>
           <div className="section" style={{ borderTop: "none", paddingTop: "0px" }}>
             <div className={`section-single ${theme === "light" ? "light-toned-bg dark-font" : "dark-bg white-font"}`} style={{ gap: "5px" }}>
-              <span className={theme === "light" ? "light-var-font" : "dark-var-font"}>Name:</span>
+              <span className={theme === "light" ? "light-var-font" : "dark-var-font"}>{t('name')}:</span>
               <input className={`admin-input ${theme === "light" ? "light-var-outline" : "dark-var-outline"}`} value={name} type="textbox" onChange={(e) => setName(e.target.value)} />
-              <span className={theme === "light" ? "light-var-font" : "dark-var-font"}>Image path:</span>
+              <span className={theme === "light" ? "light-var-font" : "dark-var-font"}>{t('image_path')}:</span>
               <input className={`admin-input ${theme === "light" ? "light-var-outline" : "dark-var-outline"}`} value={image} type="textbox" onChange={(e) => setImage(e.target.value)} />
               <span></span>
             </div>
             <div className={`section-single ${theme === "light" ? "light-toned-bg dark-font" : "dark-bg white-font"}`} style={{ alignSelf: "center" }}>
-              <header className={theme === "light" ? "light-var-font" : "dark-var-font"}>Image display:</header>
+              <header className={theme === "light" ? "light-var-font" : "dark-var-font"}>{t('image_display')}:</header>
               <img className="admin-candle-image" src={`/${image}`} />
             </div>
           </div>
           <div style={{ display: "flex", gap: "20px" }}>
-            <button className={`admin-button ${theme === "light" ? "light-var-bg" : "dark-var-bg"}`} onClick={(e) => handleCreate(e)}>Add new candle</button>
+            <button className={`admin-button ${theme === "light" ? "light-var-bg" : "dark-var-bg"}`} onClick={(e) => handleCreate(e)}>{t('add_new_candle')}</button>
             <Link to="/admin">
-              <button className={`admin-button ${theme === "light" ? "light-var-bg" : "dark-var-bg"}`}>Cancel creating</button>
+              <button className={`admin-button ${theme === "light" ? "light-var-bg" : "dark-var-bg"}`}>{t('cancel_creating')}</button>
             </Link>
           </div>
         </div>

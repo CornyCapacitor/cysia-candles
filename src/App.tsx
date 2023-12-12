@@ -1,13 +1,18 @@
 import { Route, Routes } from 'react-router-dom'
-import './App.css'
 import { AdminPage } from './pages/AdminPage'
+import { CandleCreatePage } from './pages/CandleCreatePage'
+import { CandleEditPage } from './pages/CandleEditPage'
 import { CandlesPage } from './pages/CandlesPage'
 import { CartPage } from './pages/CartPage'
 import { CheckoutPage } from './pages/CheckoutPage'
 import { ContactPage } from './pages/ContactPage'
-import { CreatePage } from './pages/CreatePage'
-import { EditPage } from './pages/EditPage'
+import { DeliveryCreatePage } from './pages/DeliveryCreatePage'
+import { DeliveryEditPage } from './pages/DeliveryEditPage'
 import { FavouritesPage } from './pages/FavouritesPage'
+import { PaymentCreatePage } from './pages/PaymentCreatePage'
+import { PaymentEditPage } from './pages/PaymentEditPage'
+
+import './App.css'
 
 function App() {
   return (
@@ -18,8 +23,12 @@ function App() {
       <Route path="/cart" element={<CartPage />} />
       <Route path="/checkout" element={<CheckoutPage />} />
       <Route path="/admin" element={<AdminPage />} />
-      <Route path="/admin/create" element={<CreatePage />} />
-      <Route path="/admin/:candleId" element={<EditPage />} />
+      <Route path="/admin/candle/create" element={<CandleCreatePage />} />
+      <Route path="/admin/candle/:candleId" element={<CandleEditPage />} />
+      <Route path="/admin/delivery/create" element={<DeliveryCreatePage />} />
+      <Route path="/admin/delivery/:deliveryId" element={<DeliveryEditPage />} />
+      <Route path="/admin/payment/create" element={<PaymentCreatePage />} />
+      <Route path="/admin/payment/:paymentId" element={<PaymentEditPage />} />
     </Routes>
   )
 }
