@@ -41,7 +41,7 @@ export const DeliveryCreate = () => {
       themeColor = "#ffffff"
     }
 
-    if (!name || price < 0 || !estimatedTime || available !== true || false) {
+    if (!name || price < 0 || !estimatedTime || available === true || false) {
       Swal.fire({
         icon: 'error',
         iconColor: '#e71f1f',
