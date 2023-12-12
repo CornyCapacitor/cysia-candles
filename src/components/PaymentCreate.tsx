@@ -40,7 +40,7 @@ export const PaymentCreate = () => {
       themeColor = "#ffffff"
     }
 
-    if (!name || price < 0 || available === null || available === undefined) {
+    if (!name || price < 0 || available !== true || false) {
       Swal.fire({
         icon: 'error',
         iconColor: '#e71f1f',
