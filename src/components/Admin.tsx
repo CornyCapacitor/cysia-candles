@@ -308,10 +308,6 @@ export const Admin = () => {
     console.log(`Editing ${candles[id - 1].name} candle with id ${id}`)
   }
 
-  const createNewCandle = () => {
-    console.log("Creating new candle!")
-  }
-
   useEffect(() => {
     const scrollToTop = () => {
       window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -344,8 +340,8 @@ export const Admin = () => {
               <div className={`section-single ${theme === "light" ? "light-toned-bg dark-font" : "dark-bg white-font"}`}>
                 <header className={theme === "light" ? "light-var-font" : "dark-var-font"}>Create new candle</header>
                 <img className="admin-candle-image" src={theme === "light" ? "/black-circled-question-mark.svg" : "/white-circled-question-mark.svg"} />
-                <Link to="/admin/create">
-                  <button className={`admin-button ${theme === "light" ? "light-var-bg" : "dark-var-bg"}`} style={{ alignSelf: "center" }} onClick={() => createNewCandle()}>Create</button>
+                <Link to="/admin/candle/create">
+                  <button className={`admin-button ${theme === "light" ? "light-var-bg" : "dark-var-bg"}`} style={{ alignSelf: "center" }}>Create</button>
                 </Link>
               </div>
               {candles.map((candle) => (
@@ -451,6 +447,12 @@ export const Admin = () => {
             <section style={{ width: "100%" }} className="section">
               {paymentMethods.length > 0 ?
                 <section className="section">
+                  <div style={{ height: "282px", justifyContent: "center" }} className={`section-single ${theme === "light" ? "light-toned-bg dark-font" : "dark-bg white-font"}`}>
+                    <header className={theme === "light" ? "light-var-font" : "dark-var-font"}>Create new payment method</header>
+                    <Link to="/admin/payment/create">
+                      <button className={`admin-button ${theme === "light" ? "light-var-bg" : "dark-var-bg"}`} style={{ alignSelf: "center" }}>Create</button>
+                    </Link>
+                  </div>
                   {paymentMethods.map((method) => (
                     <div className={`section-single ${theme === "light" ? "light-toned-bg dark-font" : "dark-bg white-font"}`} key={method.id}>
                       <header className={theme === "light" ? "light-var-font" : "dark-var-font"}>Name:</header>
@@ -474,8 +476,8 @@ export const Admin = () => {
                 <section className="section">
                   <div style={{ height: "356px", justifyContent: "center" }} className={`section-single ${theme === "light" ? "light-toned-bg dark-font" : "dark-bg white-font"}`}>
                     <header className={theme === "light" ? "light-var-font" : "dark-var-font"}>Create new delivery type</header>
-                    <Link to="/admin/create">
-                      <button className={`admin-button ${theme === "light" ? "light-var-bg" : "dark-var-bg"}`} style={{ alignSelf: "center" }} onClick={() => createNewCandle()}>Create</button>
+                    <Link to="/admin/delivery/create">
+                      <button className={`admin-button ${theme === "light" ? "light-var-bg" : "dark-var-bg"}`} style={{ alignSelf: "center" }}>Create</button>
                     </Link>
                   </div>
                   {deliveryTypes.map((delivery) => (
