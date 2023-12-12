@@ -205,6 +205,8 @@ export const DeliveryEdit = () => {
                 <span>{deliveryType.name}</span>
                 <span className={theme === "light" ? "light-var-font" : "dark-var-font"}>Price:</span>
                 <span>{deliveryType.price}</span>
+                <span className={theme === "light" ? "light-var-font" : "dark-var-font"}>Estimated time:</span>
+                <span>{deliveryType.estimatedTime}</span>
                 <span className={theme === "light" ? "light-var-font" : "dark-var-font"}>Is available:</span>
                 <span>{deliveryType.available ? <span style={{ color: "#3dff3d" }}>&#10003;</span> : <span style={{ color: "#ff3838" }}>&#10007;</span>}</span>
               </div>
