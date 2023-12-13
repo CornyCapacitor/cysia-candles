@@ -137,7 +137,7 @@ export const DeliveryCreate = () => {
               <span>{available ? <span style={{ color: "#3dff3d" }}>&#10003;</span> : <span style={{ color: "#ff3838" }}>&#10007;</span>}</span>
             </div>
           </div>
-          <div style={{ display: "flex", gap: "20px", alignItems: "center" }}>
+          <div style={{ display: "flex", gap: "20px" }}>
             <button style={{ height: "60px" }} className={`admin-button ${theme === "light" ? "light-var-bg" : "dark-var-bg"}`} onClick={(e) => handleCreate(e)}>{t('add_new_delivery_type')}</button>
             <Link to="/admin">
               <button className={`admin-button ${theme === "light" ? "light-var-bg" : "dark-var-bg"}`}>{t('cancel_creating')}</button>
