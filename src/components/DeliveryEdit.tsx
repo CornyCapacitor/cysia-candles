@@ -1,5 +1,6 @@
 import { useAtom } from "jotai"
 import { useEffect, useState } from "react"
+import { useTranslation } from "react-i18next"
 import { Link, useNavigate, useParams } from "react-router-dom"
 import Swal from "sweetalert2"
 import { adminAtom, themeAtom } from "../atoms"
@@ -19,6 +20,8 @@ export const DeliveryEdit = () => {
   const { deliveryId } = useParams()
   const [theme] = useAtom(themeAtom)
   const [isAdmin] = useAtom(adminAtom)
+
+  const { t } = useTranslation();
 
   const navigate = useNavigate();
 
@@ -114,7 +117,7 @@ export const DeliveryEdit = () => {
         iconColor: '#e71f1f',
         background: `${themeBackground}`,
         color: `${themeColor}`,
-        title: `Name can't be empty, price must be at least 0.00, estimated time can't be empty, availability must be either true or false!`,
+        title: `${t('delivery_edit_swal_error')}!`,
         timer: 5000,
       })
       return
@@ -136,7 +139,7 @@ export const DeliveryEdit = () => {
         iconColor: '#f568a9',
         background: `${themeBackground}`,
         color: `${themeColor}`,
-        title: `You've succesfully updated delivery type!`,
+        title: `${t('delivery_edit_swal_success')}!`,
       }).then((result) => {
         if (result.isConfirmed || result.dismiss) {
           navigate('/admin')
@@ -180,7 +183,7 @@ export const DeliveryEdit = () => {
       background: `${themeBackground}`,
       color: `${themeColor}`,
       confirmButtonText: "Proceed",
-      title: `Are you sure you want to delete "${deliveryType.name}" from database? You won't be able to revert this!`,
+      title: `${t('delivery_edit_swal_1')} "${deliveryType.name}" ${t('delivery_edit_swal_2')}!`,
     }).then((result) => {
       if (result.isConfirmed) {
         deleteDeliveryType()
@@ -198,48 +201,48 @@ export const DeliveryEdit = () => {
           <div className="section" style={{ borderTop: "none", paddingTop: "0px" }}>
             <div style={{ display: "flex", flexDirection: "column", gap: "20px", alignItems: "center" }}>
               <div id={deliveryId} className={`section-single ${theme === "light" ? "light-toned-bg dark-font" : "dark-bg white-font"}`}>
-                <header className={theme === "light" ? "light-var-font" : "dark-var-font"}>Before</header>
+                <header className={theme === "light" ? "light-var-font" : "dark-var-font"}>{t('before')}</header>
                 <span className={theme === "light" ? "light-var-font" : "dark-var-font"}>Id:</span>
                 <span>{deliveryType.id}</span>
-                <span className={theme === "light" ? "light-var-font" : "dark-var-font"}>Name:</span>
+                <span className={theme === "light" ? "light-var-font" : "dark-var-font"}>{t('name')}:</span>
                 <span>{deliveryType.name}</span>
-                <span className={theme === "light" ? "light-var-font" : "dark-var-font"}>Price:</span>
+                <span className={theme === "light" ? "light-var-font" : "dark-var-font"}>{t('price')}:</span>
                 <span>{deliveryType.price}</span>
-                <span className={theme === "light" ? "light-var-font" : "dark-var-font"}>Estimated time:</span>
+                <span className={theme === "light" ? "light-var-font" : "dark-var-font"}>{t('estimated_time')}:</span>
                 <span>{deliveryType.estimatedTime}</span>
-                <span className={theme === "light" ? "light-var-font" : "dark-var-font"}>Is available:</span>
+                <span className={theme === "light" ? "light-var-font" : "dark-var-font"}>{t('is_available')}:</span>
                 <span>{deliveryType.available ? <span style={{ color: "#3dff3d" }}>&#10003;</span> : <span style={{ color: "#ff3838" }}>&#10007;</span>}</span>
               </div>
               <div id={deliveryId} className={`section-single ${theme === "light" ? "light-toned-bg dark-font" : "dark-bg white-font"}`}>
-                <header className={theme === "light" ? "light-var-font" : "dark-var-font"}>After</header>
+                <header className={theme === "light" ? "light-var-font" : "dark-var-font"}>{t('after')}</header>
                 <span className={theme === "light" ? "light-var-font" : "dark-var-font"}>Id:</span>
                 <span>{deliveryType.id}</span>
                 <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "5px" }}>
-                  <span className={theme === "light" ? "light-var-font" : "dark-var-font"}>Name:</span>
+                  <span className={theme === "light" ? "light-var-font" : "dark-var-font"}>{t('name')}:</span>
                   <input className={`admin-input ${theme === "light" ? "light-var-outline" : "dark-var-outline"}`} value={name} type="textbox" onChange={(e) => setName(e.target.value)} />
-                  <span className={theme === "light" ? "light-var-font" : "dark-var-font"}>Price:</span>
+                  <span className={theme === "light" ? "light-var-font" : "dark-var-font"}>{t('price')}:</span>
                   <input className={`admin-input ${theme === "light" ? "light-var-outline" : "dark-var-outline"}`} value={priceString} type="text" onChange={(e) => setPriceHandler(e.target.value)} />
-                  <span className={theme === "light" ? "light-var-font" : "dark-var-font"}>Estimated time:</span>
+                  <span className={theme === "light" ? "light-var-font" : "dark-var-font"}>{t('estimated_time')}:</span>
                   <input className={`admin-input ${theme === "light" ? "light-var-outline" : "dark-var-outline"}`} value={estimatedTime} type="text" onChange={(e) => setEstimatedTime(e.target.value)} />
-                  <span className={theme === "light" ? "light-var-font" : "dark-var-font"}>Is available:</span>
+                  <span className={theme === "light" ? "light-var-font" : "dark-var-font"}>{t('is_available')}:</span>
                   <select style={{ width: "100%", height: "40px" }} className={`admin-input ${theme === "light" ? "light-var-outline" : "dark-var-outline"}`} value={isAvailable} onChange={(e) => setAvailableHandler(e.target.value)}>
-                    <option value="" disabled>Choose one</option>
-                    <option value="true">Yes</option>
-                    <option value="false">No</option>
+                    <option value="" disabled>{t('choose_one')}</option>
+                    <option value="true">{t('yes')}</option>
+                    <option value="false">{t('no')}</option>
                   </select>
                 </div>
               </div>
               <div style={{ display: "flex", gap: "20px" }}>
-                <button className={`admin-button ${theme === "light" ? "light-var-bg" : "dark-var-bg"}`} onClick={(e) => handleSubmit(e)}>Save changes</button>
-                <button className={`admin-button ${theme === "light" ? "light-var-bg" : "dark-var-bg"}`} onClick={(e) => handleDelete(e)}>Delete delivery type</button>
+                <button className={`admin-button ${theme === "light" ? "light-var-bg" : "dark-var-bg"}`} onClick={(e) => handleSubmit(e)}>{t('save_changes')}</button>
+                <button className={`admin-button ${theme === "light" ? "light-var-bg" : "dark-var-bg"}`} onClick={(e) => handleDelete(e)}>{t('delete_delivery_type')}</button>
                 <Link to="/admin">
-                  <button className={`admin-button ${theme === "light" ? "light-var-bg" : "dark-var-bg"}`}>Cancel editing</button>
+                  <button className={`admin-button ${theme === "light" ? "light-var-bg" : "dark-var-bg"}`}>{t('cancel_editing')}</button>
                 </Link>
               </div>
             </div>
           </div>
         </div >
-        : <>You shouldn't be here</>}
+        : <>{t('not_an_admin_warn')}</>}
     </div>
   )
 }
