@@ -93,9 +93,6 @@ export const PaymentEdit = () => {
   const handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault()
 
-    const properPrice = price.toFixed(2)
-    console.log(properPrice)
-
     let themeBackground
     let themeColor
 
@@ -126,7 +123,7 @@ export const PaymentEdit = () => {
       .select()
 
     if (error) {
-      console.log(error)
+      console.error(error)
     }
 
     if (data) {
@@ -165,7 +162,7 @@ export const PaymentEdit = () => {
         .eq('id', paymentId)
 
       if (data) {
-        console.log(data)
+        return data
       }
 
       if (error) {

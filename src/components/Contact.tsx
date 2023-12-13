@@ -48,7 +48,7 @@ export const Contact = () => {
         .select()
 
       if (data) {
-        console.log("Order sent to database")
+        return data
       }
 
       if (error) {

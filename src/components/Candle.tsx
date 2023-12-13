@@ -98,13 +98,11 @@ export const Candle = ({ image, name }: CandleProps) => {
       const existingItem = updatedFavourites[existingItemIndex];
 
       if (existingItem) {
-        console.log(`Removing ${name} from favourites!`);
         updatedFavourites.splice(existingItemIndex, 1);
         setFavourites(updatedFavourites);
       }
     } else {
       setFavourites((prevFavourites) => [...prevFavourites, newItem]);
-      console.log(`Adding ${name} to favourites!`)
     }
   }
 

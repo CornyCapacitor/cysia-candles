@@ -25,7 +25,6 @@ export const Navbar = () => {
 
   const languageSwitch = () => {
     const currentLanguage = localStorage.getItem('i18nextLng')
-    console.log(currentLanguage)
     if (currentLanguage === "en") {
       localStorage.setItem('i18nextLng', "pl")
     } else {

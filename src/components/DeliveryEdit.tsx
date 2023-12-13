@@ -97,9 +97,6 @@ export const DeliveryEdit = () => {
   const handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault()
 
-    const properPrice = price.toFixed(2)
-    console.log(properPrice)
-
     let themeBackground
     let themeColor
 
@@ -130,7 +127,7 @@ export const DeliveryEdit = () => {
       .select()
 
     if (error) {
-      console.log(error)
+      console.error(error)
     }
 
     if (data) {
@@ -169,7 +166,7 @@ export const DeliveryEdit = () => {
         .eq('id', deliveryId)
 
       if (data) {
-        console.log(data)
+        return data
       }
 
       if (error) {

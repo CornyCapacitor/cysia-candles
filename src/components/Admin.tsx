@@ -231,7 +231,7 @@ export const Admin = () => {
         .eq('id', id)
 
       if (data) {
-        console.log(data)
+        return data
       }
 
       if (error) {
@@ -279,7 +279,7 @@ export const Admin = () => {
         .eq('id', id)
 
       if (data) {
-        console.log(data)
+        return data
       }
 
       if (error) {
@@ -304,10 +304,6 @@ export const Admin = () => {
         return
       }
     })
-  }
-
-  const candleEdit = (id: number) => {
-    console.log(`Editing ${candles[id - 1].name} candle with id ${id}`)
   }
 
   useEffect(() => {
@@ -351,7 +347,7 @@ export const Admin = () => {
                   <header className={theme === "light" ? "light-var-font" : "dark-var-font"}>{t(`${candle.name}`)}</header>
                   <img className="admin-candle-image" src={`${candle.image}`} />
                   <Link to={'/admin/candle/' + candle.id}>
-                    <button className={`admin-button ${theme === "light" ? "light-var-bg" : "dark-var-bg"}`} style={{ alignSelf: "center" }} onClick={() => candleEdit(candle.id)}>{t('edit_candle')}</button>
+                    <button className={`admin-button ${theme === "light" ? "light-var-bg" : "dark-var-bg"}`} style={{ alignSelf: "center" }}>{t('edit_candle')}</button>
                   </Link>
                 </div>
               ))}

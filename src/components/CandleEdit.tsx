@@ -94,7 +94,7 @@ export const CandleEdit = () => {
       .select()
 
     if (error) {
-      console.log(error)
+      console.error(error)
     }
 
     if (data) {
@@ -133,7 +133,7 @@ export const CandleEdit = () => {
         .eq('id', candleId)
 
       if (data) {
-        console.log(data)
+        return data
       }
 
       if (error) {
