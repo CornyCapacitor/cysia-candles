@@ -409,9 +409,9 @@ export const Checkout = () => {
                   <input className={`smaller-customer-input ${theme === "light" ? "light-var-outline" : "dark-var-outline"}`} placeholder={t('zip_code')} value={zipCode} onChange={(e) => setZipCode(e.target.value)} />
                 </div>
                 <select className={`customer-select ${theme === "light" ? "light-var-outline" : "dark-var-outline"}`} value={country} onChange={(e) => setCountry(e.target.value)}>
-                  <option value="" disabled>Choose country</option>
+                  <option value="" disabled>{t('choose_country')}</option>
                   {countryOptions.map((option, index) => (
-                    <option key={index} disabled={!option.available}>{option.name}</option>
+                    <option key={index} disabled={!option.available}>{t(`${option.name}`)}</option>
                   ))}
                 </select>
                 <input type="textbox" placeholder={`${t('phone_number')}*`} className={`customer-input ${theme === "light" ? "light-var-outline" : "dark-var-outline"}`} value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} />
