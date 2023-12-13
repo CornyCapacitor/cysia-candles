@@ -169,7 +169,7 @@ export const CandleEdit = () => {
                 <span className={theme === "light" ? "light-var-font" : "dark-var-font"}>Id:</span>
                 <span>{candle.id}</span>
                 <span className={theme === "light" ? "light-var-font" : "dark-var-font"}>{t('name')}:</span>
-                <span>{t(`${candle.name}`)}</span>
+                <span>{candle.name}</span>
                 <span className={theme === "light" ? "light-var-font" : "dark-var-font"}>{t('image_path')}:</span>
                 <span>{candle.image}</span>
                 <span></span>

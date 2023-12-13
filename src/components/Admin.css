@@ -47,7 +47,7 @@
   font-family: Poppins;
   font-size: 18px;
   font-weight: 500;
-  height: 50px;
+  min-height: 50px;
   min-width: 150px;
   transition: 0.2s;
   width: 200px;
