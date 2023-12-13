@@ -240,7 +240,7 @@ export const Checkout = () => {
         addError("delivery_error")
       }
       if (!selectedPayment) {
-        addError("")
+        addError("payment_error")
       }
       if (candlesPrice === "0.00") {
         Swal.fire({
