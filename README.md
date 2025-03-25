@@ -12,4 +12,4 @@
 - *Backend*: Supabase
 
 ### Visit it yourself 
-[External link to Cysia Candles website](https://github.com/CornyCapacitor/cysia-candles/)
+[External link to Cysia Candles website](https://cysia-candles-delta.vercel.app/)
