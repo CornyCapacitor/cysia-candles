@@ -250,3 +250,8 @@
     width: 260px;
   }
 }
+
+.text-wrap {
+  text-wrap: break-word;
+  overflow-wrap: break-word;
+}

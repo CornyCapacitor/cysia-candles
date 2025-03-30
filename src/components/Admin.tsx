@@ -69,7 +69,7 @@ export const Admin = () => {
   const { t } = useTranslation()
 
   // Auth states
-  const [pagePassword] = useState<string>("adminos")
+  const [pagePassword] = useState<string>(import.meta.env.VITE_PUBLIC_ADMIN_PANEL_PASS)
   const [password, setPassword] = useState<string>("");
   const [isAdmin, setIsAdmin] = useAtom(adminAtom);
 
@@ -369,7 +369,7 @@ export const Admin = () => {
                         <header className={theme === "light" ? "light-var-font" : "dark-var-font"}>{t('topic')}:</header>
                         <span>{question.topic}</span>
                         <header className={theme === "light" ? "light-var-font" : "dark-var-font"}>{t('comment')}:</header>
-                        <span>{question.comment}</span>
+                        <span className="text-wrap">{question.comment}</span>
                         <button className={`admin-button ${theme === "light" ? "light-var-bg" : "dark-var-bg"}`} style={{ alignSelf: "center" }} onClick={(e) => deleteQuestion(e, question.id)}>{t('delete_question')}</button>
                       </div>
                     </div>
